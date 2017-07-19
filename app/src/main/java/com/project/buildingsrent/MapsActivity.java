@@ -48,6 +48,7 @@ public class MapsActivity extends HandlingMaps{
                     mAuth.signOut();
                     Toast.makeText(MapsActivity.this, "You have signed out successfully ..", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext() , LoginActivity.class));
+                    finish();
 
                 } else if (currentUser == null) {
                     Toast.makeText(MapsActivity.this, "You haven't logged in ..", Toast.LENGTH_SHORT).show();

@@ -372,7 +372,7 @@ public class HandlingLoginAuth extends Activity {
             registerLayout.setVisibility(View.GONE);
             loginLayout.setVisibility(View.VISIBLE);
         }else{
-            super.onBackPressed();
+            finishAffinity();
         }
     }
 
