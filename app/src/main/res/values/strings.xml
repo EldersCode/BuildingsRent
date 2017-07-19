@@ -1,0 +1,47 @@
+<resources>
+    <string name="ask_permission_title">GPS Permission</string>
+    <string name="ask_permission_messege">please enable your GPS to get your Location on Map</string>
+    <string name="ask_permission_positive">Enable</string>
+    <string name="ask_permission_negative">Cancel</string>
+    <string name="app_name">BuildingsRent</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="SearchForAnApartment_Menu">Search For A new Apartment</string>
+    <string name="SearchForAnApartmentHint_Menu">Either you wana Buy Or Rent An Apartment</string>
+    <string name="CreateEvent_Menu">Serach For Event</string>
+    <string name="CreateEventHint_Menu">Discover All the Events That is Happening In Ur Area Or any Place In The World</string>
+    <string name="noOfPaths">paths</string>
+    <string name="apartment_location_english">Submit</string>
+    <string name="apartment_area_english">- Apartment area</string>
+    <string name="area_hint">put area here ..</string>
+    <string name="bedrooms_hint">Number of bedrooms ..</string>
+    <string name="noOfBathrooms">- Number of Bathrooms</string>
+    <string name="bathrooms_hint">Number of bathrooms ..</string>
+    <string name="pets">- Pets allowed</string>
+    <string name="cat">Cat</string>
+    <string name="bDog">Big Dogs</string>
+    <string name="sDog">Small Dogs</string>
+    <string name="others">Others</string>
+    <string name="Parking">- Parking Lots</string>
+    <string name="livingRoom">- Living room</string>
+    <string name="kitchen">- Kitchen</string>
+    <string name="coolingSystem">- Cooling System</string>
+    <string name="negotiablePrice">- Negotiable Price</string>
+    <string name="priceText">- Price..</string>
+    <string name="price">Price</string>
+    <string name="noOfBedrooms">- Number of Bedrooms</string>
+    <string name="drawer_item_home">Item Number One</string>
+    <string name="drawer_item_settings">Item Number 2</string>
+    <string name="SetTheApartmentLocation">Get ApartmentLocation</string>
+    <string name="SetTheApartmentLocation_hint">get location</string>
+    <string name="title_activity_places_auto_location">Map</string>
+    <string name="login_btn">Login</string>
+    <string name="register_btn">Register</string>
+    <string name="registerLogin_btn"><![CDATA[Register & Login]]></string>
+    <string name="iamIn">i am in the location</string>
+    <string name="iamOut">this\'s not my estate location</string>
+    <string name="show_password">show password</string>
+    <string name="forgetPassword">forget password</string>
+    <string name="rent">rent</string>
+    <string name="sale">sale</string>
+
+</resources>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "716973877592",
+    "firebase_url": "https://buildings-rent.firebaseio.com",
+    "project_id": "buildings-rent",
+    "storage_bucket": "buildings-rent.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716973877592:android:6da53daade045f50",
+        "android_client_info": {
+          "package_name": "com.project.buildingsrent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716973877592-u0huvsbsj1btuk49t8lqmnjvtsdjjvqq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.buildingsrent",
+            "certificate_hash": "78ca337efeeeaad872a5ea9dcc09c52ee22f22bb"
+          }
+        },
+        {
+          "client_id": "716973877592-s7vnr20gih0v5eq6sbnov03sleqs6hjj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3X7LU4-X3Yv9Doa4eU2O2l-scBFAiHiw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716973877592-s7vnr20gih0v5eq6sbnov03sleqs6hjj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
