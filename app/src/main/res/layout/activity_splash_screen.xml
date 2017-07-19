@@ -4,24 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/lol"
-
-tools:context="com.project.buildingsrent.SplashScreen">
+    tools:context="com.project.buildingsrent.SplashScreen">
     <ImageView
     android:id="@+id/imgLogo"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:src="@color/colorAccent" />
+        android:layout_marginTop="30dp"
+    android:layout_width="300dp"
+    android:layout_height="100dp"
+    android:layout_centerHorizontal="true"
+    android:background="@drawable/welcomepng"/>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:textSize="20dp"
-        android:textColor="#FFFF"
-        android:gravity="center_horizontal"
-        android:layout_alignParentBottom="true"
-        android:text="be ready for the adventure" />
+
 
 </RelativeLayout>

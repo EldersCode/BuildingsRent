@@ -1,6 +1,7 @@
 package com.project.buildingsrent;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
@@ -38,15 +41,17 @@ public class MapsActivity extends HandlingMaps{
         logoutFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                FirebaseUser currentUser = mAuth.getCurrentUser();
-//
-//                if (currentUser != null) {
-//                    mAuth.signOut();
-//                    Toast.makeText(MapsActivity.this, "You have signed out successfully ..", Toast.LENGTH_SHORT).show();
-//
-//                } else if (currentUser == null) {
+                FirebaseAuth mAuth= FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                if (currentUser != null) {
+                    mAuth.signOut();
+                    Toast.makeText(MapsActivity.this, "You have signed out successfully ..", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext() , LoginActivity.class));
+
+                } else if (currentUser == null) {
                     Toast.makeText(MapsActivity.this, "You haven't logged in ..", Toast.LENGTH_SHORT).show();
-//                }
+                }
 
             }
         });
