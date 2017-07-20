@@ -24,6 +24,7 @@
         android:id="@+id/login_id"
         android:orientation="vertical"
         android:layout_marginTop="10dp"
+
         >
 
         <EditText
@@ -118,7 +119,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -144,7 +145,7 @@
             android:textColor="@android:color/black"
             />
         <EditText
-            android:visibility="gone"
+            android:background="@drawable/login_edittext"
             android:id="@+id/PasswordR"
             android:layout_width="304dp"
             android:layout_height="41dp"

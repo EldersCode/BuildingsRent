@@ -5,12 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,14 +17,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.zip.Inflater;
 
 /**
  * Created by Hesham on 7/19/2017.
@@ -68,7 +63,7 @@ public class HandlingLoginAuth extends Activity {
                 startActivity(new Intent(context , MapsActivity.class));
                 finish();
             }else if (!currentUser.isEmailVerified()){
-                Toast.makeText(context, "Please verify your email first !", Toast.LENGTH_SHORT).show();
+
             }
 
         }
@@ -212,7 +207,6 @@ public class HandlingLoginAuth extends Activity {
                         public void onClick(DialogInterface dialog, int which) {
                             String mail = emailLogin.getText().toString();
                             ForgetPass(context , mail);
-                            Toast.makeText(context, "Your have received an email check it out !", Toast.LENGTH_SHORT).show();
                         }
                     });
                     alert.setNegativeButton("no", new DialogInterface.OnClickListener() {
@@ -249,8 +243,13 @@ public class HandlingLoginAuth extends Activity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     alert.setCancelable(true);
+                                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                                    intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                                    context.startActivity(intent);
+                                    alert.setCancelable(true);
                                 }
                             });
+                            alert.create().show();
                         }
                     }
                 });
@@ -288,7 +287,7 @@ public class HandlingLoginAuth extends Activity {
 
                             } else {
                                      // If sign in fails, display a message to the user.
-                                Toast.makeText(context, "Login Authentication failed.",
+                                Toast.makeText(context, "Login Authentication failed .. please check internet connection or user's email and password ..",
                                         Toast.LENGTH_SHORT).show();
                                 progressD.dismiss();
                             }
@@ -324,7 +323,7 @@ public class HandlingLoginAuth extends Activity {
 
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Toast.makeText(context, "Authentication failed.",
+                                Toast.makeText(context, "Authentication failed .. please check internet connection ..",
                                         Toast.LENGTH_SHORT).show();
                             }
 
@@ -332,7 +331,7 @@ public class HandlingLoginAuth extends Activity {
                         }
                     });
         } catch (Exception e) {
-            Log.e("eeeeeeeeee", String.valueOf(e));
+
         }
     }
 
@@ -382,9 +381,10 @@ public class HandlingLoginAuth extends Activity {
 // Prepare the View for the animation
         loginLayout.setVisibility(View.VISIBLE);
         loginLayout.setAlpha(0.0f);
+        registerLayout.setVisibility(View.GONE);
 
 // Start the animation
         loginLayout.animate()
-                .translationY(loginLayout.getHeight())
+//                .translationY(loginLayout.getHeight())
                 .alpha(1.0f).setDuration(5000);    }
 }
