@@ -1,14 +1,18 @@
 package com.project.buildingsrent;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
@@ -35,24 +39,41 @@ public class MapsActivity extends HandlingMaps{
         setContentView(R.layout.activity_maps);
         onCreateHandle();
 
+        try{
+            Profile profile = Profile.getCurrentProfile();
+            Toast.makeText(getApplicationContext(), "     Login Successfully\nWelcome "+ profile.getName() + " :)", Toast.LENGTH_LONG).show();
+        }catch (Exception e){
+
+        }
+
 //        logout fab button handling
 
         logoutFab = (FloatingActionButton) findViewById(R.id.fabLogout);
         logoutFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth mAuth= FirebaseAuth.getInstance();
-                FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                if (currentUser != null) {
-                    mAuth.signOut();
-                    Toast.makeText(MapsActivity.this, "You have signed out successfully ..", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext() , LoginActivity.class));
-                    finish();
+                        //first check which type of accounts that logged in
+                    // Facebook or Email and Password registration to logout it ..
+                final AlertDialog.Builder alert = new AlertDialog.Builder(MapsActivity.this)
+                        .setTitle("Notification")
+                        .setMessage( "you have received an email .. Verification sent check it out !")
+                        .setCancelable(false)
+                        .setIcon(R.mipmap.alarm);
+                alert.setPositiveButton("no", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alert.setCancelable(true);
+                    }
+                });
+                alert.setNegativeButton("yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Logout();
+                    }
+                });
+                alert.create().show();
 
-                } else if (currentUser == null) {
-                    Toast.makeText(MapsActivity.this, "You haven't logged in ..", Toast.LENGTH_SHORT).show();
-                }
 
             }
         });
@@ -153,6 +174,29 @@ public class MapsActivity extends HandlingMaps{
         }
         else{
             finishAffinity();
+        }
+    }
+
+    public void Logout(){
+        try {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            if (currentUser != null) {
+                mAuth.signOut();
+                Toast.makeText(MapsActivity.this, "You have signed out successfully ..", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+            }
+        }catch (Exception e){
+
+        }
+        try {
+            LoginManager.getInstance().logOut();
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            finish();
+
+        }catch (Exception e){
+
         }
     }
 

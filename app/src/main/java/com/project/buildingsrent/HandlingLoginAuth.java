@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,6 +16,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -39,22 +45,26 @@ public class HandlingLoginAuth extends Activity {
     private CheckBox showPass;
     private Button login_btn , register_btn , registerLoginBtn;
     private EditText emailLogin , passwordLogin ,userName , password , ConfPass;
+    private CallbackManager callbackManager ;
+    private LoginButton loginButton;
 
                          //////////////////////
 
-            // Check if user is signed in (non-null) and update UI accordingly.
+              // Check if user is signed in (non-null) and update UI accordingly.
 
-     FirebaseAuth mAuth= FirebaseAuth.getInstance();
+    FirebaseAuth mAuth= FirebaseAuth.getInstance();
     FirebaseUser currentUser = mAuth.getCurrentUser();
+    Profile profile = Profile.getCurrentProfile();
 
 
-                        ////////////////////
+    ////////////////////
 
     public void HandlingLoginAuth (final Context context){
 
         ViewsInitialization(context);
         HandlingFunctionalities(context);
 
+                            //Handling Email and Password side
          if(currentUser != null){
 
             mAuth= FirebaseAuth.getInstance();
@@ -65,8 +75,15 @@ public class HandlingLoginAuth extends Activity {
             }else if (!currentUser.isEmailVerified()){
 
             }
-
         }
+                                    //////////////
+
+                           //Handling Facebook side here
+        else if(profile != null){
+            startActivity(new Intent(context , MapsActivity.class));
+            finish();
+        }
+                                  /////////////
 
 
 
@@ -76,8 +93,14 @@ public class HandlingLoginAuth extends Activity {
 
     public void ViewsInitialization(Context context){
 
-//        view = View.inflate( context , R.layout.activity_login , null);
-//        view = LayoutInflater.from(context).inflate(R.layout.activity_login, null, true);
+                    //Facebook login requirements here ..
+
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email");
+        callbackManager = CallbackManager.Factory.create();
+
+                        ////////////////////////
+
         loginLayout = (LinearLayout)findViewById(R.id.login_id);
         registerLayout = (LinearLayout) findViewById(R.id.register_id);
         login_btn =(Button)findViewById(R.id.button);
@@ -102,7 +125,42 @@ public class HandlingLoginAuth extends Activity {
     public void HandlingFunctionalities(final Context context){
 
 
-                            // Handling show password check box here
+                            // Login with Facebook handling ..
+        // Callback registration
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Profile profile = Profile.getCurrentProfile();
+                progressD = new ProgressDialog(context);
+                progressD.setMessage("Logging in ...");
+                progressD.show();
+                startActivity(new Intent(context , MapsActivity.class));
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+        });
+
+            }
+        });
+                                ///////////////////
+
+
+
+        // Handling show password check box here
 
         showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -387,4 +445,11 @@ public class HandlingLoginAuth extends Activity {
         loginLayout.animate()
 //                .translationY(loginLayout.getHeight())
                 .alpha(1.0f).setDuration(5000);    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

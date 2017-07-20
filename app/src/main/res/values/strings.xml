@@ -43,5 +43,8 @@
     <string name="forgetPassword">forget password</string>
     <string name="rent">rent</string>
     <string name="sale">sale</string>
+    <string name="facebook_app_id">487725684953514</string>
+    <string name="fb_login_protocol_scheme">fb487725684953514</string>
+
 
 </resources>
