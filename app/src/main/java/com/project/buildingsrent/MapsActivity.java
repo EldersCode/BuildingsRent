@@ -148,7 +148,9 @@ public class MapsActivity extends HandlingMaps{
         if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         }
-
+        else if(bottomSheetBehavior1.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+        }
         else{
             finishAffinity();
         }
