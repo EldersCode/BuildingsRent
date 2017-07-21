@@ -17,15 +17,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -43,12 +49,15 @@ public class HandlingLoginAuth extends Activity {
     private String pass = null;
     private TextView forgetPass;
     private CheckBox showPass;
-    private Button login_btn , register_btn , registerLoginBtn;
+    private Button login_btn , register_btn , registerLoginBtn ,  facebook_btn;
     private EditText emailLogin , passwordLogin ,userName , password , ConfPass;
     private CallbackManager callbackManager ;
     private LoginButton loginButton;
+    private  AccessTokenTracker accessTokenTracker;
+    private ProfileTracker profileTracker;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
-                         //////////////////////
+    //////////////////////
 
               // Check if user is signed in (non-null) and update UI accordingly.
 
@@ -98,6 +107,7 @@ public class HandlingLoginAuth extends Activity {
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
         callbackManager = CallbackManager.Factory.create();
+        facebook_btn = (Button)findViewById(R.id.myfacebook);
 
                         ////////////////////////
 
@@ -125,37 +135,75 @@ public class HandlingLoginAuth extends Activity {
     public void HandlingFunctionalities(final Context context){
 
 
+        // Initialize Firebase Auth
+
+        // Initialize firebase Listener to check the state of firebase auth for login
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() != null){
+
+                    Intent intent = new Intent(context , MapsActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        };
+
                             // Login with Facebook handling ..
-        // Callback registration
-        loginButton.setOnClickListener(new View.OnClickListener() {
+
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+
+            }
+        };
+
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+            }
+        };
+
+        accessTokenTracker.startTracking();
+        profileTracker.startTracking();
+
+        facebook_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loginButton.performClick();
+            }
+        });
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        // Callback registration
+        if(loginButton.getText().equals("Log out")){
+            startActivity(new Intent(context , MapsActivity.class));
+            finish();
+        }
 
-            @Override
-            public void onSuccess(LoginResult loginResult) {
+                LoginManager.getInstance().registerCallback(callbackManager , new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
                 Profile profile = Profile.getCurrentProfile();
                 progressD = new ProgressDialog(context);
                 progressD.setMessage("Logging in ...");
                 progressD.show();
+                handleFacebookAccessToken(loginResult.getAccessToken());
                 startActivity(new Intent(context , MapsActivity.class));
                 finish();
             }
 
             @Override
             public void onCancel() {
-                // App code
+                Toast.makeText(context, "Login Cancelled !!", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(FacebookException exception) {
-                // App code
+                Toast.makeText(context, "Can't login with facebook please check internet connection ..", Toast.LENGTH_LONG).show();
             }
         });
 
-            }
-        });
                                 ///////////////////
 
 
@@ -450,6 +498,34 @@ public class HandlingLoginAuth extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        accessTokenTracker.stopTracking();
+        profileTracker.stopTracking();
+    }
+
+                                // handling Facebook with firebase authentication here ..
+
+    private void handleFacebookAccessToken(AccessToken token) {
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+
+                        } else {
+
+                        }
+
+                        // ...
+                    }
+                });
     }
 
 }
