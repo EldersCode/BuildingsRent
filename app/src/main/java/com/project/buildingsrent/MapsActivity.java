@@ -57,7 +57,7 @@ public class MapsActivity extends HandlingMaps{
                     // Facebook or Email and Password registration to logout it ..
                 final AlertDialog.Builder alert = new AlertDialog.Builder(MapsActivity.this)
                         .setTitle("Notification")
-                        .setMessage( "you have received an email .. Verification sent check it out !")
+                        .setMessage( "Do you want to Sign out ?")
                         .setCancelable(false)
                         .setIcon(R.mipmap.alarm);
                 alert.setPositiveButton("no", new DialogInterface.OnClickListener() {
