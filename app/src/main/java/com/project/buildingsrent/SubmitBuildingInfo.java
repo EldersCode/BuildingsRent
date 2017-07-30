@@ -1,7 +1,9 @@
 package com.project.buildingsrent;
-
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,19 +12,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.Toast;
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 /**
- * Created by heshamsalama on 7/20/2017.
+ * Created by heshamsalama on 6/16/2017.
  */
 
 public class SubmitBuildingInfo extends Activity {
@@ -32,7 +40,14 @@ public class SubmitBuildingInfo extends Activity {
     private int flatsNo =1;
     private DatabaseReference houses;
     ////////////////////////////////
-    public SubmitBuildingInfo(final LatLng latLng, final GoogleMap mMap, final String building, Button locateFlat, final LinearLayout petsLayout, Switch petsSwitch, final EditText priceEditText, final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText, final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch, final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch) {
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("contry/" + "city/" +"region/"+ flatsNo);
+    GeoFire geoFire = new GeoFire(ref);
+    public SubmitBuildingInfo() {
+
+
+    }
+
+    public SubmitBuildingInfo(final Context context, final LatLng latLng, final GoogleMap mMap, final String building, Button locateFlat, final LinearLayout petsLayout, Switch petsSwitch, final EditText priceEditText, final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText, final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch, final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch) {
         petsLayout.setVisibility(View.GONE);
 //images();
 //Button rentBtn=(Button) findViewById(R.id.forRentBtn);
@@ -56,6 +71,7 @@ public class SubmitBuildingInfo extends Activity {
 //
         houses.addValueEventListener(new ValueEventListener() {
             @Override
+
             public void onDataChange(DataSnapshot dataSnapshot) {
                 flatsNo= (int) dataSnapshot.getChildrenCount()+1;
                 Log.e("nnnnnnn", String.valueOf(flatsNo));
@@ -74,7 +90,7 @@ public class SubmitBuildingInfo extends Activity {
 //                Intent intent = new Intent(getApplicationContext() , MapsActivity.class);
 
                 DatabaseReference users = database.getReference("users");
-                DatabaseReference regions = database.getReference("regions");
+//                DatabaseReference regions = database.getReference("regions");
 
                 users.child("userId/" + "houses/" + "owened/" + "houseId/"+flatsNo).setValue("");
 
@@ -87,11 +103,25 @@ public class SubmitBuildingInfo extends Activity {
                 houses.child(flatsNo + "/pets/").setValue("boolean");
                 houses.child(flatsNo + "/kitchen/").setValue(String.valueOf(kitchenSwitch.isChecked()));
                 houses.child(flatsNo + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
-                houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString());
+                houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
+
+                    }
+                });
                 houses.child(flatsNo + "/houseIdNo/" + "location/").setValue("");
 //                Toast.makeText(getApplicationContext(),"sending",Toast.LENGTH_LONG).show();
-                regions.child("contry/" + "city/" + flatsNo).setValue("location");
-//                Toast.makeText(getApplicationContext() , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
+                geoFire.setLocation("firebase-hq", new GeoLocation(latLng.latitude, latLng.longitude));
+
+//                regions.child("contry/" + "city/" + flatsNo).setValue("location").addOnFailureListener((Activity) context, new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(context , "fail "+e.toString() , Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                });
+//                Toast.makeText(context , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
                 mMap.addMarker(new MarkerOptions().position(latLng).title(priceEditText.getText().toString()).
                         icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
 
@@ -108,10 +138,10 @@ public class SubmitBuildingInfo extends Activity {
                 rentBtn.setEnabled(false);
                 saleBtn.setEnabled(true);
 //
-                rentBtn.setTextColor(Integer.parseInt(String.valueOf(R.color.colorAccent)));
+                rentBtn.setTextColor(Integer.parseInt(String.valueOf(R.color.colorPrimary)));
                 saleBtn.setTextColor(Integer.parseInt(String.valueOf(R.color.colorAccent)));
                 saleBtn.setBackgroundColor(1);
-                rentBtn.setBackgroundColor(Integer.parseInt(String.valueOf(R.color.colorPrimary)));
+                rentBtn.setBackgroundColor(Integer.parseInt(String.valueOf(R.color.colorAccent)));
 //rentBtn.setBackgroundColor();
             }
         });
@@ -121,10 +151,10 @@ public class SubmitBuildingInfo extends Activity {
                 saleBtn.setEnabled(false);
                 rentBtn.setEnabled(true);
 //
-                saleBtn.setTextColor(Integer.parseInt(String.valueOf(R.color.colorAccent)));
+                saleBtn.setTextColor(Integer.parseInt(String.valueOf(R.color.colorPrimary)));
                 rentBtn.setTextColor(Integer.parseInt(String.valueOf(R.color.colorAccent)));
                 rentBtn.setBackgroundColor(1);
-                saleBtn.setBackgroundColor(Integer.parseInt(String.valueOf(R.color.colorPrimary)));
+                saleBtn.setBackgroundColor(Integer.parseInt(String.valueOf(R.color.colorAccent)));
 
             }
         });

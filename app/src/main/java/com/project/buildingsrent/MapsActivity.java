@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
@@ -28,8 +29,10 @@ public class MapsActivity extends HandlingMaps{
     FloatingActionButton logoutFab;
     BottomSheetBehavior bottomSheetBehavior;
     BottomSheetBehavior bottomSheetBehavior1;
-    Button TheButtonInTheFirstButtonSheet;
+    Button homeSheetBtn;
     String buildingType;
+    boolean flag = true;
+    LatLng latLng;
 
 
 
@@ -38,6 +41,9 @@ public class MapsActivity extends HandlingMaps{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         onCreateHandle();
+// declearing widgets for sheets
+        sheetsWedgits();
+        /////////////
 
         try{
             Profile profile = Profile.getCurrentProfile();
@@ -80,13 +86,7 @@ public class MapsActivity extends HandlingMaps{
 
         //////////////
 
-
-
-
-
-        //showing the first bottom sheet by the first button
-
-        TheButtonInTheFirstButtonSheet = (Button) findViewById(R.id.HomeButton);
+        homeSheetBtn = (Button) findViewById(R.id.HomeButton);
 
 
 
@@ -116,6 +116,7 @@ public class MapsActivity extends HandlingMaps{
         bmb.setButtonEnum(ButtonEnum.Ham);
         bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_4);
         bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_4);
+        // wheen a boom btn cklicked
         for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
             final HamButton.Builder builder = new HamButton.Builder().listener(new OnBMClickListener() {
 
@@ -126,42 +127,73 @@ public class MapsActivity extends HandlingMaps{
 
                     } else if (index == 1) {
 
-                    } else if (index == 2) {
-                        bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    }
+                    // the 3rd boom btn oncklick for submetting a proprty
+                    else if (index == 2) {
+
+//buttom sheets activated and ready for submtting a proberty
+                        //alertdialog for asking where is the property location
+                            final FindLocatinDialog findLocatinDialog = new FindLocatinDialog(MapsActivity.this);
+                        //if same location is the current location btn in the aleret dialog
+                            findLocatinDialog.here_btn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    try {
+//getting the current  latlong to be ready then pass it to the submetting class
+                                        latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                                        //if a home btn sheet selected
+
+                                        new SubmitBuildingInfo(MapsActivity.this,latLng,mMap,buildingType,locateFlat,petsLayout,petsSwitch,priceEditText,ApartmentAreaEditText,noOfBedRoomsEditText
+                                                ,noOfBathRoomsEditText,parkingLotsSwitch,LivingRoomSwitch,KitchenSwitch,coolingSystemSwitch,NegotiablePriceSwitch);
 
 
-                        TheButtonInTheFirstButtonSheet.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                                        flag = true;
+                                        findLocatinDialog.dialog.dismiss();
+                                    }catch (Exception e){
+//                                        Toast.makeText(getApplication(),e.toString(),Toast.LENGTH_LONG).show();
 
-                                buildingType="home";
-                                bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+                                        findLocatinDialog.dialog.dismiss();
 
-                                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                                    }
+//when the latlong is ready btn sheets activated
+                                    if(flag){
 
-                            }
-                        });
-                    } else if (index == 3) {
+                                        bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+
+                                        homeSheetBtn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+
+                                                buildingType="home";
+                                                bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+                                                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+                                                mMap.clear();
+
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
 
                     }
 
                 }
+            })
 
-        })
-             .normalImageRes(ImagesForTheMenu[i])
+                    .normalImageRes(ImagesForTheMenu[i])
                     .normalTextRes(TextForMenu[i])
                     .subNormalTextRes(HintTextForMenu[i]);
 
 
             bmb.addBuilder(builder);
-
-
-            ///////////////////
-
-
-
         }
     }
+
+
 
 
     @Override

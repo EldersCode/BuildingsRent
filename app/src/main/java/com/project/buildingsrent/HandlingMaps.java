@@ -16,6 +16,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -51,7 +55,35 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
     SupportMapFragment mapFragment ;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
+    ////////////////submitBuildingInfo
+    EditText priceEditText;
+    EditText ApartmentAreaEditText;
+    EditText noOfBedRoomsEditText;
+    EditText noOfBathRoomsEditText;
+    Switch parkingLotsSwitch;
+    Switch LivingRoomSwitch;
+    Switch KitchenSwitch;
+    Switch coolingSystemSwitch;
+    Switch NegotiablePriceSwitch;
+    LinearLayout petsLayout;
+    Switch petsSwitch;
+    Button locateFlat;
 
+    public void sheetsWedgits(){
+        //declearing inistances for home
+        petsLayout = (LinearLayout) findViewById(R.id.switchOn_pets);
+        petsSwitch = (Switch) findViewById(R.id.petSwitch);
+        priceEditText = (EditText) findViewById(R.id.Price);
+        ApartmentAreaEditText = (EditText) findViewById(R.id.area);
+        noOfBedRoomsEditText = (EditText) findViewById(R.id.bedrooms);
+        noOfBathRoomsEditText = (EditText) findViewById(R.id.bathrooms);
+        parkingLotsSwitch=(Switch)findViewById(R.id.ParkingSwitch);
+        LivingRoomSwitch=(Switch)findViewById(R.id.livingRoomSwitch);
+        KitchenSwitch=(Switch)findViewById(R.id.kitchenSwitch);
+        coolingSystemSwitch=(Switch)findViewById(R.id.coolingSystemSwitch);
+        NegotiablePriceSwitch=(Switch)findViewById(R.id.negotiablePriceSwitch);
+    locateFlat = (Button) findViewById(R.id.locateFlat);
+    }
     void onCreateHandle(){
         buildGoogleApiClient();
 
