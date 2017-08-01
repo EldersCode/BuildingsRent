@@ -23,6 +23,80 @@
         layout="@layout/buildingtypesbtnsheet"
         />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/search_location_layout"
+        android:visibility="gone"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="30dp"
+            android:textColor="@android:color/black"
+            android:scrollHorizontally="true"
+            android:ellipsize="end"
+            android:textSize="21sp"
+            android:id="@+id/search_editText"
+            android:hint="@string/enterAddress"
+            android:background="@drawable/login_edittext"
+            android:textColorHint="#565656"
+            android:gravity="center"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:id="@+id/search_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="30dp"
+            android:onClick="findAddress"
+            android:background="@mipmap/search" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:id="@+id/recyclerId"
+            android:layout_below="@id/search_editText"
+            android:layout_marginTop="10dp"
+            android:scrollbars="vertical"
+            />
+
+        <Button
+            android:layout_width="100dp"
+            android:elevation="10dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/confirmBtn_Id"
+            android:text="@string/confirm"
+            android:textAllCaps="false"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancelBtn_Id"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:elevation="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            />
+
+
+
+    </RelativeLayout>
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabLogout"

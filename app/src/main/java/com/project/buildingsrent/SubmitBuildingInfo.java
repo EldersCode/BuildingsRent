@@ -19,6 +19,7 @@ import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -122,6 +123,14 @@ public class SubmitBuildingInfo extends Activity {
 //                    }
 //                });
 //                Toast.makeText(context , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
+
+                try {
+                    if (MapsActivity.myDefaultMarker.getTitle().equals("here")) {
+                        MapsActivity.myDefaultMarker.remove();
+                    }
+                }catch (Exception e){
+
+                }
                 mMap.addMarker(new MarkerOptions().position(latLng).title(priceEditText.getText().toString()).
                         icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
 

@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
@@ -110,13 +112,15 @@ public class MapsActivity extends HandlingMaps{
         int TextForMenu[] = new int[]{R.string.SearchForAnApartment_Menu, R.string.CreateEvent_Menu, R.string.SetTheApartmentLocation, R.string.SetTheApartmentLocation};
         int HintTextForMenu[] = new int[]{R.string.SearchForAnApartmentHint_Menu, R.string.CreateEventHint_Menu, R.string.SetTheApartmentLocation_hint, R.string.SetTheApartmentLocation_hint};
 
-        BoomMenuButton bmb = (BoomMenuButton) findViewById(R.id.bmb);
+        final BoomMenuButton bmb = (BoomMenuButton) findViewById(R.id.bmb);
 
 
         bmb.setButtonEnum(ButtonEnum.Ham);
         bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_4);
         bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_4);
-        // wheen a boom btn cklicked
+
+        // wheen a boom btn clicked
+
         for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
             final HamButton.Builder builder = new HamButton.Builder().listener(new OnBMClickListener() {
 
@@ -131,31 +135,40 @@ public class MapsActivity extends HandlingMaps{
                     // the 3rd boom btn oncklick for submetting a proprty
                     else if (index == 2) {
 
-//buttom sheets activated and ready for submtting a proberty
+                    //buttom sheets activated and ready for submtting a proberty
                         //alertdialog for asking where is the property location
+
+                        flag = false;
                             final FindLocatinDialog findLocatinDialog = new FindLocatinDialog(MapsActivity.this);
+
                         //if same location is the current location btn in the aleret dialog
+
                             findLocatinDialog.here_btn.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     try {
-//getting the current  latlong to be ready then pass it to the submetting class
-                                        latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                                        //if a home btn sheet selected
-
-                                        new SubmitBuildingInfo(MapsActivity.this,latLng,mMap,buildingType,locateFlat,petsLayout,petsSwitch,priceEditText,ApartmentAreaEditText,noOfBedRoomsEditText
-                                                ,noOfBathRoomsEditText,parkingLotsSwitch,LivingRoomSwitch,KitchenSwitch,coolingSystemSwitch,NegotiablePriceSwitch);
 
 
-                                        flag = true;
-                                        findLocatinDialog.dialog.dismiss();
+                         //getting the current  latlong to be ready then pass it to the submetting class
+
+
+
+                                            latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+
+                                            //if a home btn sheet selected
+
+                                            new SubmitBuildingInfo(MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                                                    , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
+
+
+                                            flag = true;
+                                            findLocatinDialog.dialog.dismiss();
+
                                     }catch (Exception e){
-//                                        Toast.makeText(getApplication(),e.toString(),Toast.LENGTH_LONG).show();
 
-                                        findLocatinDialog.dialog.dismiss();
-
+                                        checkLocationDialog();
                                     }
-//when the latlong is ready btn sheets activated
+                    //when the latlong is ready btn sheets activated
                                     if(flag){
 
                                         bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -170,13 +183,106 @@ public class MapsActivity extends HandlingMaps{
 
                                                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-                                                mMap.clear();
 
                                             }
                                         });
                                     }
+
                                 }
                             });
+
+
+
+                            // here the code if user's apartment is not in the same place of him
+
+                        findLocatinDialog.notHere_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                bmb.setVisibility(View.GONE);
+                                logoutFab.setVisibility(View.GONE);
+                                search_layout.setVisibility(View.VISIBLE);
+                                findLocatinDialog.dialog.dismiss();
+
+
+                                            // in case of finding the location of the user's apartment
+
+                                confirm_btn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        if(myLatLng == null){
+                                            Toast.makeText(MapsActivity.this, "please choose your location first", Toast.LENGTH_SHORT).show();
+                                        }else {
+                                            // here what happen when we confirm a location after search
+
+                                            final AlertDialog.Builder alert = new AlertDialog.Builder(MapsActivity.this)
+                                                    .setTitle("Notification")
+                                                    .setMessage("Is this the location of your apartment ?")
+                                                    .setCancelable(false)
+                                                    .setIcon(R.mipmap.alarm);
+                                            alert.setPositiveButton("no", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    alert.setCancelable(true);
+                                                }
+                                            });
+                                            alert.setNegativeButton("yes", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                    search_editText.getText().clear();
+
+                                                    //when the latLong is ready btn sheets activated
+
+                                                    new SubmitBuildingInfo(MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                                                            , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
+
+
+                                                    bmb.setVisibility(View.VISIBLE);
+                                                    logoutFab.setVisibility(View.VISIBLE);
+                                                    search_layout.setVisibility(View.GONE);
+
+                                                    bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+                                                    homeSheetBtn.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+
+                                                            buildingType = "home";
+                                                            bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+                                                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                            alert.create().show();
+                                        }
+
+                                    }
+                                });
+
+                                        // if user canceled searching the findLocationDialog appears again
+
+                                cancel_btn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        findLocatinDialog.dialog.show();
+                                        bmb.setVisibility(View.VISIBLE);
+                                        logoutFab.setVisibility(View.VISIBLE);
+                                        search_layout.setVisibility(View.GONE);
+
+
+                                    }
+                                });
+
+                                                /////////////////////////////////////////
+                            }
+                        });
+
+
+                                ///////////////////////////////////////////////////////////
 
 
                     }
@@ -198,14 +304,39 @@ public class MapsActivity extends HandlingMaps{
 
     @Override
     public void onBackPressed() {
-        if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+
+         if(mRecyclerView.getVisibility() == View.VISIBLE){
+            mRecyclerView.setVisibility(View.GONE);
+        }
+
+        else if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         }
         else if(bottomSheetBehavior1.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
         }
         else{
-            finishAffinity();
+
+
+             final AlertDialog.Builder alert = new AlertDialog.Builder(MapsActivity.this)
+                     .setTitle("Notification")
+                     .setMessage( "Do you want to Exit ?")
+                     .setCancelable(false)
+                     .setIcon(R.mipmap.alarm);
+             alert.setPositiveButton("no", new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+                     alert.setCancelable(true);
+                 }
+             });
+             alert.setNegativeButton("yes", new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+                     finishAffinity();
+                 }
+             });
+             alert.create().show();
+
         }
     }
 
@@ -231,6 +362,8 @@ public class MapsActivity extends HandlingMaps{
 
         }
     }
+
+
 
 
 }

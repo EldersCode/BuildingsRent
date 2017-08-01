@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:id="@+id/recycler_row"
+    android:background="#dad8d8"
+    >
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:src="@mipmap/placeholderold"
+        android:id="@+id/location_pin"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/location_pin"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:scrollHorizontally="true"
+        android:layout_marginRight="20dp"
+        android:id="@+id/address"
+        android:textSize="19sp"
+        android:textColor="@android:color/black"
+        />
+
+
+
+
+
+
+
+</RelativeLayout>
