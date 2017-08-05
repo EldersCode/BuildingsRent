@@ -156,6 +156,13 @@ public class MapsActivity extends HandlingMaps{
 
                                             latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
+                                            // get Location Data from latLng here \\
+
+                                        DataFromLatLng dataFromLatLng = new DataFromLatLng(mLastLocation.getLatitude() , mLastLocation.getLongitude() , MapsActivity.this);
+
+
+                                                            ////\\\\
+
                                             flag = true;
                                             findLocatinDialog.dialog.dismiss();
 
@@ -235,6 +242,17 @@ public class MapsActivity extends HandlingMaps{
                                                 public void onClick(DialogInterface dialog, int which) {
 
                                                     search_editText.getText().clear();
+
+
+                                                                      // get Location Data from latLng here \\
+
+                                                    DataFromLatLng dataFromLatLng = new DataFromLatLng(myLatLng.latitude ,myLatLng.longitude , MapsActivity.this);
+
+                                                                                    ///\\\\
+
+
+
+
 
                                                     //when the latLong is ready btn sheets activated
 
