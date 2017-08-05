@@ -1,12 +1,16 @@
 package com.project.buildingsrent;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -31,6 +35,11 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -50,12 +59,17 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.tapadoo.alerter.Alert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -67,9 +81,13 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
         GoogleApiClient.ConnectionCallbacks ,
         GoogleApiClient.OnConnectionFailedListener ,
         AsyncResponse ,
-        LocationListener {
+        LocationListener ,BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
+    private static final int REQUEST_CODE = 1;
+    Button button;    Bitmap bitmap;
+    public static SliderLayout mDemoSlider;
 
-     GoogleMap mMap;
+
+    GoogleMap mMap;
     GoogleApiClient mGoogleApiClient ;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -78,6 +96,7 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     ////////////////submitBuildingInfo
+
     EditText priceEditText;
     EditText ApartmentAreaEditText;
     EditText noOfBedRoomsEditText;
@@ -90,7 +109,8 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
     LinearLayout petsLayout;
     Switch petsSwitch;
     Button locateFlat;
-
+    static TextSliderView textSliderView;
+    private StorageReference storageReference;
 
                  //search location on map components here ..
 
@@ -113,6 +133,19 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
                     //////////////////////////////////////
 
     public void sheetsWedgits(){
+
+        //slider creation and sending image instance
+        storageReference= FirebaseStorage.getInstance().getReference();
+
+        mDemoSlider = (SliderLayout)findViewById(R.id.slider);
+
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(4000);
+        mDemoSlider.addOnPageChangeListener(this);
+
+//////////slider creation end
         //declearing inistances for home
         petsLayout = (LinearLayout) findViewById(R.id.switchOn_pets);
         petsSwitch = (Switch) findViewById(R.id.petSwitch);
@@ -613,5 +646,106 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
     }
 
                     ///////////////////////////////////////////////////////////
+
+    //on sheets result (slider and sending images to firebase)
+    @Override
+                    //when an image selected
+                    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//
+
+                        InputStream stream = null;
+                        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK)
+                            try {
+                                //sending image to firebase and store it
+                                final Uri uri =data.getData();
+                                StorageReference filepath =storageReference.child("flats").child("userId");
+                                filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                                               @Override
+                                                                               public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                                                   Toast.makeText(getApplicationContext(),"sent",Toast.LENGTH_SHORT).show();}
+                                });
+                                ///////////////////////sending image end
+                                // recyle unused bitmaps
+                                if (bitmap != null) {
+                                    bitmap.recycle();
+
+                                }
+                                stream = getContentResolver().openInputStream(data.getData());
+
+                                bitmap = BitmapFactory.decodeStream(stream);
+                                //setting the image in the slider
+                                 textSliderView = new TextSliderView(this);
+                                textSliderView
+                                        .image(data.getDataString())
+                                        .description("image")
+
+                                        .setScaleType(BaseSliderView.ScaleType.Fit)
+                                        ;
+
+                                mDemoSlider.addSlider(textSliderView);
+
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                    }
+/////////////////// on sheets result end
+
+
+
+
+
+
+
+
+
+
+
+
+
+//slider images on submit info class
+    @Override//
+    protected void onStop() {//
+        // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
+        mDemoSlider.stopAutoCycle();//
+        super.onStop();//
+    }//
+
+    @Override//
+    public void onSliderClick(BaseSliderView slider) {//
+        slider.getView();//
+        Log.e("ccccccc",slider.getView().getId()+"");
+        Toast.makeText(getApplication(),slider.getView().getId()+"",Toast.LENGTH_SHORT).show();
+
+    }//
+
+
+    @Override//
+    public void onPageScrollStateChanged(int state) {}//
+    public void onClick(View View) {//
+        Intent intent = new Intent();//
+        intent.setType("image/*");//
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        intent.addCategory(Intent.CATEGORY_OPENABLE);//
+        startActivityForResult(intent, REQUEST_CODE);//
+    }//
+
+
+    @Override//
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}//
+
+    @Override//
+    public void onPageSelected(int position) {
+        Toast.makeText(getApplicationContext(),position+"",Toast.LENGTH_SHORT).show();
+        try {
+//            mDemoSlider.setDrawingCacheEnabled(false);
+
+        }catch (Exception e){
+
+            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
+        }
+        Log.d("Slider Demo", "Page Changed: " + position);
+    }//
 
 }

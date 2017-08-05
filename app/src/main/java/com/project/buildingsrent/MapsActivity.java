@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.model.LatLng;
@@ -155,12 +156,6 @@ public class MapsActivity extends HandlingMaps{
 
                                             latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
-                                            //if a home btn sheet selected
-
-                                            new SubmitBuildingInfo(MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
-                                                    , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
-
-
                                             flag = true;
                                             findLocatinDialog.dialog.dismiss();
 
@@ -182,6 +177,14 @@ public class MapsActivity extends HandlingMaps{
                                                 bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
 
                                                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                                                //if a home btn sheet selected
+//                                                textSliderView =  new TextSliderView(MapsActivity.this);
+
+                                                if (buildingType =="home") {
+                                                    new SubmitBuildingInfo(bottomSheetBehavior,MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                                                            , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
+
+                                                }
 
 
                                             }
@@ -235,7 +238,7 @@ public class MapsActivity extends HandlingMaps{
 
                                                     //when the latLong is ready btn sheets activated
 
-                                                    new SubmitBuildingInfo(MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                                                    new SubmitBuildingInfo(bottomSheetBehavior,MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
                                                             , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
 
 

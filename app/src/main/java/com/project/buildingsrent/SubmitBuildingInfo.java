@@ -3,7 +3,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +35,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.File;
+
+import static com.project.buildingsrent.HandlingMaps.mDemoSlider;
+import static com.project.buildingsrent.HandlingMaps.textSliderView;
 
 
 /**
@@ -48,7 +60,7 @@ public class SubmitBuildingInfo extends Activity {
 
     }
 
-    public SubmitBuildingInfo(final Context context, final LatLng latLng, final GoogleMap mMap, final String building, Button locateFlat, final LinearLayout petsLayout, Switch petsSwitch, final EditText priceEditText, final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText, final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch, final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch) {
+    public SubmitBuildingInfo(final BottomSheetBehavior bottomSheetBehavior1, final Context context, final LatLng latLng, final GoogleMap mMap, final String building, Button locateFlat, final LinearLayout petsLayout, Switch petsSwitch, final EditText priceEditText, final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText, final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch, final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch) {
         petsLayout.setVisibility(View.GONE);
 //images();
 //Button rentBtn=(Button) findViewById(R.id.forRentBtn);
@@ -111,19 +123,25 @@ public class SubmitBuildingInfo extends Activity {
 
                     }
                 });
+
                 houses.child(flatsNo + "/houseIdNo/" + "location/").setValue("");
 //                Toast.makeText(getApplicationContext(),"sending",Toast.LENGTH_LONG).show();
                 geoFire.setLocation("firebase-hq", new GeoLocation(latLng.latitude, latLng.longitude));
 
-//                regions.child("contry/" + "city/" + flatsNo).setValue("location").addOnFailureListener((Activity) context, new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(context , "fail "+e.toString() , Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                });
-//                Toast.makeText(context , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
+                //after submetting clear slider and sheet colapse
+//                HandlingMaps.mDemoSlider.
 
+
+
+//                textSliderView= new TextSliderView(context);
+//
+//                HandlingMaps.mDemoSlider.removeAllSliders();
+////                HandlingMaps.mDemoSlider.getCurrentPosition()
+//textSliderView.getUrl().clsetPicasso(null);
+//                mDemoSlider.addSlider(textSliderView);
+                bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+                /////////////////////////////////////
                 try {
                     if (MapsActivity.myDefaultMarker.getTitle().equals("here")) {
                         MapsActivity.myDefaultMarker.remove();
@@ -177,4 +195,28 @@ public class SubmitBuildingInfo extends Activity {
     public void onBackPressed() {
         startActivity(new Intent(getApplicationContext(), MapsActivity.class));
 
-    }}
+    }
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {}
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
+}
