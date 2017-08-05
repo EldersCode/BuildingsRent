@@ -48,6 +48,20 @@
     <string name="enterAddress">Enter Address Here Please ..</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="favourites">* Favourites :</string>
+    <string name="myAdv">* My Advertisements :</string>
+    <string name="editProfile">Edit Profile</string>
+    <string name="saveChangesBtn">Save Changes</string>
+    <string name="NameProfile">* Name :</string>
+    <string name="editNameHint">enter your name here ..</string>
+    <string name="emailProfile">* Email :</string>
+    <string name="AddressProfile">* Address :</string>
+    <string name="editAddressHint">enter your Address here ..</string>
+    <string name="contactNumProfile">* Contact Number :</string>
+    <string name="contactNumEditHint">enter your contact number here ..</string>
+    <string name="AddressText">My Address here</string>
+    <string name="contactText">My mobile number here</string>
+    <string name="profileTitle">Your Profile</string>
 
 
 </resources>

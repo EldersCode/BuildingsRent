@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@android:color/white"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    tools:context="com.profile.activities.EditProfileActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
-                    android:text="Edit Profile"
+                    android:text="@string/editProfile"
                     android:textSize="22dp"
                     android:layout_marginTop="13dp"
 
@@ -62,7 +63,7 @@
                     android:drawablePadding="8dp"
                     android:drawableLeft="@mipmap/save1"
                     android:paddingRight="135dp"
-                    android:text="Save Changes"
+                    android:text="@string/saveChangesBtn"
 
 
                     />
@@ -83,7 +84,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="* Name :"
+                    android:text="@string/NameProfile"
                     android:textColor="@android:color/black" />
 
                 <EditText
@@ -94,7 +95,7 @@
                     android:id="@+id/edit_profile_name"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
-                    android:hint="enter your name here .. "
+                    android:hint="@string/editNameHint"
                     android:textColor="@android:color/black"
                     android:textColorHint="#c0c0c0"
                     android:background="@drawable/edit_text_profile"
@@ -105,7 +106,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="* Email :"
+                    android:text="@string/emailProfile"
                     android:textColor="@android:color/black" />
 
                 <EditText
@@ -123,31 +124,12 @@
                     android:textSize="18sp" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="* Date of Birthday :"
-                    android:textColor="@android:color/black" />
 
-                <EditText
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/edit_text_profile"
-                    android:hint="enter your DOB here .. "
-                    android:id="@+id/edit_profile_dob"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="#c0c0c0"
-                    android:textSize="18sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="* Address :"
+                    android:text="@string/AddressProfile"
                     android:textColor="@android:color/black" />
 
                 <EditText
@@ -159,81 +141,18 @@
                     android:background="@drawable/edit_text_profile"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
-                    android:hint="enter your Address here .. "
+                    android:hint="@string/editAddressHint"
                     android:textColor="@android:color/black"
                     android:textColorHint="#c0c0c0"
                     android:textSize="18sp" />
+
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="* City :"
-                    android:textColor="@android:color/black" />
-
-                <EditText
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:gravity="center"
-                    android:id="@+id/edit_profile_city"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:hint="enter your city name here .. "
-                    android:textColor="@android:color/black"
-                    android:textColorHint="#c0c0c0"
-                    android:background="@drawable/edit_text_profile"
-                    android:textSize="18sp" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="* Zip Code :"
-                    android:textColor="@android:color/black" />
-
-                <EditText
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:id="@+id/edit_profile_zip"
-                    android:hint="enter your Zip code here .. "
-                    android:background="@drawable/edit_text_profile"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="#c0c0c0"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="* Apt :"
-                    android:textColor="@android:color/black" />
-
-                <EditText
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:background="@drawable/edit_text_profile"
-                    android:gravity="center"
-                    android:id="@+id/edit_profile_abt"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:hint="Apt.. "
-                    android:textColor="@android:color/black"
-                    android:textColorHint="#c0c0c0"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="* Contact Number :"
+                    android:text="@string/contactNumProfile"
                     android:textColor="@android:color/black" />
 
                 <EditText
@@ -244,97 +163,14 @@
                     android:gravity="center"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
-                    android:hint="enter your contact number here .. "
+                    android:hint="@string/contactNumEditHint"
                     android:textColor="@android:color/black"
                     android:textColorHint="#c0c0c0"
                     android:id="@+id/edit_profile_contactNumber"
                     android:textSize="18sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="* SSN or drivers license :"
-                    android:textColor="@android:color/black" />
-
-                <EditText
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:background="@drawable/edit_text_profile"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:id="@+id/edit_profile_license"
-                    android:hint="enter your information here .. "
-                    android:textColor="@android:color/black"
-                    android:textColorHint="#c0c0c0"
-                    android:textSize="18sp" />
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="* Confirm Password :"
-                    android:textColor="@android:color/black" />
 
 
-                <EditText
-
-                    android:hint="enter your password confirmation"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:background="@drawable/edit_text_profile"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:id="@+id/edit_profie_confirm"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="#c0c0c0"
-                    android:textSize="18sp"
-                    />
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="* Certification :"
-                    android:textColor="@android:color/black" />
-
-                <EditText
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:gravity="center"
-                    android:id="@+id/edit_profile_certification"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:hint="your certificaiton here .. "
-                    android:textColor="@android:color/black"
-                    android:textColorHint="#c0c0c0"
-                    android:background="@drawable/edit_text_profile"
-                    android:textSize="18sp" />
-
-
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="* Comment :"
-                    android:textColor="@android:color/black" />
-
-                <EditText
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:gravity="center"
-                    android:id="@+id/edit_profile_comment"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:hint=" ... "
-                    android:textColor="@android:color/black"
-                    android:textColorHint="#c0c0c0"
-                    android:background="@drawable/edit_text_profile"
-                    android:textSize="18sp" />
 
 
 
