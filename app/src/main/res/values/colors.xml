@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#35cc62</color>
+    <color name="chaletColor">#b2d4fa</color>
+    <color name="storeColor">#93ce94</color>
+    <color name="hallColor">#faf9ed</color>
+    <color name="landColor">#ecdb17</color>
 </resources>

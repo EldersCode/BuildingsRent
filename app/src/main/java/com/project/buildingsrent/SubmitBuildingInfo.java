@@ -1,9 +1,11 @@
 package com.project.buildingsrent;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.util.Log;
@@ -120,26 +122,27 @@ public class SubmitBuildingInfo extends Activity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(context , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
-
+//                        Intent intent = getIntent();
+//                        finish();
+//                        startActivity(intent);
                     }
                 });
-
                 houses.child(flatsNo + "/houseIdNo/" + "location/").setValue("");
-//                Toast.makeText(getApplicationContext(),"sending",Toast.LENGTH_LONG).show();
                 geoFire.setLocation("firebase-hq", new GeoLocation(latLng.latitude, latLng.longitude));
 
                 //after submetting clear slider and sheet colapse
-//                HandlingMaps.mDemoSlider.
-
-
-
-//                textSliderView= new TextSliderView(context);
-//
-//                HandlingMaps.mDemoSlider.removeAllSliders();
-////                HandlingMaps.mDemoSlider.getCurrentPosition()
-//textSliderView.getUrl().clsetPicasso(null);
-//                mDemoSlider.addSlider(textSliderView);
                 bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+//              refresh maps activity after submetting
+                Activity a=    (Activity)  context;
+
+                final Intent intent = a.getIntent();
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                a.finish();
+                a.overridePendingTransition(0, 0);
+//                a.startActivityForResult(intent);
+                a.startActivity(intent);
+                a.overridePendingTransition(0, 0);
+                ////////////////////////////////
 
                 /////////////////////////////////////
                 try {
@@ -219,4 +222,17 @@ public class SubmitBuildingInfo extends Activity {
             return false;
         }
     }
+//    @SuppressLint("")
+//    public static final void recreateActivityCompat(final Activity a) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+//            a.recreate();
+//        } else {
+//            final Intent intent = a.getIntent();
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//            a.finish();
+//            a.overridePendingTransition(0, 0);
+//            a.startActivity(intent);
+//            a.overridePendingTransition(0, 0);
+//        }
+//    }
 }
