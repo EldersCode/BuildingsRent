@@ -5,9 +5,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,6 +25,8 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
@@ -35,13 +40,20 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
+
 /**
  * Created by Hesham on 7/19/2017.
  */
 
 public class HandlingLoginAuth extends Activity {
 
-                 //Declaration of what we need in login layout
+    //Declaration of what we need in login layout
 
     private View loginLayout , registerLayout;
     private ProgressDialog progressD ;
@@ -59,22 +71,40 @@ public class HandlingLoginAuth extends Activity {
 
     //////////////////////
 
-              // Check if user is signed in (non-null) and update UI accordingly.
+    // Check if user is signed in (non-null) and update UI accordingly.
 
     FirebaseAuth mAuth= FirebaseAuth.getInstance();
     FirebaseUser currentUser = mAuth.getCurrentUser();
     Profile profile = Profile.getCurrentProfile();
 
 
-    ////////////////////
+
+////////////////////
+
+                         // shared preferences for facebook information \\
+
+    private static final String PREFS_NAME = "MyPrefsFile";
+
+                                            ///\\\
+
+
+                                // Getter for the shared preferences string \\
+
+    public static String getPrefsName() {
+        return PREFS_NAME;
+    }
+
+                                                    ////\\\\
+
+
 
     public void HandlingLoginAuth (final Context context){
 
         ViewsInitialization(context);
         HandlingFunctionalities(context);
 
-                            //Handling Email and Password side
-         if(currentUser != null){
+        //Handling Email and Password side
+        if(currentUser != null){
 
             mAuth= FirebaseAuth.getInstance();
             currentUser = mAuth.getCurrentUser();
@@ -85,14 +115,14 @@ public class HandlingLoginAuth extends Activity {
 
             }
         }
-                                    //////////////
+        //////////////
 
-                           //Handling Facebook side here
+        //Handling Facebook side here
         else if(profile != null){
             startActivity(new Intent(context , MapsActivity.class));
             finish();
         }
-                                  /////////////
+        /////////////
 
 
 
@@ -102,14 +132,16 @@ public class HandlingLoginAuth extends Activity {
 
     public void ViewsInitialization(Context context){
 
-                    //Facebook login requirements here ..
+        //Facebook login requirements here ..
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
         callbackManager = CallbackManager.Factory.create();
         facebook_btn = (Button)findViewById(R.id.myfacebook);
+        loginButton.setReadPermissions(Arrays.asList(
+                "public_profile", "email", "user_birthday", "user_friends" , "user_location" , "user_photos" ));
 
-                        ////////////////////////
+        ////////////////////////
 
         loginLayout = (LinearLayout)findViewById(R.id.login_id);
         registerLayout = (LinearLayout) findViewById(R.id.register_id);
@@ -119,16 +151,16 @@ public class HandlingLoginAuth extends Activity {
         forgetPass = (TextView)findViewById(R.id.forgetPass_textView);
         showPass = (CheckBox)findViewById(R.id.showPassCheck);
 
-                    // The Login Screen Edit texts initializing here ..
+        // The Login Screen Edit texts initializing here ..
         emailLogin = (EditText) findViewById(R.id.Username);
         passwordLogin = (EditText) findViewById(R.id.Password);
-                            ////////////////////////
+        ////////////////////////
 
-                    // The Register Screen Edit texts initializing here ..
+        // The Register Screen Edit texts initializing here ..
         userName=(EditText) findViewById(R.id.UsernameR);
         password=(EditText)findViewById(R.id.PasswordR);
         ConfPass = (EditText)findViewById(R.id.confirmPassR);
-                            ///////////////////////
+        ///////////////////////
 
     }
 
@@ -150,7 +182,7 @@ public class HandlingLoginAuth extends Activity {
             }
         };
 
-                            // Login with Facebook handling ..
+        // Login with Facebook handling ..
 
         accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -181,10 +213,26 @@ public class HandlingLoginAuth extends Activity {
             finish();
         }
 
-                LoginManager.getInstance().registerCallback(callbackManager , new FacebookCallback<LoginResult>() {
+        LoginManager.getInstance().registerCallback(callbackManager , new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                String accessToken = loginResult.getAccessToken().getToken();
+                Log.i("accessToken", accessToken);
+
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+
                     @Override
-                    public void onSuccess(LoginResult loginResult) {
-                Profile profile = Profile.getCurrentProfile();
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        Log.i("LoginActivity", response.toString());
+                        // Get facebook data from login
+                        getFacebookData(object);
+                    }
+                });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,first_name,last_name,email,gender,birthday,location"); // parameters of facebook information
+                request.setParameters(parameters);
+                request.executeAsync();
+
                 progressD = new ProgressDialog(context);
                 progressD.setMessage("Logging in ...");
                 progressD.show();
@@ -204,7 +252,7 @@ public class HandlingLoginAuth extends Activity {
             }
         });
 
-                                ///////////////////
+        ///////////////////
 
 
 
@@ -224,10 +272,10 @@ public class HandlingLoginAuth extends Activity {
             }
         });
 
-                                     ////////////////////
+        ////////////////////
 
 
-                             //Handling Login Button first ..
+        //Handling Login Button first ..
 
 
         login_btn.setOnClickListener(new View.OnClickListener() {
@@ -249,10 +297,10 @@ public class HandlingLoginAuth extends Activity {
             }
         });
 
-                             /////////////////////////
+        /////////////////////////
 
 
-                            //Handling Register Button of login layout here ..
+        //Handling Register Button of login layout here ..
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,10 +312,10 @@ public class HandlingLoginAuth extends Activity {
             }
         });
 
-                            //////////////////////////
+        //////////////////////////
 
 
-                        // Handling Register Button After you Sign up here ..
+        // Handling Register Button After you Sign up here ..
 
         registerLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -294,10 +342,10 @@ public class HandlingLoginAuth extends Activity {
         });
 
 
-                            ////////////////////////////////
+        ////////////////////////////////
 
 
-                        // Handling Forget Password Text Here ..
+             // Handling Forget Password Text Here ..
 
         forgetPass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -332,7 +380,7 @@ public class HandlingLoginAuth extends Activity {
     }
 
 
-                        // here I put all the firebase authentication needed codes ..
+    // here I put all the firebase authentication needed codes ..
 
     private void ForgetPass(final Context context , String Email) {
         mAuth.sendPasswordResetEmail(Email)
@@ -392,7 +440,7 @@ public class HandlingLoginAuth extends Activity {
 
 
                             } else {
-                                     // If sign in fails, display a message to the user.
+                                // If sign in fails, display a message to the user.
                                 Toast.makeText(context, "Login Authentication failed .. please check internet connection or user's email and password ..",
                                         Toast.LENGTH_SHORT).show();
                                 progressD.dismiss();
@@ -444,31 +492,35 @@ public class HandlingLoginAuth extends Activity {
 
 
     public void VerifyEmail(FirebaseUser user , final Context context){
-        user.sendEmailVerification()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
+        try {
+            user.sendEmailVerification()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
 
-                            final AlertDialog.Builder alert = new AlertDialog.Builder(context)
-                                    .setTitle("Notification")
-                                    .setMessage( "you have received an email .. Verification sent check it out !")
-                                    .setCancelable(false)
-                                    .setIcon(R.mipmap.alarm);
-                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                                    intent.addCategory(Intent.CATEGORY_APP_EMAIL);
-                                    context.startActivity(intent);
-                                    alert.setCancelable(true);
-                                }
-                            });
-                            alert.create().show();
+                                final AlertDialog.Builder alert = new AlertDialog.Builder(context)
+                                        .setTitle("Notification")
+                                        .setMessage("you have received an email .. Verification sent check it out !")
+                                        .setCancelable(false)
+                                        .setIcon(R.mipmap.alarm);
+                                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                                        intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                                        context.startActivity(intent);
+                                        alert.setCancelable(true);
+                                    }
+                                });
+                                alert.create().show();
 
+                            }
                         }
-                    }
-                });
+                    });
+        }catch (Exception e){
+            Toast.makeText(context, "please check if the email is right or not ..", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -507,7 +559,7 @@ public class HandlingLoginAuth extends Activity {
         profileTracker.stopTracking();
     }
 
-                                // handling Facebook with firebase authentication here ..
+    // handling Facebook with firebase authentication here ..
 
     private void handleFacebookAccessToken(AccessToken token) {
 
@@ -527,5 +579,65 @@ public class HandlingLoginAuth extends Activity {
                     }
                 });
     }
+
+    private void getFacebookData(JSONObject object) {
+
+        SharedPreferences preference = getSharedPreferences(PREFS_NAME , 0);
+        SharedPreferences.Editor editor = preference.edit();
+
+
+        try {
+            String id = object.getString("id");
+            Log.i("id" , id);
+
+            try {
+                URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=120&height=120");
+                Log.i("profile_pic", profile_pic + "");
+                editor.putString("profile_pic", profile_pic.toString());
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            editor.putString("id", id);
+
+            if(object.has("name")){
+                editor.putString("name" , object.getString("name"));
+                Log.i("Facebook name : " , object.getString("name"));
+            }
+            if (object.has("first_name")) {
+                editor.putString("first_name", object.getString("first_name"));
+                Log.i("Facebook first name : " , object.getString("first_name"));
+            }
+            if (object.has("last_name")) {
+                editor.putString("last_name", object.getString("last_name"));
+                Log.i("Facebook last name : " , object.getString("last_name"));
+            }
+            if (object.has("email")) {
+                editor.putString("email", object.getString("email"));
+                Log.i("Facebook email : " , object.getString("email"));
+            }
+            if (object.has("gender")) {
+                editor.putString("gender", object.getString("gender"));
+                Log.i("Facebook gender : " , object.getString("gender"));
+            }
+            if (object.has("birthday")) {
+                editor.putString("birthday", object.getString("birthday"));
+                Log.i("Facebook birthday : " , object.getString("birthday"));
+            }
+            if (object.has("location")) {
+                editor.putString("location", object.getJSONObject("location").getString("name"));
+                Log.i("Facebook location : " , object.getJSONObject("location").getString("name"));
+            }
+
+        }
+        catch(JSONException e) {
+            Toast.makeText(getApplicationContext(), "Something went wrong !", Toast.LENGTH_SHORT).show();
+        }
+
+        editor.commit();
+
+    }
+
 
 }

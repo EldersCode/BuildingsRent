@@ -59,9 +59,19 @@
     <string name="editAddressHint">enter your Address here ..</string>
     <string name="contactNumProfile">* Contact Number :</string>
     <string name="contactNumEditHint">enter your contact number here ..</string>
-    <string name="AddressText">My Address here</string>
-    <string name="contactText">My mobile number here</string>
+    <string name="AddressText">Address here</string>
+    <string name="contactText">Mobile number here</string>
     <string name="profileTitle">Your Profile</string>
+    <string name="genderProfile">* Gender :</string>
+    <string name="GenderText">Gender here</string>
+    <string name="emailHint">Email</string>
+    <string name="passwordHint">Password</string>
+    <string name="confPassHint">Confirm Password</string>
+    <string name="phoneNumHint">Phone Number</string>
+    <string name="BirthdayProfile">* Birthday :</string>
+    <string name="BirthdayText">Birthday here</string>
+    <string name="noName">No name found</string>
+    <string name="noEmail">No email found here</string>
 
 
 </resources>

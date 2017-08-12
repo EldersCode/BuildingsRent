@@ -24,7 +24,6 @@
         android:id="@+id/login_id"
         android:orientation="vertical"
         android:layout_marginTop="10dp"
-
         >
 
         <EditText
@@ -35,10 +34,8 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:inputType="text"
-            android:hint="Email"
-            android:layout_centerHorizontal="true"
+            android:hint="@string/emailHint"
             android:textColorHint="#19723e"
-            android:layout_above="@+id/Password"
             android:layout_marginBottom="12dp"
             android:textColor="@android:color/black"
             />
@@ -49,12 +46,10 @@
             android:layout_height="41dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="Password"
+            android:hint="@string/passwordHint"
             android:inputType="textPassword"
             android:textColorHint="#19723e"
             android:layout_marginTop="15dp"
-            android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/Username"
             android:textColor="@android:color/black"
             />
 
@@ -78,7 +73,7 @@
             android:layout_marginTop="10dp"
             android:text="@string/forgetPassword"
             android:gravity="center"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#ff0026"
             android:id="@+id/forgetPass_textView"
@@ -95,10 +90,8 @@
             android:gravity="center"
             android:text="@string/login_btn"
             android:textAllCaps="false"
-            android:layout_centerHorizontal="true"
             android:textColor="#fcfcfc"
             android:textStyle="bold"
-            android:layout_below="@+id/Password"
             />
 
         <Button
@@ -172,11 +165,9 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:inputType="text"
-            android:hint="Email"
+            android:hint="@string/emailHint"
             android:layout_marginTop="70dp"
-            android:layout_centerHorizontal="true"
             android:textColorHint="#19723e"
-            android:layout_above="@+id/Password"
             android:layout_marginBottom="12dp"
             android:textColor="@android:color/black"
             />
@@ -187,12 +178,10 @@
             android:layout_height="41dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="Password"
+            android:hint="@string/passwordHint"
             android:inputType="textPassword"
             android:textColorHint="#19723e"
             android:layout_marginTop="15dp"
-            android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/UsernameR"
             android:textColor="@android:color/black"
             />
 
@@ -204,11 +193,9 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:inputType="textPassword"
-            android:hint="Confirm Password"
+            android:hint="@string/confPassHint"
             android:textColorHint="#19723e"
             android:layout_marginTop="15dp"
-            android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/PasswordR"
             android:textColor="@android:color/black"
             />
 
@@ -220,11 +207,9 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:inputType="number"
-            android:hint="Phone Number"
+            android:hint="@string/phoneNumHint"
             android:textColorHint="#19723e"
             android:layout_marginTop="15dp"
-            android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/PasswordR"
             android:textColor="@android:color/black"
             />
 

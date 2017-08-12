@@ -165,7 +165,7 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
 
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkLocationPermission();
+            checkLocationDialog();
         }
 
         else {

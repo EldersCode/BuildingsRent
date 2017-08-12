@@ -26,28 +26,38 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:id="@+id/header"
-
                 android:weightSum="1">
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                     android:text="@string/profileTitle"
                     android:textSize="22sp"
                     android:layout_marginTop="13dp"
-
+                    android:textStyle="bold"
                     />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/profile_image"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="20dp"
+                    app:civ_border_width="2dp"
+                    android:src="@mipmap/profileuser"
+                    app:civ_border_color="#FF000000"/>
+
+                <com.facebook.login.widget.ProfilePictureView
+                    android:id="@+id/profile_imageFace"
                     android:layout_width="96dp"
                     android:layout_height="96dp"
                     android:src="@drawable/mepng"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#FF000000"/>
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
+                    />
+
+
 
 
                 <TextView
@@ -55,34 +65,32 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="16dp"
                     android:gravity="center_horizontal"
-                    android:text="Hesham Morsy"
+                    android:text="@string/noName"
                     android:id="@+id/profile_name"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
                 <TextView
                     android:id="@+id/profile_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:text="Hesham.morsy143@gmail.com" />
+                    android:textColor="@android:color/black"
+                    android:text="@string/noEmail" />
 
                 <Button
                     android:id="@+id/edit_profile_btn"
-                    android:paddingLeft="130dp"
+                    android:paddingStart="130dp"
                     android:layout_width="match_parent"
                     android:layout_marginTop="7dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
-                    android:background="#0099ff"
-                    android:drawablePadding="8dp"
-                    android:drawableLeft="@mipmap/edit"
-                    android:paddingRight="135dp"
+                    android:background="#65a8ae"
+                    android:drawableStart="@mipmap/edit"
+                    android:paddingEnd="120dp"
                     android:text="@string/editProfile"
-
-
+                    android:textSize="15sp"
                     />
 
             </LinearLayout>
@@ -98,10 +106,26 @@
                 >
 
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/genderProfile"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/profile_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/GenderText"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:text="@string/AddressProfile"
                     android:textColor="@android:color/black" />
 
@@ -116,12 +140,23 @@
                     android:textSize="18sp" />
 
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/BirthdayProfile"
+                    android:textColor="@android:color/black" />
 
+                <TextView
+                    android:id="@+id/profile_birthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/BirthdayText"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
 
-
-             
-
-              
 
                 <TextView
                     android:layout_width="wrap_content"

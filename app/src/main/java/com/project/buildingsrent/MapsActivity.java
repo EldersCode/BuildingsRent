@@ -25,6 +25,7 @@ import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
+import com.profile.activities.ProfileActivity;
 
 
 public class MapsActivity extends HandlingMaps{
@@ -129,6 +130,8 @@ public class MapsActivity extends HandlingMaps{
                 @Override
                 public void onBoomButtonClick(int index) {
                     if (index == 0) {
+
+                        startActivity(new Intent(getApplicationContext() , ProfileActivity.class));
 
                     } else if (index == 1) {
 
