@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@android:color/white"
+    android:background="#c16868"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     tools:context="com.profile.activities.EditProfileActivity">
 
@@ -40,20 +40,30 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/edit_profile_image"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="20dp"
                     app:civ_border_width="2dp"
                     android:src="@mipmap/profileuser"
                     app:civ_border_color="#FF000000"/>
 
+                <Button
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:onClick="ChangeProfilePic"
+                    android:text="@string/changePhoto"
+                    android:textSize="13sp"
+                    android:textAllCaps="false"
+                    android:background="@drawable/btn_design"
+                    />
 
 
                 <Button
                     android:id="@+id/save_profile_btn"
                     android:paddingStart="130dp"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="25dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:textAllCaps="false"
@@ -115,11 +125,27 @@
                     android:id="@+id/edit_profile_email"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
-                    android:hint="enter your email here .. "
+                    android:hint="@string/editEmailHint"
                     android:textColor="@android:color/black"
                     android:textColorHint="#c0c0c0"
                     android:background="@drawable/edit_text_profile"
                     android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/genderProfile"
+                    android:textColor="@android:color/black" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/genderSpinner"
+                    android:layout_gravity="center"
+
+                    />
 
 
 
@@ -140,6 +166,27 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:hint="@string/editAddressHint"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="#c0c0c0"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/BirthProfile"
+                    android:textColor="@android:color/black" />
+
+                <EditText
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/edit_profile_birthday"
+                    android:gravity="center"
+                    android:background="@drawable/edit_text_profile"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/editBirthHint"
                     android:textColor="@android:color/black"
                     android:textColorHint="#c0c0c0"
                     android:textSize="18sp" />

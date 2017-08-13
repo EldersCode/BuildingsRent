@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.ParseException;
 import android.net.Uri;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -34,6 +38,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.profile.activities.EditProfileHandling.getSharedPrefs;
 import static com.project.buildingsrent.HandlingLoginAuth.getPrefsName;
 
 /**
@@ -73,7 +78,7 @@ public class ProfileHandling extends Activity {
         profileAddress = (TextView)findViewById(R.id.profile_address);
         profilePhone = (TextView) findViewById(R.id.profile_contactNumber);
         profileGender = (TextView) findViewById(R.id.profile_gender);
-        profilePic = (CircleImageView)findViewById(R.id.profile_image);
+        profilePic = (CircleImageView) findViewById(R.id.profile_image);
         profileBirthday = (TextView) findViewById(R.id.profile_birthday);
         editBtn = (Button) findViewById(R.id.edit_profile_btn);
 
@@ -91,6 +96,7 @@ public class ProfileHandling extends Activity {
             public void onClick(View v) {
 
                 startActivity(new Intent(getApplicationContext() , EditProfileActivity.class));
+                finish();
 
             }
         });
@@ -107,11 +113,34 @@ public class ProfileHandling extends Activity {
     public void getUserData(Context context){
 
 
-
-
                        // if logged in with email and password \\
         if (currentUser != null && currentUser.isEmailVerified()){
-            Toast.makeText(getApplicationContext(), "a7eeeeeeeeh", Toast.LENGTH_SHORT).show();
+            try {
+
+                SharedPreferences prefs = getSharedPreferences(getSharedPrefs() , 0);
+                profileName.setText(prefs.getString("name" , "Not found"));
+                profilePhone.setText(prefs.getString("phone" , "Not found"));
+                profileAddress.setText(prefs.getString("location" , "Not found"));
+                profileBirthday.setText(prefs.getString("birthday" , "Not found"));
+                profileGender.setText(prefs.getString("gender" , "Not found"));
+                profileEmail.setText(prefs.getString("email" , currentUser.getEmail()));
+
+                try{
+
+                    String profile_pic = prefs.getString("profile_pic" , "");
+                    if( ! profile_pic.equals("")) {
+                        byte[] b = Base64.decode(profile_pic, Base64.DEFAULT);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+                        profilePic.setImageBitmap(bitmap);
+                    }
+
+                }catch (Exception e){
+
+                }
+
+            }catch (Exception e){
+
+            }
         }
 
                                          ///\\\
@@ -148,10 +177,16 @@ public class ProfileHandling extends Activity {
 
                 String profile_pic = myPrefs.getString("profile_pic" , "");
                 Log.i("profile_pic", profile_pic);
-                Picasso.with(context).load(profile_pic).into(profilePic);
+                if(profile_pic.contains("https")) {
+                    Picasso.with(context).load(profile_pic).into(profilePic);
+                }else {
+                    byte[] b = Base64.decode(profile_pic, Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+                    profilePic.setImageBitmap(bitmap);
+                }
 
             } catch (Exception e) {
-                Toast.makeText(context, "photo error", Toast.LENGTH_SHORT).show();
+
             }
 
 

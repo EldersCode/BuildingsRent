@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@android:color/white"
+    android:background="#c16868"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     tools:context="com.profile.activities.ProfileActivity">
 
@@ -39,23 +39,16 @@
                     android:textStyle="bold"
                     />
 
+
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="20dp"
                     app:civ_border_width="2dp"
                     android:src="@mipmap/profileuser"
                     app:civ_border_color="#FF000000"/>
-
-                <com.facebook.login.widget.ProfilePictureView
-                    android:id="@+id/profile_imageFace"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
-                    android:src="@drawable/mepng"
-                    android:layout_marginTop="20dp"
-                    android:visibility="gone"
-                    />
 
 
 

@@ -72,6 +72,10 @@
     <string name="BirthdayText">Birthday here</string>
     <string name="noName">No name found</string>
     <string name="noEmail">No email found here</string>
+    <string name="editBirthHint">mm/dd/yy</string>
+    <string name="BirthProfile">* Birthday :</string>
+    <string name="editEmailHint">enter your email here ..</string>
+    <string name="changePhoto">Change Picture</string>
 
 
 </resources>
