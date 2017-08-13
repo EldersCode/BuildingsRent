@@ -11,12 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
@@ -31,9 +28,16 @@ import com.profile.activities.ProfileActivity;
 public class MapsActivity extends HandlingMaps{
 
     FloatingActionButton logoutFab;
-    BottomSheetBehavior bottomSheetBehavior;
+    BottomSheetBehavior homeBottomSheetBehavior;
+    BottomSheetBehavior storeBottomSheetBehavior;
+    BottomSheetBehavior landBottomSheetBehavior;
+    BottomSheetBehavior hallBottomSheetBehavior;
     BottomSheetBehavior bottomSheetBehavior1;
     Button homeSheetBtn;
+    Button storeSheetBtn;
+    Button chaletSheetBtn;
+    Button hallSheetBtn;
+    Button landSheetBtn;
     String buildingType;
     boolean flag = true;
     LatLng latLng;
@@ -51,7 +55,7 @@ public class MapsActivity extends HandlingMaps{
 
         try{
             Profile profile = Profile.getCurrentProfile();
-            Toast.makeText(getApplicationContext(), "     Login Successfully\nWelcome "+ profile.getName() + " :)", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "     Login Successfully\nWelcome "+ profile.getName() , Toast.LENGTH_LONG).show();
         }catch (Exception e){
 
         }
@@ -91,18 +95,31 @@ public class MapsActivity extends HandlingMaps{
         //////////////
 
         homeSheetBtn = (Button) findViewById(R.id.HomeButton);
+        hallSheetBtn = (Button) findViewById(R.id.Hall);
+        chaletSheetBtn = (Button) findViewById(R.id.Chalet);
+        landSheetBtn = (Button) findViewById(R.id.land);
+        storeSheetBtn = (Button) findViewById(R.id.StoreButton);
 
 
 
         //Handling the bottom sheets
 
         View bottomSheet1 = findViewById(R.id.bottom_sheet1);
-        View bottomSheet = findViewById(R.id.bottom_sheet);
+        View home_bottomSheet = findViewById(R.id.home_bottom_sheet);
+        View store_bottomSheet = findViewById(R.id.store_bottom_sheet);
+        View land_bottomSheet = findViewById(R.id.land_bottom_sheet);
+        View hall_bottomSheet = findViewById(R.id.hall_bottom_sheet);
 
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        homeBottomSheetBehavior = BottomSheetBehavior.from(home_bottomSheet);
+        storeBottomSheetBehavior = BottomSheetBehavior.from(store_bottomSheet);
+        landBottomSheetBehavior = BottomSheetBehavior.from(land_bottomSheet);
+        hallBottomSheetBehavior = BottomSheetBehavior.from(hall_bottomSheet);
         bottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet1);
-
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        //hide sheets on 1st creat
+        homeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        storeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        landBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        hallBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         /////////////////
@@ -175,30 +192,12 @@ public class MapsActivity extends HandlingMaps{
                                     }
                     //when the latlong is ready btn sheets activated
                                     if(flag){
-
+//categories expantion
                                         bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+////////////////
+                                        //categories btn sheets behvior
+categoriesBtnSheets();
 
-
-                                        homeSheetBtn.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-
-                                                buildingType="home";
-                                                bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
-
-                                                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                                                //if a home btn sheet selected
-//                                                textSliderView =  new TextSliderView(MapsActivity.this);
-
-                                                if (buildingType =="home") {
-                                                    new SubmitBuildingInfo(bottomSheetBehavior,MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
-                                                            , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
-
-                                                }
-
-
-                                            }
-                                        });
                                     }
 
                                 }
@@ -259,8 +258,8 @@ public class MapsActivity extends HandlingMaps{
 
                                                     //when the latLong is ready btn sheets activated
 
-                                                    new SubmitBuildingInfo(bottomSheetBehavior,MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
-                                                            , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
+//                                                    new SubmitBuildingInfo(homeBottomSheetBehavior,MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+//                                                            , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
 
 
                                                     bmb.setVisibility(View.VISIBLE);
@@ -269,16 +268,17 @@ public class MapsActivity extends HandlingMaps{
 
                                                     bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-                                                    homeSheetBtn.setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View view) {
-
-                                                            buildingType = "home";
-                                                            bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
-                                                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-
-                                                        }
-                                                    });
+//                                                    homeSheetBtn.setOnClickListener(new View.OnClickListener() {
+//                                                        @Override
+//                                                        public void onClick(View view) {
+//
+//                                                            buildingType = "home";
+//                                                            bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+//                                                            homeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//
+//                                                        }
+//                                                    });
+                                                    categoriesBtnSheets();
                                                 }
                                             });
                                             alert.create().show();
@@ -333,8 +333,8 @@ public class MapsActivity extends HandlingMaps{
             mRecyclerView.setVisibility(View.GONE);
         }
 
-        else if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        else if(homeBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            homeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         }
         else if(bottomSheetBehavior1.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
@@ -385,9 +385,93 @@ public class MapsActivity extends HandlingMaps{
         }catch (Exception e){
 
         }
+
     }
 
 
+public void categoriesBtnSheets(){
 
+    homeSheetBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            buildingType="home";
+            bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+            homeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            //if a home btn sheet selected
+//                                                textSliderView =  new TextSliderView(MapsActivity.this);
+
+            if (buildingType =="home") {
+                new SubmitBuildingInfo(homeBottomSheetBehavior,MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
+
+            }
+
+
+        }
+    });
+    storeSheetBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            buildingType="home";
+            bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+            storeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            //if a home btn sheet selected
+//                                                textSliderView =  new TextSliderView(MapsActivity.this);
+
+            if (buildingType =="home") {
+                new SubmitBuildingInfo(homeBottomSheetBehavior,MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
+
+            }
+
+
+        }
+    });
+    landSheetBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            buildingType="home";
+            bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+            landBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            //if a home btn sheet selected
+//                                                textSliderView =  new TextSliderView(MapsActivity.this);
+
+            if (buildingType =="home") {
+                new SubmitBuildingInfo(homeBottomSheetBehavior,MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
+
+            }
+
+
+        }
+    });
+    hallSheetBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            buildingType="home";
+            bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+            hallBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            //if a home btn sheet selected
+//                                                textSliderView =  new TextSliderView(MapsActivity.this);
+
+            if (buildingType =="home") {
+                new SubmitBuildingInfo(homeBottomSheetBehavior,MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch, NegotiablePriceSwitch);
+
+            }
+
+
+        }
+    });
+    //////////////////////
+}
 
 }

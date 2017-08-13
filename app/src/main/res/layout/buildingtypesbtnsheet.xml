@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 >
                 <Button
-                    android:id="@+id/BeachHouseButton"
+                    android:id="@+id/Chalet"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@mipmap/beachhouse"
@@ -95,7 +95,7 @@
                     android:layout_width="60dp"
                     android:layout_marginTop="10dp"
                     android:layout_height="60dp"
-                    android:text="Beach house"
+                    android:text="Chalet"
                     android:gravity="center"
                     android:textColor="#000000"
                     android:textSize="20sp"
@@ -110,17 +110,17 @@
                 android:layout_height="wrap_content"
                 >
                 <Button
-                    android:id="@+id/CityScapeButton"
+                    android:id="@+id/land"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:background="@mipmap/cityscape"
+                    android:background="@mipmap/land"
                     />
 
                 <TextView
                     android:layout_width="60dp"
                     android:layout_marginTop="10dp"
                     android:layout_height="60dp"
-                    android:text="Multi"
+                    android:text="Land"
                     android:gravity="center"
                     android:textColor="#000000"
                     android:textSize="20sp"
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 >
                 <Button
-                    android:id="@+id/WeddingHallButton"
+                    android:id="@+id/Hall"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@mipmap/couple"
@@ -146,7 +146,7 @@
                     android:layout_width="60dp"
                     android:layout_marginTop="10dp"
                     android:layout_height="60dp"
-                    android:text="Wedding Hall"
+                    android:text="Hall"
                     android:gravity="center"
                     android:textColor="#000000"
                     android:textSize="20sp"
