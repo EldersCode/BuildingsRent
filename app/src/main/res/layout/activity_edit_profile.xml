@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="#c16868"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
     tools:context="com.profile.activities.EditProfileActivity">
 
     <ScrollView
@@ -97,7 +95,7 @@
 
                 <EditText
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:inputType="text"
                     android:gravity="center"
                     android:id="@+id/edit_profile_name"
@@ -118,17 +116,17 @@
                     android:textColor="@android:color/black" />
 
                 <EditText
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:gravity="center"
                     android:id="@+id/edit_profile_email"
+                    android:layout_width="300dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
+                    android:background="@drawable/edit_text_profile"
+                    android:gravity="center"
                     android:hint="@string/editEmailHint"
+                    android:inputType="text"
                     android:textColor="@android:color/black"
                     android:textColorHint="#c0c0c0"
-                    android:background="@drawable/edit_text_profile"
                     android:textSize="18sp" />
 
                 <TextView
@@ -158,7 +156,7 @@
 
                 <EditText
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:inputType="text"
                     android:id="@+id/edit_profile_address"
                     android:gravity="center"
@@ -179,7 +177,7 @@
 
                 <EditText
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:inputType="text"
                     android:id="@+id/edit_profile_birthday"
                     android:gravity="center"
@@ -202,7 +200,7 @@
 
                 <EditText
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:inputType="text"
                     android:background="@drawable/edit_text_profile"
                     android:gravity="center"

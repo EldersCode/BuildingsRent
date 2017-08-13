@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="#c16868"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     tools:context="com.profile.activities.ProfileActivity">
 

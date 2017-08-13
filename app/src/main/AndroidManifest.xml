@@ -83,8 +83,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name="com.profile.activities.ProfileActivity" />
-        <activity android:name="com.profile.activities.EditProfileActivity"></activity>
+        <activity android:name="com.profile.activities.ProfileActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"/>
+        <activity android:name="com.profile.activities.EditProfileActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"/>
     </application>
 
 </manifest>

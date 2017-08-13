@@ -214,6 +214,10 @@ public class ProfileHandling extends Activity {
                 String user_location = myPrefs.getString("location" , "Not Found");
                 Log.i("SharedPrefs location: " , user_location);
                 profileAddress.setText(user_location);
+                if(myPrefs.contains("phone")){
+                    String phone = myPrefs.getString("phone" , "Not found");
+                    profilePhone.setText(phone);
+                }
             }
 
         }
