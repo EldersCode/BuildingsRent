@@ -591,7 +591,7 @@ public class HandlingLoginAuth extends Activity {
             Log.i("id" , id);
 
             try {
-                URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=150&height=150");
+                URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=170&height=170");
                 Log.i("profile_pic", profile_pic + "");
                 editor.putString("profile_pic", profile_pic.toString());
 
