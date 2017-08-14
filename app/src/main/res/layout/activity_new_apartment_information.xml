@@ -165,22 +165,6 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <Switch
-                    android:id="@+id/petSwitch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
-                    android:text="@string/pets"
-                    android:textSize="18sp"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="65dp">
 
                 <EditText
@@ -196,6 +180,23 @@
                     android:scrollHorizontally="true" />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <Switch
+                    android:id="@+id/petSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="30dp"
+                    android:text="@string/pets"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+
+
 
             <LinearLayout
                 android:id="@+id/switchOn_pets"
@@ -208,14 +209,14 @@
                     android:layout_height="70dp">
 
                     <CheckBox
-                        android:id="@+id/checkBox1"
+                        android:id="@+id/smallDogs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
                         android:text="@string/sDog" />
 
                     <CheckBox
-                        android:id="@+id/checkBox2"
+                        android:id="@+id/bigDogs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -223,19 +224,19 @@
                         android:text="@string/bDog" />
 
                     <CheckBox
-                        android:id="@+id/checkBox3"
+                        android:id="@+id/cat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/checkBox2"
+                        android:layout_below="@id/bigDogs"
                         android:layout_marginLeft="40dp"
                         android:text="@string/cat" />
 
                     <CheckBox
-                        android:id="@+id/checkBox4"
+                        android:id="@+id/other"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_below="@id/checkBox1"
+                        android:layout_below="@id/smallDogs"
                         android:layout_marginRight="62dp"
                         android:text="@string/others" />
 

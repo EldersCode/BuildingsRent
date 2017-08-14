@@ -28,6 +28,9 @@
     <include
         android:id="@+id/hall_bottom_sheet"
         layout="@layout/activity_new_hall_information"
+        /><include
+        android:id="@+id/chalet_bottom_sheet"
+        layout="@layout/activity_new_chalet_information"
         />
     <include
         android:id="@+id/bottom_sheet1"

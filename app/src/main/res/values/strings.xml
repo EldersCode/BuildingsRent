@@ -11,7 +11,7 @@
     <string name="CreateEventHint_Menu">Discover All the Events That is Happening In Ur Area Or any Place In The World</string>
     <string name="noOfPaths">paths</string>
     <string name="apartment_location_english">Submit</string>
-    <string name="apartment_area_english">- Apartment area</string>
+    <string name="apartment_area_english">- Area</string>
     <string name="area_hint">put area here ..</string>
     <string name="bedrooms_hint">Number of bedrooms ..</string>
     <string name="noOfBathrooms">- Number of Bathrooms</string>
@@ -76,6 +76,12 @@
     <string name="BirthProfile">* Birthday :</string>
     <string name="editEmailHint">enter your email here ..</string>
     <string name="changePhoto">Change Picture</string>
+    <string name="farm">farm</string>
+    <string name="build">for build</string>
+    <string name="description">Type a description ..</string>
+    <string name="noOfSeats">seats</string>
+    <string name="seat">No of seats</string>
+    <string name="buffet">buffet</string>
 
 
 </resources>

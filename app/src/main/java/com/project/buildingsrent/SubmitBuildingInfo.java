@@ -11,6 +11,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -56,15 +57,23 @@ public class SubmitBuildingInfo extends Activity {
     private DatabaseReference houses;
     ////////////////////////////////
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("contry/" + "city/" +"region/"+ flatsNo);
+    private DatabaseReference  users;
+
     GeoFire geoFire = new GeoFire(ref);
     public SubmitBuildingInfo() {
 
 
     }
 
-    public SubmitBuildingInfo(final BottomSheetBehavior bottomSheetBehavior1, final Context context, final LatLng latLng, final GoogleMap mMap, final String building, Button locateFlat, final LinearLayout petsLayout, Switch petsSwitch, final EditText priceEditText, final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText, final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch, final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch) {
+    public SubmitBuildingInfo(final EditText descriptionEditText,
+                              final BottomSheetBehavior bottomSheetBehavior1, final Context context,
+                              final LatLng latLng, final GoogleMap mMap, final String building, final Button locateFlat,
+                              final LinearLayout petsLayout, final Switch petsSwitch, final EditText priceEditText,
+                              final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText,
+                              final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch,
+                              final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch,
+                              final CheckBox farmLand, final CheckBox buildLand) {
         petsLayout.setVisibility(View.GONE);
-//images();
 //Button rentBtn=(Button) findViewById(R.id.forRentBtn);
 //Button saleBtn=(Button) findViewById(R.id.forSaleBtn);
 //        rentBtn.setEnabled(false);
@@ -82,7 +91,7 @@ public class SubmitBuildingInfo extends Activity {
         });
         database = FirebaseDatabase.getInstance();
 
-        houses = database.getReference("home");
+        houses = database.getReference(building);
 //
         houses.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,32 +111,12 @@ public class SubmitBuildingInfo extends Activity {
             public void onClick(View v) {
 
 
-//                Intent intent = new Intent(getApplicationContext() , MapsActivity.class);
 
-                DatabaseReference users = database.getReference("users");
-//                DatabaseReference regions = database.getReference("regions");
 
-                users.child("userId/" + "houses/" + "owened/" + "houseId/"+flatsNo).setValue("");
+                submitType( descriptionEditText,bottomSheetBehavior1,context,
+                latLng,  mMap,building,locateFlat,petsLayout, petsSwitch, priceEditText,apartmentAreaEditText,  noOfBedRoomsEditText,  noOfBathRoomsEditText,  parkingLotsSwitch,livingRoomSwitch,kitchenSwitch,coolingSystemSwitch,negotiablePriceSwitch,
+                        farmLand,buildLand);
 
-                houses.child(flatsNo + "/bedRoomsNo/").setValue(noOfBedRoomsEditText.getText().toString());
-                houses.child(flatsNo + "/bathNo/").setValue(noOfBathRoomsEditText.getText().toString());
-                houses.child(flatsNo + "/price/").setValue(priceEditText.getText().toString());
-                houses.child(flatsNo + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
-                houses.child(flatsNo + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
-                houses.child(flatsNo + "/livingRoom/").setValue(String.valueOf(livingRoomSwitch.isChecked()));
-                houses.child(flatsNo + "/pets/").setValue("boolean");
-                houses.child(flatsNo + "/kitchen/").setValue(String.valueOf(kitchenSwitch.isChecked()));
-                houses.child(flatsNo + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
-                houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(context , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
-//                        Intent intent = getIntent();
-//                        finish();
-//                        startActivity(intent);
-                    }
-                });
-                houses.child(flatsNo + "/houseIdNo/" + "location/").setValue("");
                 geoFire.setLocation("firebase-hq", new GeoLocation(latLng.latitude, latLng.longitude));
 
                 //after submetting clear slider and sheet colapse
@@ -139,7 +128,6 @@ public class SubmitBuildingInfo extends Activity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 a.finish();
                 a.overridePendingTransition(0, 0);
-//                a.startActivityForResult(intent);
                 a.startActivity(intent);
                 a.overridePendingTransition(0, 0);
                 ////////////////////////////////
@@ -190,49 +178,155 @@ public class SubmitBuildingInfo extends Activity {
         });
 
     }
-    //public void images(){
-//    ImageSliderImplementdMethods imageSliderImplementdMethods=new ImageSliderImplementdMethods();
-////    imageSliderImplementdMethods.onPageScrolled();
-//}
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), MapsActivity.class));
 
-    }
-    public static void deleteCache(Context context) {
-        try {
-            File dir = context.getCacheDir();
-            deleteDir(dir);
-        } catch (Exception e) {}
-    }
+    @Override//
+    public void onBackPressed() {//
+        startActivity(new Intent(getApplicationContext(), MapsActivity.class));//
 
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
+    }//
+//    public static void deleteCache(Context context) {//
+//        try {//
+//            File dir = context.getCacheDir();//
+//            deleteDir(dir);//
+//        } catch (Exception e) {}//
+//    }//
+//
+//    public static boolean deleteDir(File dir) {//
+//        if (dir != null && dir.isDirectory()) {//
+//            String[] children = dir.list();//
+//            for (int i = 0; i < children.length; i++) {//
+//                boolean success = deleteDir(new File(dir, children[i]));//
+//                if (!success) {//
+//                    return false;//
+//                }//
+//            }//
+//            return dir.delete();//
+//        } else if(dir!= null && dir.isFile()) {//
+//            return dir.delete();//
+//        } else {//
+//            return false;//
+//        }//
+//    }//
+
+    public void submitType(EditText descriptionEditText,final BottomSheetBehavior bottomSheetBehavior1, final Context context, final LatLng latLng, final GoogleMap mMap, final String building, Button locateFlat, final LinearLayout petsLayout, Switch petsSwitch, final EditText priceEditText, final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText, final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch, final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch
+    , CheckBox farmLand,CheckBox buildLand) {
+       Toast.makeText(context,building,Toast.LENGTH_SHORT).show();
+        switch (building){
+            case "house":
+            {
+                users = database.getReference("users");
+
+                users.child("userId/" + building + "owened/" + "houseId/"+flatsNo).setValue(flatsNo);
+
+                houses.child(flatsNo + "/bedRoomsNo/").setValue(noOfBedRoomsEditText.getText().toString());
+                houses.child(flatsNo + "/bathNo/").setValue(noOfBathRoomsEditText.getText().toString());
+                houses.child(flatsNo + "/price/").setValue(priceEditText.getText().toString());
+                houses.child(flatsNo + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
+                houses.child(flatsNo + "/livingRoom/").setValue(String.valueOf(livingRoomSwitch.isChecked()));
+                houses.child(flatsNo + "/pets/").setValue("boolean");
+                houses.child(flatsNo + "/kitchen/").setValue(String.valueOf(kitchenSwitch.isChecked()));
+                houses.child(flatsNo + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
+                houses.child(flatsNo + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
+                houses.child(flatsNo + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
+
+                houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+break;
             }
-            return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
-            return dir.delete();
-        } else {
-            return false;
+            //type hall
+            case "hall":{
+                users = database.getReference("users");
+
+                users.child("userId/" + building + "owened/" + "houseId/"+flatsNo).setValue(flatsNo);
+                houses.child(flatsNo + "/noOfSeats/").setValue(noOfBedRoomsEditText.getText().toString());
+                houses.child(flatsNo + "/buffet/").setValue(String.valueOf(kitchenSwitch.isChecked()));
+                houses.child(flatsNo + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
+                houses.child(flatsNo + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
+                houses.child(flatsNo + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
+                houses.child(flatsNo + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
+                houses.child(flatsNo + "/price/").setValue(priceEditText.getText().toString());
+                houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+      break;
+            }
+            //type store
+            case "store":{
+                users = database.getReference("users");
+
+                users.child("userId/" + building + "owened/" + "houseId/"+flatsNo).setValue(flatsNo);
+
+                houses.child(flatsNo + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
+                houses.child(flatsNo + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
+                houses.child(flatsNo + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
+                houses.child(flatsNo + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
+                houses.child(flatsNo + "/price/").setValue(priceEditText.getText().toString());
+                houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
+
+                    }
+
+                });
+            break;
+            }
+            //type chalet
+            case "chalet" :{
+                users = database.getReference("users");
+
+                users.child("userId/" + building + "owened/" + "houseId/"+flatsNo).setValue(flatsNo);
+
+                houses.child(flatsNo + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
+
+                houses.child(flatsNo + "/bedRoomsNo/").setValue(noOfBedRoomsEditText.getText().toString());
+                houses.child(flatsNo + "/bathNo/").setValue(noOfBathRoomsEditText.getText().toString());
+                houses.child(flatsNo + "/price/").setValue(priceEditText.getText().toString());
+                houses.child(flatsNo + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
+                houses.child(flatsNo + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
+                houses.child(flatsNo + "/livingRoom/").setValue(String.valueOf(livingRoomSwitch.isChecked()));
+                houses.child(flatsNo + "/pets/").setValue("boolean");
+                houses.child(flatsNo + "/kitchen/").setValue(String.valueOf(kitchenSwitch.isChecked()));
+                houses.child(flatsNo + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
+                houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            break;
+            }
+            //type land
+            case "land":{
+                users = database.getReference("users");
+                users.child("userId/" + building + "owened/" + "houseId/"+flatsNo).setValue(flatsNo);
+
+                houses.child(flatsNo + "/price/").setValue(priceEditText.getText().toString());
+                houses.child(flatsNo + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
+                houses.child(flatsNo + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
+                houses.child(flatsNo + "/farm/").setValue(String.valueOf(farmLand.isChecked()));
+                houses.child(flatsNo + "/build/").setValue(String.valueOf(buildLand.isChecked()));
+
+                houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context , "Data Sent Successfully .." , Toast.LENGTH_SHORT).show();
+
+                    }
+
+                });
+            break;
+            }
         }
     }
-//    @SuppressLint("")
-//    public static final void recreateActivityCompat(final Activity a) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-//            a.recreate();
-//        } else {
-//            final Intent intent = a.getIntent();
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//            a.finish();
-//            a.overridePendingTransition(0, 0);
-//            a.startActivity(intent);
-//            a.overridePendingTransition(0, 0);
-//        }
-//    }
 }

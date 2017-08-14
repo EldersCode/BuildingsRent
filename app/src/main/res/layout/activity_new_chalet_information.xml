@@ -42,7 +42,7 @@
                 <Button
 
                     android:id="@+id/forRentBtn"
-                    android:background="#efedd0"
+                    android:background="@color/chaletColor"
                     android:layout_alignParentStart="true"
                     android:text="@string/rent"
                     android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
                 <Button
 
                     android:layout_alignParentEnd="true"
-                    android:background="#efedd0"
+                    android:background="@color/chaletColor"
                     android:id="@+id/forSaleBtn"
                     android:text="@string/sale"
                     android:layout_width="wrap_content"

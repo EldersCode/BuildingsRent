@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -97,18 +98,52 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
 
     ////////////////submitBuildingInfo
 
-    EditText priceEditText;
-    EditText ApartmentAreaEditText;
+
     EditText noOfBedRoomsEditText;
     EditText noOfBathRoomsEditText;
-    Switch parkingLotsSwitch;
     Switch LivingRoomSwitch;
     Switch KitchenSwitch;
+CheckBox smallDogs;
+CheckBox bigDogs;
+CheckBox cats;
+CheckBox other;
+
+    EditText priceEditText;
+    EditText ApartmentAreaEditText;
+    EditText descriptionEditText;
     Switch coolingSystemSwitch;
     Switch NegotiablePriceSwitch;
+    Button submit_store;
+    Button locateFlat;
+    Switch parkingLotsSwitch;
+
+    EditText storePriceEditText;
+    EditText storeAreaEditText;
+    EditText storeDescriptionEditText;
+    Switch storeCoolingSystemSwitch;
+    Switch storeNegotiablePriceSwitch;
+    Switch storeParkingLotsSwitch;
+
+    EditText landPriceEditText;
+    EditText landAreaEditText;
+    EditText landDescriptionEditText;
+    Switch landNegotiablePriceSwitch;
+CheckBox landCheckBoxFarm;
+CheckBox landCheckBoxbuild;
+    Button landSubmit;
+
+    EditText hallPriceEditText;
+    EditText hallAreaEditText;
+    EditText hallDescriptionEditText;
+    EditText noOfSeatsEditText;
+    Switch hallCoolingSystemSwitch;
+    Switch hallNegotiablePriceSwitch;
+    Switch hallParkingLotsSwitch;
+    Switch hallBuffetSwitch;
+Button hallSubmit;
+
     LinearLayout petsLayout;
     Switch petsSwitch;
-    Button locateFlat;
     static TextSliderView textSliderView;
     private StorageReference storageReference;
 
@@ -149,16 +184,51 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
         //declearing inistances for home
         petsLayout = (LinearLayout) findViewById(R.id.switchOn_pets);
         petsSwitch = (Switch) findViewById(R.id.petSwitch);
-        priceEditText = (EditText) findViewById(R.id.Price);
-        ApartmentAreaEditText = (EditText) findViewById(R.id.area);
         noOfBedRoomsEditText = (EditText) findViewById(R.id.bedrooms);
         noOfBathRoomsEditText = (EditText) findViewById(R.id.bathrooms);
-        parkingLotsSwitch=(Switch)findViewById(R.id.ParkingSwitch);
         LivingRoomSwitch=(Switch)findViewById(R.id.livingRoomSwitch);
         KitchenSwitch=(Switch)findViewById(R.id.kitchenSwitch);
+smallDogs=(CheckBox)findViewById(R.id.smallDogs);
+bigDogs=(CheckBox)findViewById(R.id.bigDogs);
+cats=(CheckBox)findViewById(R.id.cat);
+other=(CheckBox)findViewById(R.id.other);
+
+        ApartmentAreaEditText = (EditText) findViewById(R.id.area);
+        priceEditText = (EditText) findViewById(R.id.Price);
+        descriptionEditText = (EditText) findViewById(R.id.description);
+        parkingLotsSwitch=(Switch)findViewById(R.id.ParkingSwitch);
         coolingSystemSwitch=(Switch)findViewById(R.id.coolingSystemSwitch);
         NegotiablePriceSwitch=(Switch)findViewById(R.id.negotiablePriceSwitch);
     locateFlat = (Button) findViewById(R.id.locateFlat);
+
+        //store widgets
+        submit_store = (Button) findViewById(R.id.submit_store);
+        storeAreaEditText = (EditText) findViewById(R.id.storeArea);
+        storePriceEditText = (EditText) findViewById(R.id.storePrice);
+        storeDescriptionEditText = (EditText) findViewById(R.id.storeDescription);
+        storeParkingLotsSwitch=(Switch)findViewById(R.id.storeParkingSwitch);
+        storeCoolingSystemSwitch=(Switch)findViewById(R.id.storeCoolingSystemSwitch);
+        storeNegotiablePriceSwitch=(Switch)findViewById(R.id.storeNegotiablePriceSwitch);
+        //land
+         landPriceEditText= (EditText) findViewById(R.id.landPrice);;
+         landAreaEditText= (EditText) findViewById(R.id.landArea);;
+         landDescriptionEditText= (EditText) findViewById(R.id.landDescription);;
+         landNegotiablePriceSwitch=(Switch)findViewById(R.id.landNegotiablePriceSwitch);
+         landCheckBoxFarm=(CheckBox)findViewById(R.id.landCheckBox1);
+         landCheckBoxbuild=(CheckBox)findViewById(R.id.landCheckBox2);
+        landSubmit=(Button)findViewById(R.id.landSubmit) ;
+        //hall
+         hallPriceEditText=(EditText) findViewById(R.id.hallPrice);;
+         hallAreaEditText=(EditText) findViewById(R.id.hallArea);;
+         hallDescriptionEditText=(EditText) findViewById(R.id.hallDescription);;
+         hallCoolingSystemSwitch=(Switch)findViewById(R.id.hallCoolingSystemSwitch);;
+         hallNegotiablePriceSwitch=(Switch)findViewById(R.id.hallNegotiablePriceSwitch);;
+         hallParkingLotsSwitch=(Switch)findViewById(R.id.hallParkingSwitch);;
+         hallBuffetSwitch=(Switch)findViewById(R.id.hallBuffetSwitch);;
+         noOfSeatsEditText=(EditText) findViewById(R.id.noOfSeats);
+        hallSubmit=(Button)findViewById(R.id.hallSubmit) ;
+
+
     }
     void onCreateHandle(){
         buildGoogleApiClient();

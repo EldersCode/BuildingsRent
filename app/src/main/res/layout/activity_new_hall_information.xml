@@ -73,7 +73,7 @@
                 android:layout_height="65dp">
 
                 <EditText
-                    android:id="@+id/Price"
+                    android:id="@+id/hallPrice"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -102,7 +102,7 @@
                 android:layout_height="65dp">
 
                 <EditText
-                    android:id="@+id/area"
+                    android:id="@+id/hallArea"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -114,7 +114,7 @@
                     android:scrollHorizontally="true" />
 
                 <Spinner
-                    android:id="@+id/spinner"
+                    android:id="@+id/hallSpinner"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="@string/noOfBedrooms"
+                android:text="@string/noOfSeats"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="italic"
@@ -139,12 +139,12 @@
                 android:layout_height="65dp">
 
                 <EditText
-                    android:id="@+id/bedrooms"
+                    android:id="@+id/noOfSeats"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:ellipsize="end"
-                    android:hint="@string/bedrooms_hint"
+                    android:hint="@string/seat"
                     android:inputType="number"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
@@ -152,103 +152,15 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/noOfBathrooms"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="italic"
 
-                />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/petSwitch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
-                    android:text="@string/pets"
-                    android:textSize="18sp"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="65dp">
-
-                <EditText
-                    android:id="@+id/bathrooms"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:ellipsize="end"
-                    android:hint="@string/bathrooms_hint"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:paddingLeft="10dp"
-                    android:scrollHorizontally="true" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/switchOn_pets"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp">
-
-                    <CheckBox
-                        android:id="@+id/checkBox1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:text="@string/sDog" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="50dp"
-                        android:text="@string/bDog" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/checkBox2"
-                        android:layout_marginLeft="40dp"
-                        android:text="@string/cat" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@id/checkBox1"
-                        android:layout_marginRight="62dp"
-                        android:text="@string/others" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <Switch
-                    android:id="@+id/ParkingSwitch"
+                    android:id="@+id/hallParkingSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -259,17 +171,19 @@
 
             </LinearLayout>
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/livingRoomSwitch"
+                    android:id="@+id/hallBuffetSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="30dp"
-                    android:text="@string/livingRoom"
+                    android:text="@string/buffet"
                     android:textSize="18sp"
                     android:textStyle="italic" />
 
@@ -280,23 +194,7 @@
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/kitchenSwitch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
-                    android:text="@string/kitchen"
-                    android:textSize="18sp"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <Switch
-                    android:id="@+id/coolingSystemSwitch"
+                    android:id="@+id/hallCoolingSystemSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -313,7 +211,7 @@
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/negotiablePriceSwitch"
+                    android:id="@+id/hallNegotiablePriceSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -330,7 +228,24 @@
 
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
 
+                <EditText
+                    android:id="@+id/hallDescription"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:hint="@string/description"
+
+                    android:inputType="textMultiLine"
+                    android:maxLines="4"
+                    android:paddingLeft="10dp"
+                    android:scrollHorizontally="true" />
+
+            </LinearLayout>
             <LinearLayout
 
                 android:layout_width="match_parent"
@@ -355,6 +270,7 @@
 
                 </LinearLayout>
                 <com.daimajia.slider.library.SliderLayout
+                    android:visibility="gone"
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -371,7 +287,7 @@
                 >
 
                 <Button
-                    android:id="@+id/locateFlat"
+                    android:id="@+id/hallSubmit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/apartment_location_english"

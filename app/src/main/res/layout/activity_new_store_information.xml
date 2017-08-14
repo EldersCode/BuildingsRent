@@ -41,8 +41,7 @@
                 android:layout_height="wrap_content">
                 <Button
 
-                    android:id="@+id/forRentBtn"
-                    android:background="#efedd0"
+                    android:id="@+id/storeForRentBtn"
                     android:layout_alignParentStart="true"
                     android:text="@string/rent"
                     android:layout_width="wrap_content"
@@ -51,8 +50,7 @@
                 <Button
 
                     android:layout_alignParentEnd="true"
-                    android:background="#efedd0"
-                    android:id="@+id/forSaleBtn"
+                    android:id="@+id/storeForSaleBtn"
                     android:text="@string/sale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -73,7 +71,7 @@
                 android:layout_height="65dp">
 
                 <EditText
-                    android:id="@+id/Price"
+                    android:id="@+id/storePrice"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -102,7 +100,7 @@
                 android:layout_height="65dp">
 
                 <EditText
-                    android:id="@+id/area"
+                    android:id="@+id/storeArea"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -114,7 +112,7 @@
                     android:scrollHorizontally="true" />
 
                 <Spinner
-                    android:id="@+id/spinner"
+                    android:id="@+id/storeSpinner"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -123,132 +121,16 @@
                 </Spinner>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/noOfBedrooms"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="italic"
 
-                />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="65dp">
 
-                <EditText
-                    android:id="@+id/bedrooms"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:ellipsize="end"
-                    android:hint="@string/bedrooms_hint"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:paddingLeft="10dp"
-                    android:scrollHorizontally="true" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/noOfBathrooms"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="italic"
-
-                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/petSwitch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
-                    android:text="@string/pets"
-                    android:textSize="18sp"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="65dp">
-
-                <EditText
-                    android:id="@+id/bathrooms"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:ellipsize="end"
-                    android:hint="@string/bathrooms_hint"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:paddingLeft="10dp"
-                    android:scrollHorizontally="true" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/switchOn_pets"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp">
-
-                    <CheckBox
-                        android:id="@+id/checkBox1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:text="@string/sDog" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="50dp"
-                        android:text="@string/bDog" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/checkBox2"
-                        android:layout_marginLeft="40dp"
-                        android:text="@string/cat" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@id/checkBox1"
-                        android:layout_marginRight="62dp"
-                        android:text="@string/others" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <Switch
-                    android:id="@+id/ParkingSwitch"
+                    android:id="@+id/storeParkingSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -259,44 +141,13 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <Switch
-                    android:id="@+id/livingRoomSwitch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
-                    android:text="@string/livingRoom"
-                    android:textSize="18sp"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/kitchenSwitch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
-                    android:text="@string/kitchen"
-                    android:textSize="18sp"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <Switch
-                    android:id="@+id/coolingSystemSwitch"
+                    android:id="@+id/storeCoolingSystemSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -313,7 +164,7 @@
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/negotiablePriceSwitch"
+                    android:id="@+id/storeNegotiablePriceSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -327,7 +178,24 @@
             </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
 
+                <EditText
+                    android:id="@+id/storeDescription"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:hint="@string/description"
+
+                    android:inputType="textMultiLine"
+                    android:maxLines="4"
+                    android:paddingLeft="10dp"
+                    android:scrollHorizontally="true" />
+
+            </LinearLayout>
 
 
 
@@ -355,6 +223,7 @@
 
                 </LinearLayout>
                 <com.daimajia.slider.library.SliderLayout
+                    android:visibility="gone"
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -371,7 +240,7 @@
                 >
 
                 <Button
-                    android:id="@+id/locateFlat"
+                    android:id="@+id/submit_store"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/apartment_location_english"
