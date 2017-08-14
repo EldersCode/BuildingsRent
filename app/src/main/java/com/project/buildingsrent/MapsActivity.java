@@ -23,6 +23,7 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 import com.profile.activities.ProfileActivity;
+import com.search.activity.SearchActivity;
 
 
 public class MapsActivity extends HandlingMaps{
@@ -155,6 +156,15 @@ public class MapsActivity extends HandlingMaps{
                         startActivity(new Intent(getApplicationContext() , ProfileActivity.class));
 
                     } else if (index == 1) {
+                                             // go to search activity \\
+                        startActivity(new Intent(getApplicationContext() , SearchActivity.class));
+
+                                    // getting ID of the user that logged in \\
+
+                        FirebaseAuth mAuth= FirebaseAuth.getInstance();
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        String userId = currentUser.getUid();
+                        Toast.makeText(MapsActivity.this, userId, Toast.LENGTH_SHORT).show();
 
                     }
                     // the 3rd boom btn oncklick for submetting a proprty

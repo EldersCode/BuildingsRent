@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/profile_pic_bg"
+    tools:context="com.search.activity.SearchActivity">
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:inputType="text"
+        android:drawableStart="@mipmap/search"
+        android:drawablePadding="5dp"
+        android:maxLines="1"
+        android:paddingRight="10dp"
+        android:textColor="@android:color/black"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        android:textSize="21sp"
+        android:id="@+id/searchA_editText"
+        android:textColorHint="#7e7d7d"
+        android:hint="Enter your address here"
+        android:background="@drawable/edit_text_profile"
+        android:layout_alignTop="@+id/clear_img"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:id="@+id/recyclerIdA"
+        android:layout_below="@id/searchA_editText"
+        android:layout_marginTop="10dp"
+        android:scrollbars="vertical"
+        />
+
+
+
+
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:id="@+id/clear_img"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
+        android:src="@mipmap/close"
+        android:layout_marginTop="52dp"
+        android:padding="4dp"
+
+        />
+
+    <Button
+        android:id="@+id/submit_address_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchA_editText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="210dp"
+        android:onClick="findAddress"
+        android:text="Submit"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        android:background="@drawable/btn_design"
+        />
+
+</RelativeLayout>

@@ -65,8 +65,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
-        />
+        <activity android:name=".LoginActivity" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -83,10 +82,14 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name="com.profile.activities.ProfileActivity"
-            android:theme="@style/Theme.Design.Light.NoActionBar"/>
-        <activity android:name="com.profile.activities.EditProfileActivity"
-            android:theme="@style/Theme.Design.Light.NoActionBar"/>
+        <activity
+            android:name="com.profile.activities.ProfileActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
+            android:name="com.profile.activities.EditProfileActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity android:name="com.search.activity.SearchActivity"
+        android:theme="@style/Theme.Design.Light.NoActionBar" />
     </application>
 
 </manifest>
