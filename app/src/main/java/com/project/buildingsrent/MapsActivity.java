@@ -394,13 +394,16 @@ public void categoriesBtnSheets(){
             homeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             //if a home btn sheet selected
 
-            if (buildingType =="home") {
+            if (buildingType =="home" && myLatLng == null) {
                 new SubmitBuildingInfo(descriptionEditText,homeBottomSheetBehavior,MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
                         NegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
 
+            }else  if (buildingType =="home" && latLng == null) {
+                new SubmitBuildingInfo(descriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
+                        NegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild);
             }
-
 
         }
     });
@@ -435,8 +438,14 @@ public void categoriesBtnSheets(){
             landBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             //if a land btn sheet selected
 
-            if (buildingType =="land") {
+            if (buildingType =="land" && myLatLng == null) {
                 new SubmitBuildingInfo(landDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this, latLng, mMap,
+                        buildingType, landSubmit, petsLayout, petsSwitch, landPriceEditText, landAreaEditText, noOfBedRoomsEditText
+                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
+                        landNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+
+            } else if (buildingType =="land" && latLng == null) {
+                new SubmitBuildingInfo(landDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this, myLatLng, mMap,
                         buildingType, landSubmit, petsLayout, petsSwitch, landPriceEditText, landAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
                         landNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
@@ -456,9 +465,17 @@ public void categoriesBtnSheets(){
             hallBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             //if a hall btn sheet selected
 
-            if (buildingType =="hall") {
+            if (buildingType =="hall" && myLatLng == null) {
                 new SubmitBuildingInfo(hallDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this,
                         latLng, mMap, buildingType, hallSubmit,
+                        petsLayout, petsSwitch, hallPriceEditText, hallAreaEditText, noOfSeatsEditText
+                        , noOfBathRoomsEditText,
+                        hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
+                        hallNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+
+            }else if (buildingType =="hall" && latLng == null) {
+                new SubmitBuildingInfo(hallDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this,
+                        myLatLng, mMap, buildingType, hallSubmit,
                         petsLayout, petsSwitch, hallPriceEditText, hallAreaEditText, noOfSeatsEditText
                         , noOfBathRoomsEditText,
                         hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
@@ -481,8 +498,13 @@ public void categoriesBtnSheets(){
             //if a chalete btn sheet selected
 
 
-            if (buildingType =="chalet") {
+            if (buildingType =="chalet" && myLatLng == null) {
                 new SubmitBuildingInfo(descriptionEditText,homeBottomSheetBehavior,MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch,
+                        coolingSystemSwitch, NegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+
+            }else  if (buildingType =="chalet" && latLng == null) {
+                new SubmitBuildingInfo(descriptionEditText,homeBottomSheetBehavior,MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch,
                         coolingSystemSwitch, NegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
 
