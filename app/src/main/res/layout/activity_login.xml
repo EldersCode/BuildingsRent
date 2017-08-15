@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/login_screen_id"
-    android:background="@drawable/colorfulbuildings"
+    android:background="@drawable/loginbg"
     tools:context="com.project.buildingsrent.LoginActivity">
 
     <ImageView
