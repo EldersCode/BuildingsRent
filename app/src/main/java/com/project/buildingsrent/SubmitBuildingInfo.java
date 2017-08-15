@@ -33,6 +33,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,12 +56,13 @@ public class SubmitBuildingInfo extends Activity {
     private FirebaseDatabase database;
     private ImageView cameraImg;
     private int flatsNo =1;
+    private String adress;
     private DatabaseReference houses;
     ////////////////////////////////
-    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("contry/" + "city/" +"region/"+ flatsNo);
+    DatabaseReference ref ;
     private DatabaseReference  users;
 
-    GeoFire geoFire = new GeoFire(ref);
+    GeoFire geoFire;
     public SubmitBuildingInfo() {
 
 
@@ -73,10 +76,19 @@ public class SubmitBuildingInfo extends Activity {
                               final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch,
                               final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch,
                               final CheckBox farmLand, final CheckBox buildLand) {
+
         petsLayout.setVisibility(View.GONE);
 //Button rentBtn=(Button) findViewById(R.id.forRentBtn);
 //Button saleBtn=(Button) findViewById(R.id.forSaleBtn);
 //        rentBtn.setEnabled(false);
+
+        /////geocoding get country ,city and region
+        DataFromLatLng dataFromLatLng=new DataFromLatLng(latLng.latitude,latLng.longitude,context);
+       String country= dataFromLatLng.getMyCountry();
+        String city=dataFromLatLng.getMyCity();
+        String area=dataFromLatLng.getMyArea();
+       adress=country+"/"+city+"/"+area+"/"  ;
+        //////////////////////
         petsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -91,7 +103,7 @@ public class SubmitBuildingInfo extends Activity {
         });
         database = FirebaseDatabase.getInstance();
 
-        houses = database.getReference(building);
+        houses = database.getReference(adress+building);
 //
         houses.addValueEventListener(new ValueEventListener() {
             @Override
@@ -116,7 +128,9 @@ public class SubmitBuildingInfo extends Activity {
                 submitType( descriptionEditText,bottomSheetBehavior1,context,
                 latLng,  mMap,building,locateFlat,petsLayout, petsSwitch, priceEditText,apartmentAreaEditText,  noOfBedRoomsEditText,  noOfBathRoomsEditText,  parkingLotsSwitch,livingRoomSwitch,kitchenSwitch,coolingSystemSwitch,negotiablePriceSwitch,
                         farmLand,buildLand);
+                ref = FirebaseDatabase.getInstance().getReference(adress+building+"/"+ flatsNo+"/location");
 
+                geoFire = new GeoFire(ref);
                 geoFire.setLocation("firebase-hq", new GeoLocation(latLng.latitude, latLng.longitude));
 
                 //after submetting clear slider and sheet colapse
@@ -212,11 +226,11 @@ public class SubmitBuildingInfo extends Activity {
     , CheckBox farmLand,CheckBox buildLand) {
        Toast.makeText(context,building,Toast.LENGTH_SHORT).show();
         switch (building){
-            case "house":
+            case "home":
             {
-                users = database.getReference("users");
+                users = database.getReference("users/"+me());
 
-                users.child("userId/" + building + "owened/" + "houseId/"+flatsNo).setValue(flatsNo);
+                users.child("userId/" + building + "/owened/" + "houseId/"+flatsNo).setValue(flatsNo);
 
                 houses.child(flatsNo + "/bedRoomsNo/").setValue(noOfBedRoomsEditText.getText().toString());
                 houses.child(flatsNo + "/bathNo/").setValue(noOfBathRoomsEditText.getText().toString());
@@ -240,9 +254,9 @@ break;
             }
             //type hall
             case "hall":{
-                users = database.getReference("users");
+                users = database.getReference("users/"+me());
 
-                users.child("userId/" + building + "owened/" + "houseId/"+flatsNo).setValue(flatsNo);
+                users.child("userId/" + building + "/owened/" + "houseId/"+flatsNo).setValue(flatsNo);
                 houses.child(flatsNo + "/noOfSeats/").setValue(noOfBedRoomsEditText.getText().toString());
                 houses.child(flatsNo + "/buffet/").setValue(String.valueOf(kitchenSwitch.isChecked()));
                 houses.child(flatsNo + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
@@ -261,9 +275,9 @@ break;
             }
             //type store
             case "store":{
-                users = database.getReference("users");
+                users = database.getReference("users/"+me());
 
-                users.child("userId/" + building + "owened/" + "houseId/"+flatsNo).setValue(flatsNo);
+                users.child("userId/" + building + "/owened/" + "houseId/"+flatsNo).setValue(flatsNo);
 
                 houses.child(flatsNo + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
                 houses.child(flatsNo + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
@@ -282,21 +296,22 @@ break;
             }
             //type chalet
             case "chalet" :{
-                users = database.getReference("users");
+                users = database.getReference("users/"+me());
+                Toast.makeText(context , ".." , Toast.LENGTH_SHORT).show();
 
-                users.child("userId/" + building + "owened/" + "houseId/"+flatsNo).setValue(flatsNo);
-
-                houses.child(flatsNo + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
+                users.child("userId/" + building + "/owened/" + "houseId/"+flatsNo).setValue(flatsNo);
 
                 houses.child(flatsNo + "/bedRoomsNo/").setValue(noOfBedRoomsEditText.getText().toString());
                 houses.child(flatsNo + "/bathNo/").setValue(noOfBathRoomsEditText.getText().toString());
                 houses.child(flatsNo + "/price/").setValue(priceEditText.getText().toString());
-                houses.child(flatsNo + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
-                houses.child(flatsNo + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
+                houses.child(flatsNo + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
                 houses.child(flatsNo + "/livingRoom/").setValue(String.valueOf(livingRoomSwitch.isChecked()));
                 houses.child(flatsNo + "/pets/").setValue("boolean");
                 houses.child(flatsNo + "/kitchen/").setValue(String.valueOf(kitchenSwitch.isChecked()));
                 houses.child(flatsNo + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
+                houses.child(flatsNo + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
+                houses.child(flatsNo + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
+
                 houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -304,11 +319,11 @@ break;
 
                     }
                 });
-            break;
+                break;
             }
             //type land
             case "land":{
-                users = database.getReference("users");
+                users = database.getReference("users/"+me());
                 users.child("userId/" + building + "owened/" + "houseId/"+flatsNo).setValue(flatsNo);
 
                 houses.child(flatsNo + "/price/").setValue(priceEditText.getText().toString());
@@ -329,4 +344,13 @@ break;
             }
         }
     }
+protected  String me(){
+    // getting ID of the user that logged in \\
+
+    FirebaseAuth mAuth= FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
+    String userId = currentUser.getUid();
+//    Toast.makeText(context, userId, Toast.LENGTH_SHORT).show();
+
+return  userId;}
 }

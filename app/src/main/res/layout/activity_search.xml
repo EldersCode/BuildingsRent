@@ -8,8 +8,9 @@
     tools:context="com.search.activity.SearchActivity">
 
     <EditText
+        android:layout_below="@+id/categories"
         android:layout_width="300dp"
-        android:layout_height="35dp"
+        android:layout_height="30dp"
         android:inputType="text"
         android:drawableStart="@mipmap/search"
         android:drawablePadding="5dp"
@@ -27,6 +28,7 @@
         android:layout_centerHorizontal="true" />
 
     <android.support.v7.widget.RecyclerView
+        android:elevation="54dp"
         android:layout_width="match_parent"
         android:layout_height="190dp"
         android:id="@+id/recyclerIdA"
@@ -40,13 +42,13 @@
 
 
     <ImageView
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_below="@+id/categories"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:id="@+id/clear_img"
         android:layout_alignParentRight="true"
         android:layout_marginRight="40dp"
         android:src="@mipmap/close"
-        android:layout_marginTop="52dp"
         android:padding="4dp"
 
         />
@@ -55,14 +57,93 @@
         android:id="@+id/submit_address_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/searchA_editText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="210dp"
         android:onClick="findAddress"
         android:text="Submit"
         android:textColor="@android:color/white"
         android:textAllCaps="false"
         android:background="@drawable/btn_design"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         />
+    <LinearLayout
+        android:id="@+id/categories"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/submit_address_btn"
+        android:orientation="vertical"
+        android:padding="10dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Category :"
+            android:layout_marginBottom="5dp"/>
+
+        <Spinner
+            android:id="@+id/spinner"
+
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Price :"
+            android:layout_marginBottom="5dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <EditText
+            android:id="@+id/priceFrom"
+android:inputType="number"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="@string/to"
+            android:layout_marginBottom="5dp"/>
+        <EditText
+
+            android:id="@+id/priceTo"
+android:inputType="number"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            /></LinearLayout>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Area :"
+            android:layout_marginBottom="5dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <EditText
+            android:id="@+id/areaFrom"
+android:inputType="number"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="@string/to"
+            android:layout_marginBottom="5dp"/>
+        <EditText
+
+            android:id="@+id/areaTo"
+android:inputType="number"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            /></LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

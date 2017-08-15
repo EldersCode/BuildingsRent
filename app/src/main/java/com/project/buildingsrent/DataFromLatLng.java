@@ -17,6 +17,33 @@ import java.util.Locale;
  */
 
 public class DataFromLatLng extends Activity{
+private String myCountry;
+private String myCity;
+private String myArea;
+
+    public String getMyCountry() {
+        return myCountry;
+    }
+
+    public void setMyCountry(String myCountry) {
+        this.myCountry = myCountry;
+    }
+
+    public String getMyCity() {
+        return myCity;
+    }
+
+    public void setMyCity(String myCity) {
+        this.myCity = myCity;
+    }
+
+    public String getMyArea() {
+        return myArea;
+    }
+
+    public void setMyArea(String myArea) {
+        this.myArea = myArea;
+    }
 
     public DataFromLatLng(Double latitude , Double longitude , Context context) {
 
@@ -44,7 +71,9 @@ public class DataFromLatLng extends Activity{
                               // the country \\
 
             String country = addresses.get(0).getCountryName();
-
+setMyCountry(country);
+            setMyCity(city);
+            setMyArea(area);
             Log.i("location address : " , "address : "+ address);
             Log.i("location area : " , "area : "+ area);
             Log.i("location city : " , "city : "+ city);
@@ -59,4 +88,5 @@ public class DataFromLatLng extends Activity{
 
 
 }
+
 }

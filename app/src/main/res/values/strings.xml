@@ -82,6 +82,7 @@
     <string name="noOfSeats">seats</string>
     <string name="seat">No of seats</string>
     <string name="buffet">buffet</string>
+    <string name="to"><![CDATA[<=TO=>]]></string>
 
 
 </resources>

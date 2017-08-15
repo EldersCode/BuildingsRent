@@ -156,15 +156,15 @@ public class MapsActivity extends HandlingMaps{
                         startActivity(new Intent(getApplicationContext() , ProfileActivity.class));
 
                     } else if (index == 1) {
-                                             // go to search activity \\
+                                             // go to activity_search activity \\
                         startActivity(new Intent(getApplicationContext() , SearchActivity.class));
 
-                                    // getting ID of the user that logged in \\
-
-                        FirebaseAuth mAuth= FirebaseAuth.getInstance();
-                        FirebaseUser currentUser = mAuth.getCurrentUser();
-                        String userId = currentUser.getUid();
-                        Toast.makeText(MapsActivity.this, userId, Toast.LENGTH_SHORT).show();
+//                                    // getting ID of the user that logged in \\
+//
+//                        FirebaseAuth mAuth= FirebaseAuth.getInstance();
+//                        FirebaseUser currentUser = mAuth.getCurrentUser();
+//                        String userId = currentUser.getUid();
+//                        Toast.makeText(MapsActivity.this, userId, Toast.LENGTH_SHORT).show();
 
                     }
                     // the 3rd boom btn oncklick for submetting a proprty
@@ -240,7 +240,7 @@ categoriesBtnSheets();
                                         if(myLatLng == null){
                                             Toast.makeText(MapsActivity.this, "please choose your location first", Toast.LENGTH_SHORT).show();
                                         }else {
-                                            // here what happen when we confirm a location after search
+                                            // here what happen when we confirm a location after activity_search
 
                                             final AlertDialog.Builder alert = new AlertDialog.Builder(MapsActivity.this)
                                                     .setTitle("Notification")
@@ -515,14 +515,19 @@ public void categoriesBtnSheets(){
 
 
             if (buildingType.equals("chalet") && myLatLng == null) {
-                new SubmitBuildingInfo(descriptionEditText,homeBottomSheetBehavior,MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
-                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch,
-                        coolingSystemSwitch, NegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+                new SubmitBuildingInfo(chaletDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this,
+                        latLng, mMap, buildingType, chaletSubmit, petsLayout, petsSwitch, chaletPriceEditText
+                        , chaletAreaEditText, chaletNoOfBedRoomsEditText
+                        , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
+                        chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
 
             }else  if (buildingType.equals("chalet") && latLng == null) {
-                new SubmitBuildingInfo(descriptionEditText,homeBottomSheetBehavior,MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
-                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch,
-                        coolingSystemSwitch, NegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+
+                new SubmitBuildingInfo(chaletDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this,
+                        myLatLng, mMap, buildingType, chaletSubmit, petsLayout, petsSwitch, chaletPriceEditText
+                        , chaletAreaEditText, chaletNoOfBedRoomsEditText
+                        , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
+                        chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
 
             }
 

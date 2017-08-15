@@ -15,8 +15,6 @@
     >
 
 
-
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -28,35 +26,37 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_marginTop="30dp"
+                android:id="@+id/camImg"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:background="@mipmap/beachhouse"
-                android:id="@+id/camImg"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@mipmap/beachhouse" />
 
             <RelativeLayout
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <Button
 
-                    android:id="@+id/forRentBtn"
-                    android:background="@color/chaletColor"
-                    android:layout_alignParentStart="true"
-                    android:text="@string/rent"
+                    android:id="@+id/ChaletForRentBtn"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:background="@color/chaletColor"
+                    android:text="@string/rent" />
 
                 <Button
 
+                    android:id="@+id/ChaletForSaleBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:background="@color/chaletColor"
-                    android:id="@+id/forSaleBtn"
-                    android:text="@string/sale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:text="@string/sale" />
             </RelativeLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                 android:layout_height="65dp">
 
                 <EditText
-                    android:id="@+id/Price"
+                    android:id="@+id/chaletPrice"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -102,7 +102,7 @@
                 android:layout_height="65dp">
 
                 <EditText
-                    android:id="@+id/area"
+                    android:id="@+id/chaletArea"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -114,7 +114,7 @@
                     android:scrollHorizontally="true" />
 
                 <Spinner
-                    android:id="@+id/spinner"
+                    android:id="@+id/chaletSpinner"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -139,7 +139,7 @@
                 android:layout_height="65dp">
 
                 <EditText
-                    android:id="@+id/bedrooms"
+                    android:id="@+id/chaletBedrooms"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -184,7 +184,7 @@
                 android:layout_height="65dp">
 
                 <EditText
-                    android:id="@+id/bathrooms"
+                    android:id="@+id/chaletBathrooms"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -208,14 +208,14 @@
                     android:layout_height="70dp">
 
                     <CheckBox
-                        android:id="@+id/checkBox1"
+                        android:id="@+id/chaletSmallDogs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
                         android:text="@string/sDog" />
 
                     <CheckBox
-                        android:id="@+id/checkBox2"
+                        android:id="@+id/chaletBigDogs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -223,19 +223,19 @@
                         android:text="@string/bDog" />
 
                     <CheckBox
-                        android:id="@+id/checkBox3"
+                        android:id="@+id/chaletCats"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/checkBox2"
+                        android:layout_below="@id/chaletBigDogs"
                         android:layout_marginLeft="40dp"
                         android:text="@string/cat" />
 
                     <CheckBox
-                        android:id="@+id/checkBox4"
+                        android:id="@+id/chaletOthers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_below="@id/checkBox1"
+                        android:layout_below="@id/chaletSmallDogs"
                         android:layout_marginRight="62dp"
                         android:text="@string/others" />
 
@@ -248,7 +248,7 @@
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/ParkingSwitch"
+                    android:id="@+id/chaletParkingSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -264,7 +264,7 @@
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/livingRoomSwitch"
+                    android:id="@+id/chaletLivingRoomSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -280,7 +280,7 @@
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/kitchenSwitch"
+                    android:id="@+id/chaletKitchenSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -296,7 +296,7 @@
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/coolingSystemSwitch"
+                    android:id="@+id/chaletCoolingSystemSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -313,7 +313,7 @@
                 android:layout_height="40dp">
 
                 <Switch
-                    android:id="@+id/negotiablePriceSwitch"
+                    android:id="@+id/chaletNegotiablePriceSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -323,42 +323,52 @@
                     android:textStyle="italic" />
 
 
-
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
 
+                <EditText
+                    android:id="@+id/chaletDescription"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:hint="@string/description"
 
+                    android:inputType="textMultiLine"
+                    android:maxLines="4"
+                    android:paddingLeft="10dp"
+                    android:scrollHorizontally="true" />
 
-
-
+            </LinearLayout>
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="horizontal"
-                    >
+                    android:onClick="horizontal">
 
                     <Button
                         android:id="@+id/galary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="onClick"
-                        android:text="galary"/>
+                        android:text="galary" />
 
 
                 </LinearLayout>
+
                 <com.daimajia.slider.library.SliderLayout
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    />
+                    android:layout_height="200dp" />
 
 
             </LinearLayout>
@@ -367,35 +377,31 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/locateFlat"
+                    android:id="@+id/chaletSubmit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/apartment_location_english"
                     android:gravity="center_horizontal"
+                    android:text="@string/apartment_location_english"
                     android:textSize="19sp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="right"
                     android:text="Cancel"
                     android:textAllCaps="false"
-                    android:textStyle="italic"
                     android:textSize="19sp"
-                    android:layout_gravity="right"
-                    />
+                    android:textStyle="italic" />
 
 
             </LinearLayout>
 
 
         </LinearLayout>
-
 
 
     </android.support.v4.widget.NestedScrollView>

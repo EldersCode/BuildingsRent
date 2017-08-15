@@ -31,7 +31,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.project.buildingsrent.AsyncResponse;
+import com.project.buildingsrent.DataFromLatLng;
 import com.project.buildingsrent.DownloadTask;
 import com.project.buildingsrent.MapsActivity;
 import com.project.buildingsrent.R;
@@ -58,7 +65,7 @@ import java.util.Map;
 /**  * Two ways to get the filterLatLng :
 
             1-in mRecyclerView.addOnItemTouchListener the method that gets the latLng of the location
-            been chosen in the recycler so there I'll do what I wanted with the latLng in my search filtering code .
+            been chosen in the recycler so there I'll do what I wanted with the latLng in my activity_search filtering code .
 
             2- in processFinish method if the location didn't be chosen from the recycler and just typed in the editText .
 */
@@ -76,7 +83,6 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
     protected GoogleApiClient googleApiClient;
     private static final LatLngBounds myBounds = new LatLngBounds(
             new LatLng(-0,0),new LatLng(0,0));
-
     private EditText search_editText;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -95,10 +101,10 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
 
 
 
-    public void onCreateHandle(){
+    public void onCreateHandle(Context context){
         buildGoogleApiClient();
         InitializeViews();
-        Functions();
+        Functions(context);
     }
 
 
@@ -118,11 +124,9 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
 
 
 
-    private void Functions(){
+    private void Functions(final Context context){
 
         mRecyclerView.setVisibility(View.GONE);
-
-
         clear_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,8 +187,15 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
              Toast.makeText(getApplicationContext(),String.valueOf(places.get(0).getLatLng()),Toast.LENGTH_SHORT).show();
                                     filterLatLng = places.get(0).getLatLng();
                                     Log.i("recycler latlng" , filterLatLng.toString());
-
-                                           // changing the editText text \\
+                                    //country , city , area from searching battern
+                                    DataFromLatLng dataFromLatLng=new DataFromLatLng(filterLatLng.latitude,filterLatLng.longitude,
+                                            context);
+                                    String country=dataFromLatLng.getMyCountry();
+                                    String city=dataFromLatLng.getMyCity();
+                                    String area=dataFromLatLng.getMyArea();
+                                    fireRetrive(country,city,area);
+                                           //////////////////
+                                    // changing the editText text \\
 
                                     search_editText.setText(String.valueOf(places.get(0).getAddress()));
                                     mRecyclerView.setVisibility(View.GONE);
@@ -208,6 +219,67 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
 
 
     }
+//retriving data according to country city region and categorie
+    private void fireRetrive(String country, String city, String area) {
+        final SearchActivity searchActivity=new SearchActivity();
+//getting the data and begin to felter
+        String adress=country+"/"+city+"/"+area+"/";
+        FirebaseDatabase database=FirebaseDatabase.getInstance();
+        final DatabaseReference ref=database.getReference(adress+searchActivity.getCategorieItem());
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.e("aaaaaaaaaaaname", String.valueOf(dataSnapshot));
+                Log.e("aaaaaaaaaaaname", s);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Log.e("aaaaaaaaaaaname", String.valueOf(dataSnapshot));
+                Log.e("aaaaaaaaaaaname", s);
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        Log.e("aaaaaaaaaaa", ref.getKey());
+////                        Log.e("aaaaaaaaaaa", String.valueOf(ref.orderByChild("1")));
+//                        Log.e("aaaaaaaaaaa", String.valueOf(ref.getParent()));
+//                        Log.e("aaaaaaaaaaa", String.valueOf(ref.));
+ref.getKey();
+                        for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                            String name = (String) messageSnapshot.child("store").getValue();
+
+//                            String message = (String) messageSnapshot.child("coolingSystem").getValue();
+//                            Log.e("aaaaaaaaaaaname", name);
+//                            Log.e("aaaaaaaaaaamessage", message);
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
 
     public void findAddress(View view) {
 
@@ -220,11 +292,11 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
 
             if (search_editText.length() == 0) {
                 Log.i("Empty" , "EditText is Empty");
-                Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please enter the address you want to activity_search for ..", Toast.LENGTH_SHORT).show();
             } else {
 
 
-                //hn5ally el search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
+                //hn5ally el activity_search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
 
                 String encodedAddress = URLEncoder.encode(search_editText.getText().toString(), "UTF-8");
                 String  httpWeb = fixedHttp + "address=" + encodedAddress + "&key=" + apiKey;
@@ -249,7 +321,7 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
             }
         } catch(UnsupportedEncodingException e){
             e.printStackTrace();
-            Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter the address you want to activity_search for ..", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -329,7 +401,15 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
 
                 Toast.makeText(getApplicationContext(), filterLatLng.toString(), Toast.LENGTH_SHORT).show();
 
-
+//country , city , area from searching battern
+SearchActivity activity=new SearchActivity();
+                DataFromLatLng dataFromLatLng=new DataFromLatLng(filterLatLng.latitude,filterLatLng.longitude,
+                        contex );
+                String country=dataFromLatLng.getMyCountry();
+                String city=dataFromLatLng.getMyCity();
+                String area=dataFromLatLng.getMyArea();
+                fireRetrive(country,city,area);
+                //////////////////
 
             }
 
@@ -349,5 +429,8 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
             finish();
         }
     }
-
+    Context contex;
+public Context setContext(  Context Scontext){
+    contex=Scontext;
+return contex;}
 }

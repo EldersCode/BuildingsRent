@@ -113,10 +113,28 @@ CheckBox other;
     EditText descriptionEditText;
     Switch coolingSystemSwitch;
     Switch NegotiablePriceSwitch;
-    Button submit_store;
     Button locateFlat;
     Switch parkingLotsSwitch;
 
+    //for chalet
+    Switch chaletParkingLotsSwitch;
+    EditText chaletNoOfBedRoomsEditText;
+    EditText chaletNoOfBathRoomsEditText;
+    Switch chaletLivingRoomSwitch;
+    Switch chaletKitchenSwitch;
+    CheckBox chaletSmallDogs;
+    CheckBox chaletBigDogs;
+    CheckBox chaletCats;
+    CheckBox chaletOther;
+    EditText chaletPriceEditText;
+    EditText chaletAreaEditText;
+    EditText chaletDescriptionEditText;
+    Switch chaletCoolingSystemSwitch;
+    Switch chaletNegotiablePriceSwitch;
+    Button chaletSubmit;
+    //store
+
+    Button submit_store;
     EditText storePriceEditText;
     EditText storeAreaEditText;
     EditText storeDescriptionEditText;
@@ -147,7 +165,7 @@ Button hallSubmit;
     static TextSliderView textSliderView;
     private StorageReference storageReference;
 
-                 //search location on map components here ..
+                 //activity_search location on map components here ..
 
     RelativeLayout search_layout;
     Button cancel_btn , confirm_btn;
@@ -195,12 +213,28 @@ other=(CheckBox)findViewById(R.id.other);
 
         ApartmentAreaEditText = (EditText) findViewById(R.id.area);
         priceEditText = (EditText) findViewById(R.id.Price);
-        descriptionEditText = (EditText) findViewById(R.id.description);
+        descriptionEditText = (EditText) findViewById(R.id.Description);
         parkingLotsSwitch=(Switch)findViewById(R.id.ParkingSwitch);
         coolingSystemSwitch=(Switch)findViewById(R.id.coolingSystemSwitch);
         NegotiablePriceSwitch=(Switch)findViewById(R.id.negotiablePriceSwitch);
     locateFlat = (Button) findViewById(R.id.locateFlat);
+//chalet
+        chaletNoOfBedRoomsEditText = (EditText) findViewById(R.id.chaletBedrooms);
+        chaletNoOfBathRoomsEditText = (EditText) findViewById(R.id.chaletBathrooms);
+        chaletLivingRoomSwitch=(Switch)findViewById(R.id.chaletLivingRoomSwitch);
+        chaletKitchenSwitch=(Switch)findViewById(R.id.chaletKitchenSwitch);
+        chaletSmallDogs=(CheckBox)findViewById(R.id.chaletSmallDogs);
+        chaletBigDogs=(CheckBox)findViewById(R.id.chaletBigDogs);
+        chaletCats=(CheckBox)findViewById(R.id.chaletCats);
+        chaletOther=(CheckBox)findViewById(R.id.chaletOthers);
 
+        chaletAreaEditText = (EditText) findViewById(R.id.chaletArea);
+        chaletPriceEditText = (EditText) findViewById(R.id.chaletPrice);
+        chaletDescriptionEditText = (EditText) findViewById(R.id.chaletDescription);
+        chaletParkingLotsSwitch=(Switch)findViewById(R.id.chaletParkingSwitch);
+        chaletCoolingSystemSwitch=(Switch)findViewById(R.id.chaletCoolingSystemSwitch);
+        chaletNegotiablePriceSwitch=(Switch)findViewById(R.id.chaletNegotiablePriceSwitch);
+        chaletSubmit = (Button) findViewById(R.id.chaletSubmit);
         //store widgets
         submit_store = (Button) findViewById(R.id.submit_store);
         storeAreaEditText = (EditText) findViewById(R.id.storeArea);
@@ -506,20 +540,20 @@ other=(CheckBox)findViewById(R.id.other);
 
 
 
-                                 // here the methods I need to search for location
+                                 // here the methods I need to activity_search for location
 
 
     private void Initializing(){
 
 
-                    //here the initialization of the layout that contains all of search location views ..
+                    //here the initialization of the layout that contains all of activity_search location views ..
 
         search_layout = (RelativeLayout)findViewById(R.id.search_location_layout);
 
                                            //////////////////////////
 
 
-                    // here the initialization of all the views we use to search and the recycler
+                    // here the initialization of all the views we use to activity_search and the recycler
 
         search_editText = (EditText)findViewById(R.id.search_editText);
         search_img = (ImageView)findViewById(R.id.search_img);
@@ -616,10 +650,9 @@ other=(CheckBox)findViewById(R.id.other);
                                 /////////////////////////////////////////////////
 
 
-            // the method that performed when Click on search button or recycler
+            // the method that performed when Click on activity_search button or recycler
 
     public void findAddress(View view) {
-
         //hn5ally el keyboard te5tfy b3d ma el user y5allas ketaba
 
         mRecyclerView.setVisibility(View.GONE);
@@ -644,11 +677,11 @@ other=(CheckBox)findViewById(R.id.other);
 
             if (search_editText.length() == 0) {
                 Log.i("Empty" , "EditText is Empty");
-                Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please enter the address you want to activity_search for ..", Toast.LENGTH_SHORT).show();
             } else {
 
 
-                //hn5ally el search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
+                //hn5ally el activity_search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
 
                 String encodedAddress = URLEncoder.encode(search_editText.getText().toString(), "UTF-8");
                 String  httpWeb = fixedHttp + "address=" + encodedAddress + "&key=" + apiKey;
@@ -666,7 +699,7 @@ other=(CheckBox)findViewById(R.id.other);
             }
         } catch(UnsupportedEncodingException e){
             e.printStackTrace();
-            Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter the address you want to activity_search for ..", Toast.LENGTH_SHORT).show();
         }
 
 
