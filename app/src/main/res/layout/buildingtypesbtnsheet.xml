@@ -34,7 +34,7 @@
                     android:id="@+id/HomeButton"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:background="@mipmap/home"
+                    android:background="@mipmap/househd"
                     />
 
                 <TextView

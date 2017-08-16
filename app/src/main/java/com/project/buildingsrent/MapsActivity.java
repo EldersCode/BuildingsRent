@@ -43,6 +43,13 @@ public class MapsActivity extends HandlingMaps{
     String buildingType;
     boolean flag = true;
     LatLng latLng;
+    private Button rentBtnAppartment , saleBtnAppartment
+                  , chaletRentBtn    , chaletsaleBtn
+                  , hallRentBtn      , hallSaleBtn
+                  , landRentBtn      , landSaleBtn
+                  , storeRentBtn      , storeSaleBtn  ;
+
+
 
 
 
@@ -51,9 +58,11 @@ public class MapsActivity extends HandlingMaps{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         onCreateHandle();
-// declearing widgets for sheets
+        mRecyclerView.setVisibility(View.GONE);
+    // declearing widgets for sheets
         sheetsWedgits();
         /////////////
+        handleRentSaleBtns();
 
         try{
             Profile profile = Profile.getCurrentProfile();
@@ -132,16 +141,16 @@ public class MapsActivity extends HandlingMaps{
 
         //handling the boom menu button
 
-        int ImagesForTheMenu[] = new int[]{R.mipmap.gift, R.mipmap.stage, R.mipmap.user, R.mipmap.user};
-        int TextForMenu[] = new int[]{R.string.SearchForAnApartment_Menu, R.string.CreateEvent_Menu, R.string.SetTheApartmentLocation, R.string.SetTheApartmentLocation};
-        int HintTextForMenu[] = new int[]{R.string.SearchForAnApartmentHint_Menu, R.string.CreateEventHint_Menu, R.string.SetTheApartmentLocation_hint, R.string.SetTheApartmentLocation_hint};
+        int ImagesForTheMenu[] = new int[]{R.mipmap.user, R.mipmap.gift, R.mipmap.stage};
+        int TextForMenu[] = new int[]{R.string.profile_menu , R.string.SearchForAnApartment_Menu, R.string.setYourAdvertisement, R.string.setYourAdvertisement};
+        int HintTextForMenu[] = new int[]{R.string.SearchForAnApartmentHint_Menu, R.string.CreateEventHint_Menu, R.string.SetTheApartmentLocation_hint};
 
         final BoomMenuButton bmb = (BoomMenuButton) findViewById(R.id.bmb);
 
 
         bmb.setButtonEnum(ButtonEnum.Ham);
-        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_4);
-        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_4);
+        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_3);
+        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_3);
 
         // wheen a boom btn clicked
 
@@ -336,12 +345,40 @@ categoriesBtnSheets();
             mRecyclerView.setVisibility(View.GONE);
         }
 
+         else if(bottomSheetBehavior1.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+         }
+
         else if(homeBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             homeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        }
-        else if(bottomSheetBehavior1.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
-        }
+             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+         }
+        else if(chaletBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+
+            chaletBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+         }
+         else if(hallBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+
+             hallBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+         }
+         else if(landBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+
+             landBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+         }
+         else if(storeBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+
+             storeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+         }
         else{
 
 
@@ -392,24 +429,24 @@ categoriesBtnSheets();
     }
 
 
-public void categoriesBtnSheets(){
+public void categoriesBtnSheets() {
 
     homeSheetBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
-            buildingType="home";
+            buildingType = "home";
             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
 
             homeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             //if a home btn sheet selected
 
             if (buildingType.equals("home") && myLatLng == null) {
-                new SubmitBuildingInfo(descriptionEditText,homeBottomSheetBehavior,MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                new SubmitBuildingInfo(descriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
-                        NegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+                        NegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild);
 
-            }else  if (buildingType.equals("home") && latLng == null) {
+            } else if (buildingType.equals("home") && latLng == null) {
                 new SubmitBuildingInfo(descriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
                         NegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild);
@@ -421,23 +458,23 @@ public void categoriesBtnSheets(){
         @Override
         public void onClick(View view) {
 
-            buildingType="store";
+            buildingType = "store";
             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
 
             storeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             //if a store btn sheet selected
 
             if (buildingType.equals("store") && myLatLng == null) {
-                new SubmitBuildingInfo(storeDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this, latLng, mMap, buildingType, submit_store, petsLayout, petsSwitch, storePriceEditText, storeAreaEditText, noOfBedRoomsEditText
+                new SubmitBuildingInfo(storeDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap, buildingType, submit_store, petsLayout, petsSwitch, storePriceEditText, storeAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText,
                         storeParkingLotsSwitch,
-                        LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+                        LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild);
 
-            }else if (buildingType.equals("store") && latLng == null) {
-                new SubmitBuildingInfo(storeDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this, myLatLng, mMap, buildingType, submit_store, petsLayout, petsSwitch, storePriceEditText, storeAreaEditText, noOfBedRoomsEditText
+            } else if (buildingType.equals("store") && latLng == null) {
+                new SubmitBuildingInfo(storeDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap, buildingType, submit_store, petsLayout, petsSwitch, storePriceEditText, storeAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText,
                         storeParkingLotsSwitch,
-                        LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+                        LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild);
 
             }
 
@@ -448,23 +485,24 @@ public void categoriesBtnSheets(){
         @Override
         public void onClick(View view) {
 
-            buildingType="land";
+            buildingType = "land";
             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
 
             landBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             //if a land btn sheet selected
 
             if (buildingType.equals("land") && myLatLng == null) {
-                new SubmitBuildingInfo(landDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this, latLng, mMap,
+                new SubmitBuildingInfo(landDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap,
                         buildingType, landSubmit, petsLayout, petsSwitch, landPriceEditText, landAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
-                        landNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+                        landNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild);
+
 
             } else if (buildingType.equals("land") && latLng == null) {
-                new SubmitBuildingInfo(landDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this, myLatLng, mMap,
+                new SubmitBuildingInfo(landDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap,
                         buildingType, landSubmit, petsLayout, petsSwitch, landPriceEditText, landAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
-                        landNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+                        landNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild);
 
             }
 
@@ -475,27 +513,27 @@ public void categoriesBtnSheets(){
         @Override
         public void onClick(View view) {
 
-            buildingType="hall";
+            buildingType = "hall";
             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
 
             hallBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             //if a hall btn sheet selected
 
             if (buildingType.equals("hall") && myLatLng == null) {
-                new SubmitBuildingInfo(hallDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this,
+                new SubmitBuildingInfo(hallDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
                         latLng, mMap, buildingType, hallSubmit,
                         petsLayout, petsSwitch, hallPriceEditText, hallAreaEditText, noOfSeatsEditText
                         , noOfBathRoomsEditText,
                         hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
-                        hallNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+                        hallNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild);
 
-            }else if (buildingType.equals("hall") && latLng == null) {
-                new SubmitBuildingInfo(hallDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this,
+            } else if (buildingType.equals("hall") && latLng == null) {
+                new SubmitBuildingInfo(hallDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
                         myLatLng, mMap, buildingType, hallSubmit,
                         petsLayout, petsSwitch, hallPriceEditText, hallAreaEditText, noOfSeatsEditText
                         , noOfBathRoomsEditText,
                         hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
-                        hallNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+                        hallNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild);
 
             }
 
@@ -503,11 +541,11 @@ public void categoriesBtnSheets(){
         }
     });
     //////////////////////
-     chaletSheetBtn.setOnClickListener(new View.OnClickListener() {
+    chaletSheetBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
-            buildingType="chalet";
+            buildingType = "chalet";
             bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
 
             chaletBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -515,19 +553,19 @@ public void categoriesBtnSheets(){
 
 
             if (buildingType.equals("chalet") && myLatLng == null) {
-                new SubmitBuildingInfo(chaletDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this,
+                new SubmitBuildingInfo(chaletDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
                         latLng, mMap, buildingType, chaletSubmit, petsLayout, petsSwitch, chaletPriceEditText
                         , chaletAreaEditText, chaletNoOfBedRoomsEditText
                         , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
-                        chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+                        chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild);
 
-            }else  if (buildingType.equals("chalet") && latLng == null) {
+            } else if (buildingType.equals("chalet") && latLng == null) {
 
-                new SubmitBuildingInfo(chaletDescriptionEditText,homeBottomSheetBehavior,MapsActivity.this,
+                new SubmitBuildingInfo(chaletDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
                         myLatLng, mMap, buildingType, chaletSubmit, petsLayout, petsSwitch, chaletPriceEditText
                         , chaletAreaEditText, chaletNoOfBedRoomsEditText
                         , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
-                        chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch,landCheckBoxFarm,landCheckBoxbuild);
+                        chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild);
 
             }
 
@@ -537,4 +575,187 @@ public void categoriesBtnSheets(){
     //////////////////////
 }
 
+    public void handleRentSaleBtns(){
+
+
+        rentBtnAppartment = (Button) findViewById(R.id.forRentBtnApp);
+        saleBtnAppartment = (Button) findViewById(R.id.forSaleBtnApp);
+        chaletRentBtn     = (Button) findViewById(R.id.chaletForRentBtn);
+        chaletsaleBtn     = (Button) findViewById(R.id.chaletForSaleBtn);
+        hallRentBtn       = (Button) findViewById(R.id.hallForRentBtn);
+        hallSaleBtn       = (Button) findViewById(R.id.hallForSaleBtn);
+        landRentBtn       = (Button) findViewById(R.id.landForRentBtn);
+        landSaleBtn       = (Button) findViewById(R.id.landForSaleBtn);
+        storeRentBtn      = (Button) findViewById(R.id.storeForRentBtn);
+        storeSaleBtn      = (Button) findViewById(R.id.storeForSaleBtn);
+
+                 // performing functions appartment btns here \\
+
+
+        rentBtnAppartment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                rentBtnAppartment.setClickable(false);
+                rentBtnAppartment.setBackgroundResource(R.drawable.btn_design);
+                saleBtnAppartment.setClickable(true);
+                saleBtnAppartment.setBackgroundResource(R.drawable.btn_design_clicked);
+
+            }
+        });
+
+
+        saleBtnAppartment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                saleBtnAppartment.setClickable(false);
+                saleBtnAppartment.setBackgroundResource(R.drawable.btn_design);
+                rentBtnAppartment.setClickable(true);
+                rentBtnAppartment.setBackgroundResource(R.drawable.btn_design_clicked);
+
+            }
+        });
+
+        rentBtnAppartment.performClick();
+
+                                  ///\\\
+
+                    // performing functions chalet btns here \\
+
+
+        chaletRentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                chaletRentBtn.setClickable(false);
+                chaletRentBtn.setBackgroundResource(R.drawable.btn_design);
+                chaletsaleBtn.setClickable(true);
+                chaletsaleBtn.setBackgroundResource(R.drawable.btn_design_clicked);
+
+            }
+        });
+
+
+        chaletsaleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                chaletsaleBtn.setClickable(false);
+                chaletsaleBtn.setBackgroundResource(R.drawable.btn_design);
+                chaletRentBtn.setClickable(true);
+                chaletRentBtn.setBackgroundResource(R.drawable.btn_design_clicked);
+
+            }
+        });
+
+        chaletRentBtn.performClick();
+
+                                       ///\\\
+
+
+                        // performing functions hall btns here \\
+
+
+        hallRentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                hallRentBtn.setClickable(false);
+                hallRentBtn.setBackgroundResource(R.drawable.btn_design);
+                hallSaleBtn.setClickable(true);
+                hallSaleBtn.setBackgroundResource(R.drawable.btn_design_clicked);
+
+            }
+        });
+
+
+        hallSaleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                hallSaleBtn.setClickable(false);
+                hallSaleBtn.setBackgroundResource(R.drawable.btn_design);
+                hallRentBtn.setClickable(true);
+                hallRentBtn.setBackgroundResource(R.drawable.btn_design_clicked);
+
+            }
+        });
+
+        hallRentBtn.performClick();
+
+                                           ///\\\
+
+
+                          // performing functions land btns here \\
+
+
+        landRentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                landRentBtn.setClickable(false);
+                landRentBtn.setBackgroundResource(R.drawable.btn_design);
+                landSaleBtn.setClickable(true);
+                landSaleBtn.setBackgroundResource(R.drawable.btn_design_clicked);
+
+            }
+        });
+
+
+        landSaleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                landSaleBtn.setClickable(false);
+                landSaleBtn.setBackgroundResource(R.drawable.btn_design);
+                landRentBtn.setClickable(true);
+                landRentBtn.setBackgroundResource(R.drawable.btn_design_clicked);
+
+            }
+        });
+
+        landRentBtn.performClick();
+
+                                             ///\\\
+
+                           // performing functions store btns here \\
+
+
+        storeRentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                storeRentBtn.setClickable(false);
+                storeRentBtn.setBackgroundResource(R.drawable.btn_design);
+                storeSaleBtn.setClickable(true);
+                storeSaleBtn.setBackgroundResource(R.drawable.btn_design_clicked);
+
+            }
+        });
+
+
+        storeSaleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                storeSaleBtn.setClickable(false);
+                storeSaleBtn.setBackgroundResource(R.drawable.btn_design);
+                storeRentBtn.setClickable(true);
+                storeRentBtn.setBackgroundResource(R.drawable.btn_design_clicked);
+
+            }
+        });
+
+        storeRentBtn.performClick();
+
+                                          ///\\\
+
+
+
+
+    }
+
 }
+
+

@@ -5,18 +5,18 @@
     <string name="ask_permission_negative">Cancel</string>
     <string name="app_name">BuildingsRent</string>
     <string name="title_activity_maps">Map</string>
-    <string name="SearchForAnApartment_Menu">Search For A new Apartment</string>
-    <string name="SearchForAnApartmentHint_Menu">Either you wana Buy Or Rent An Apartment</string>
-    <string name="CreateEvent_Menu">Serach For Event</string>
-    <string name="CreateEventHint_Menu">Discover All the Events That is Happening In Ur Area Or any Place In The World</string>
+    <string name="SearchForAnApartment_Menu">Search For new Advertisements</string>
+    <string name="SearchForAnApartmentHint_Menu">Either you wana Buy Or Rent An Apartment , chalet , hall , land , store</string>
+    <string name="profile_menu">Your Profile</string>
+    <string name="CreateEventHint_Menu">See your profile so you can change your information</string>
     <string name="noOfPaths">paths</string>
     <string name="apartment_location_english">Submit</string>
-    <string name="apartment_area_english">- Area</string>
-    <string name="area_hint">put area here ..</string>
+    <string name="apartment_area_english">- Area :</string>
+    <string name="area_hint">Put area here ..</string>
     <string name="bedrooms_hint">Number of bedrooms ..</string>
     <string name="noOfBathrooms">- Number of Bathrooms</string>
     <string name="bathrooms_hint">Number of bathrooms ..</string>
-    <string name="pets">- Pets allowed</string>
+    <string name="pets">- Pets allowed </string>
     <string name="cat">Cat</string>
     <string name="bDog">Big Dogs</string>
     <string name="sDog">Small Dogs</string>
@@ -26,13 +26,13 @@
     <string name="kitchen">- Kitchen</string>
     <string name="coolingSystem">- Cooling System</string>
     <string name="negotiablePrice">- Negotiable Price</string>
-    <string name="priceText">- Price..</string>
+    <string name="priceText">- Price :</string>
     <string name="price">Price</string>
-    <string name="noOfBedrooms">- Number of Bedrooms</string>
+    <string name="noOfBedrooms">- Number of Bedrooms :</string>
     <string name="drawer_item_home">Item Number One</string>
     <string name="drawer_item_settings">Item Number 2</string>
-    <string name="SetTheApartmentLocation">Get ApartmentLocation</string>
-    <string name="SetTheApartmentLocation_hint">get location</string>
+    <string name="setYourAdvertisement">Set Your Advertisement</string>
+    <string name="SetTheApartmentLocation_hint">Get the location of your place and set up your advertisement</string>
     <string name="title_activity_places_auto_location">Map</string>
     <string name="login_btn">Login</string>
     <string name="register_btn">Register</string>
@@ -41,8 +41,8 @@
     <string name="iamOut">this\'s not my estate location</string>
     <string name="show_password">show password</string>
     <string name="forgetPassword">forget password</string>
-    <string name="rent">rent</string>
-    <string name="sale">sale</string>
+    <string name="rent">Rent</string>
+    <string name="sale">Sale</string>
     <string name="facebook_app_id">487725684953514</string>
     <string name="fb_login_protocol_scheme">fb487725684953514</string>
     <string name="enterAddress">Enter Address Here Please ..</string>
@@ -76,13 +76,17 @@
     <string name="BirthProfile">* Birthday :</string>
     <string name="editEmailHint">enter your email here ..</string>
     <string name="changePhoto">Change Picture</string>
-    <string name="farm">farm</string>
-    <string name="build">for build</string>
+    <string name="farm">Farm</string>
+    <string name="build">For build</string>
     <string name="description">Type a description ..</string>
-    <string name="noOfSeats">seats</string>
-    <string name="seat">No of seats</string>
-    <string name="buffet">buffet</string>
+    <string name="noOfSeats">- Seats :</string>
+    <string name="seat">Number of seats</string>
+    <string name="buffet">- Buffet</string>
     <string name="to"><![CDATA[<=TO=>]]></string>
+    <string name="galary">Galary</string>
+    <string name="searchHint">Enter your address here</string>
+    <string name="submit">Submit</string>
+    <string name="category">- Category :</string>
 
 
 </resources>

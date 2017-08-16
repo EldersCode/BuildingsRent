@@ -93,7 +93,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
                 android:orientation="vertical"
-                android:paddingLeft="15dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
 
                 >
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/storeColor"
+    android:background="@drawable/store_bg"
     android:orientation="vertical"
     app:behavior_hideable="true"
     app:layout_behavior="@string/bottom_sheet_behavior"
@@ -40,7 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <Button
-
+                    android:textAllCaps="false"
+                    android:background="@drawable/btn_design"
                     android:id="@+id/storeForRentBtn"
                     android:layout_alignParentStart="true"
                     android:text="@string/rent"
@@ -48,7 +49,8 @@
                     android:layout_height="wrap_content" />
 
                 <Button
-
+                    android:textAllCaps="false"
+                    android:background="@drawable/btn_design"
                     android:layout_alignParentEnd="true"
                     android:id="@+id/storeForSaleBtn"
                     android:text="@string/sale"
@@ -74,13 +76,15 @@
                     android:id="@+id/storePrice"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:ellipsize="end"
                     android:hint="@string/price"
-
+                    android:textColorHint="#3f6468"
+                    android:textColor="@android:color/black"
                     android:inputType="number"
                     android:maxLines="1"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:scrollHorizontally="true" />
 
             </LinearLayout>
@@ -101,14 +105,17 @@
 
                 <EditText
                     android:id="@+id/storeArea"
+                    android:textColorHint="#3f6468"
+                    android:textColor="@android:color/black"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:ellipsize="end"
                     android:hint="@string/area_hint"
                     android:inputType="number"
                     android:maxLines="1"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:scrollHorizontally="true" />
 
                 <Spinner
@@ -116,7 +123,7 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="30dp">
+                    android:layout_marginStart="30dp">
 
                 </Spinner>
             </LinearLayout>
@@ -133,8 +140,9 @@
                     android:id="@+id/storeParkingSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
                     android:text="@string/Parking"
                     android:textSize="18sp"
                     android:textStyle="italic" />
@@ -150,8 +158,9 @@
                     android:id="@+id/storeCoolingSystemSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:textColor="@android:color/black"
                     android:text="@string/coolingSystem"
                     android:textSize="18sp"
                     android:textStyle="italic" />
@@ -167,8 +176,9 @@
                     android:id="@+id/storeNegotiablePriceSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:textColor="@android:color/black"
                     android:text="@string/negotiablePrice"
                     android:textSize="18sp"
                     android:textStyle="italic" />
@@ -186,13 +196,15 @@
                     android:id="@+id/storeDescription"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:ellipsize="end"
                     android:hint="@string/description"
-
+                    android:textColorHint="#3f6468"
+                    android:textColor="@android:color/black"
                     android:inputType="textMultiLine"
                     android:maxLines="4"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:scrollHorizontally="true" />
 
             </LinearLayout>
@@ -208,22 +220,24 @@
 
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="horizontal"
+                    android:orientation="horizontal"
+                    android:gravity="center"
                     >
 
                     <Button
                         android:id="@+id/galary"
+                        android:textAllCaps="false"
+                        android:background="@drawable/btn_design"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="onClick"
-                        android:text="galary"/>
+                        android:text="@string/galary"/>
 
 
                 </LinearLayout>
                 <com.daimajia.slider.library.SliderLayout
-                    android:visibility="gone"
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -244,7 +258,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/apartment_location_english"
-                    android:gravity="center_horizontal"
+                    android:background="@drawable/btn_design"
+                    android:textAllCaps="false"
                     android:textSize="19sp"
                     android:textStyle="bold"
                     />
@@ -252,11 +267,13 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:textAllCaps="false"
-                    android:textStyle="italic"
+                    android:layout_marginStart="65dp"
+                    android:background="@drawable/btn_design"
+                    android:textStyle="bold"
                     android:textSize="19sp"
-                    android:layout_gravity="right"
+                    android:layout_gravity="end"
                     />
 
 

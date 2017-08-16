@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#efedd0"
+    android:background="@drawable/apartment_bg"
     android:orientation="vertical"
     app:behavior_hideable="true"
     app:layout_behavior="@string/bottom_sheet_behavior"
@@ -31,7 +31,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:background="@mipmap/home"
+                android:background="@mipmap/househd"
                 android:id="@+id/camImg"
                 android:layout_gravity="center_horizontal"/>
 
@@ -41,18 +41,20 @@
                 android:layout_height="wrap_content">
                 <Button
 
-                    android:id="@+id/forRentBtn"
-                    android:background="#efedd0"
+                    android:id="@+id/forRentBtnApp"
+                    android:background="@drawable/btn_design"
                     android:layout_alignParentStart="true"
                     android:text="@string/rent"
+                    android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <Button
 
                     android:layout_alignParentEnd="true"
-                    android:background="#efedd0"
-                    android:id="@+id/forSaleBtn"
+                    android:background="@drawable/btn_design"
+                    android:id="@+id/forSaleBtnApp"
+                    android:textAllCaps="false"
                     android:text="@string/sale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -76,13 +78,15 @@
                     android:id="@+id/Price"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:ellipsize="end"
                     android:hint="@string/price"
-
+                    android:textColorHint="#3f6468"
+                    android:textColor="@android:color/black"
                     android:inputType="number"
                     android:maxLines="1"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:scrollHorizontally="true" />
 
             </LinearLayout>
@@ -105,12 +109,15 @@
                     android:id="@+id/area"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:ellipsize="end"
                     android:hint="@string/area_hint"
+                    android:textColorHint="#3f6468"
+                    android:textColor="@android:color/black"
                     android:inputType="number"
                     android:maxLines="1"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:scrollHorizontally="true" />
 
                 <Spinner
@@ -118,7 +125,7 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="30dp">
+                    android:layout_marginStart="30dp">
 
                 </Spinner>
             </LinearLayout>
@@ -142,12 +149,15 @@
                     android:id="@+id/bedrooms"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:ellipsize="end"
+                    android:textColorHint="#3f6468"
+                    android:textColor="@android:color/black"
                     android:hint="@string/bedrooms_hint"
                     android:inputType="number"
                     android:maxLines="1"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:scrollHorizontally="true" />
 
             </LinearLayout>
@@ -171,12 +181,15 @@
                     android:id="@+id/bathrooms"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:ellipsize="end"
+                    android:textColorHint="#3f6468"
+                    android:textColor="@android:color/black"
                     android:hint="@string/bathrooms_hint"
                     android:inputType="number"
                     android:maxLines="1"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:scrollHorizontally="true" />
 
             </LinearLayout>
@@ -188,9 +201,10 @@
                     android:id="@+id/petSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
                     android:text="@string/pets"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="italic" />
 
@@ -210,34 +224,38 @@
 
                     <CheckBox
                         android:id="@+id/smallDogs"
+                        android:textColor="@android:color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
+                        android:layout_marginStart="40dp"
                         android:text="@string/sDog" />
 
                     <CheckBox
                         android:id="@+id/bigDogs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="50dp"
+                        android:textColor="@android:color/black"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="50dp"
                         android:text="@string/bDog" />
 
                     <CheckBox
                         android:id="@+id/cat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
                         android:layout_below="@id/bigDogs"
-                        android:layout_marginLeft="40dp"
+                        android:layout_marginStart="40dp"
                         android:text="@string/cat" />
 
                     <CheckBox
                         android:id="@+id/other"
                         android:layout_width="wrap_content"
+                        android:textColor="@android:color/black"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_below="@id/smallDogs"
-                        android:layout_marginRight="62dp"
+                        android:layout_marginEnd="62dp"
                         android:text="@string/others" />
 
                 </RelativeLayout>
@@ -252,8 +270,9 @@
                     android:id="@+id/ParkingSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:textColor="@android:color/black"
                     android:text="@string/Parking"
                     android:textSize="18sp"
                     android:textStyle="italic" />
@@ -268,9 +287,10 @@
                     android:id="@+id/livingRoomSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
                     android:text="@string/livingRoom"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="italic" />
 
@@ -284,8 +304,9 @@
                     android:id="@+id/kitchenSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:textColor="@android:color/black"
                     android:text="@string/kitchen"
                     android:textSize="18sp"
                     android:textStyle="italic" />
@@ -299,9 +320,10 @@
                 <Switch
                     android:id="@+id/coolingSystemSwitch"
                     android:layout_width="match_parent"
+                    android:textColor="@android:color/black"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
                     android:text="@string/coolingSystem"
                     android:textSize="18sp"
                     android:textStyle="italic" />
@@ -317,8 +339,9 @@
                     android:id="@+id/negotiablePriceSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:textColor="@android:color/black"
                     android:text="@string/negotiablePrice"
                     android:textSize="18sp"
                     android:textStyle="italic" />
@@ -347,20 +370,24 @@
                         android:id="@+id/Description"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:ellipsize="end"
                         android:hint="@string/description"
+                        android:textColorHint="#3f6468"
 
+                        android:textColor="@android:color/black"
                         android:inputType="textMultiLine"
                         android:maxLines="4"
-                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
                         android:scrollHorizontally="true" />
 
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="horizontal"
+                    android:orientation="horizontal"
+                    android:gravity="center"
                     >
 
                     <Button
@@ -368,7 +395,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="onClick"
-                        android:text="galary"/>
+                        android:background="@drawable/btn_design"
+                        android:textAllCaps="false"
+                        android:text="@string/galary"/>
 
 
                 </LinearLayout>
@@ -392,20 +421,24 @@
                     android:id="@+id/locateFlat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/apartment_location_english"
-                    android:gravity="center_horizontal"
+                    android:text="@string/submit"
+                    android:textAllCaps="false"
+                    android:background="@drawable/btn_design"
                     android:textSize="19sp"
                     android:textStyle="bold"
+                    android:layout_gravity="end"
                     />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
+                    android:background="@drawable/btn_design"
                     android:textAllCaps="false"
-                    android:textStyle="italic"
+                    android:textStyle="bold"
+                    android:layout_marginStart="65dp"
                     android:textSize="19sp"
-                    android:layout_gravity="right"
+                    android:layout_gravity="end"
                     />
 
 

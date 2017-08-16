@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -89,6 +90,9 @@ public class SubmitBuildingInfo extends Activity {
         String area=dataFromLatLng.getMyArea();
        adress=country+"/"+city+"/"+area+"/"  ;
         //////////////////////
+
+
+
         petsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -353,4 +357,6 @@ protected  String me(){
 //    Toast.makeText(context, userId, Toast.LENGTH_SHORT).show();
 
 return  userId;}
+
+
 }
