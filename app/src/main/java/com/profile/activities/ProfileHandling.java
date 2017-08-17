@@ -23,6 +23,7 @@ import com.facebook.login.widget.ProfilePictureView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.project.buildingsrent.AdvertiseActivity;
 import com.project.buildingsrent.MapsActivity;
 import com.project.buildingsrent.R;
 import com.squareup.picasso.Picasso;
@@ -65,7 +66,7 @@ public class ProfileHandling extends Activity {
 
         initializingViews();
         getUserData(context);
-        functions();
+        functions(context);
 
     }
 
@@ -90,7 +91,7 @@ public class ProfileHandling extends Activity {
 
                              // views function \\
 
-    public void functions(){
+    public void functions(final Context context){
 
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +100,13 @@ public class ProfileHandling extends Activity {
                 startActivity(new Intent(getApplicationContext() , EditProfileActivity.class));
                 finish();
 
+            }
+        });
+
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context , AdvertiseActivity.class));
             }
         });
 
