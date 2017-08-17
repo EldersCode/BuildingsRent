@@ -3,11 +3,15 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +29,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.facebook.Profile;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,6 +49,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 
+import static com.profile.activities.EditProfileHandling.getSharedPrefs;
+import static com.project.buildingsrent.HandlingLoginAuth.getPrefsName;
 import static com.project.buildingsrent.HandlingMaps.mDemoSlider;
 import static com.project.buildingsrent.HandlingMaps.textSliderView;
 
@@ -76,7 +83,7 @@ public class SubmitBuildingInfo extends Activity {
                               final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText,
                               final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch,
                               final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch,
-                              final CheckBox farmLand, final CheckBox buildLand) {
+                              final CheckBox farmLand, final CheckBox buildLand , final EditText phoneEditText) {
 
         petsLayout.setVisibility(View.GONE);
 //Button rentBtn=(Button) findViewById(R.id.forRentBtn);
@@ -90,6 +97,13 @@ public class SubmitBuildingInfo extends Activity {
         String area=dataFromLatLng.getMyArea();
        adress=country+"/"+city+"/"+area+"/"  ;
         //////////////////////
+
+
+
+
+
+
+                                             ////\\\\
 
 
 
@@ -127,41 +141,47 @@ public class SubmitBuildingInfo extends Activity {
             public void onClick(View v) {
 
 
-
-
-                submitType( descriptionEditText,bottomSheetBehavior1,context,
-                latLng,  mMap,building,locateFlat,petsLayout, petsSwitch, priceEditText,apartmentAreaEditText,  noOfBedRoomsEditText,  noOfBathRoomsEditText,  parkingLotsSwitch,livingRoomSwitch,kitchenSwitch,coolingSystemSwitch,negotiablePriceSwitch,
-                        farmLand,buildLand);
-                ref = FirebaseDatabase.getInstance().getReference(adress+building+"/"+ flatsNo+"/location");
-
-                geoFire = new GeoFire(ref);
-                geoFire.setLocation("firebase-hq", new GeoLocation(latLng.latitude, latLng.longitude));
-
-                //after submetting clear slider and sheet colapse
-                bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
-//              refresh maps activity after submetting
-                Activity a=    (Activity)  context;
-
-                final Intent intent = a.getIntent();
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                a.finish();
-                a.overridePendingTransition(0, 0);
-                a.startActivity(intent);
-                a.overridePendingTransition(0, 0);
-                ////////////////////////////////
-
-                /////////////////////////////////////
-                try {
-                    if (MapsActivity.myDefaultMarker.getTitle().equals("here")) {
-                        MapsActivity.myDefaultMarker.remove();
-                    }
-                }catch (Exception e){
-
+                if (phoneEditText.getText().toString().equals("") || phoneEditText.getText().toString().equals("phone number")){
+                    Toast.makeText(context, "Please enter your phone number !", Toast.LENGTH_SHORT).show();
                 }
-                mMap.addMarker(new MarkerOptions().position(latLng).title(priceEditText.getText().toString()).
-                        icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
+                else {
 
-                String PriceOnMarker=priceEditText.getText().toString();
+
+
+                    submitType(descriptionEditText, bottomSheetBehavior1, context,
+                            latLng, mMap, building, locateFlat, petsLayout, petsSwitch, priceEditText, apartmentAreaEditText, noOfBedRoomsEditText, noOfBathRoomsEditText, parkingLotsSwitch, livingRoomSwitch, kitchenSwitch, coolingSystemSwitch, negotiablePriceSwitch,
+                            farmLand, buildLand);
+                    ref = FirebaseDatabase.getInstance().getReference(adress + building + "/" + flatsNo + "/location");
+
+                    geoFire = new GeoFire(ref);
+                    geoFire.setLocation("firebase-hq", new GeoLocation(latLng.latitude, latLng.longitude));
+
+                    //after submetting clear slider and sheet colapse
+                    bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+//              refresh maps activity after submetting
+                    Activity a = (Activity) context;
+
+                    final Intent intent = a.getIntent();
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    a.finish();
+                    a.overridePendingTransition(0, 0);
+                    a.startActivity(intent);
+                    a.overridePendingTransition(0, 0);
+                    ////////////////////////////////
+
+                    /////////////////////////////////////
+                    try {
+                        if (MapsActivity.myDefaultMarker.getTitle().equals("here")) {
+                            MapsActivity.myDefaultMarker.remove();
+                        }
+                    } catch (Exception e) {
+
+                    }
+                    mMap.addMarker(new MarkerOptions().position(latLng).title(priceEditText.getText().toString()).
+                            icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
+
+                    String PriceOnMarker = priceEditText.getText().toString();
+                }
             }
         });
 
@@ -359,4 +379,10 @@ protected  String me(){
 return  userId;}
 
 
-}
+
+                                      ///\\\
+
+    }
+
+
+

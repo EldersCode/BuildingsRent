@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -41,9 +42,8 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.facebook.Profile;
 import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.LocationCallback;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -64,15 +64,12 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.tapadoo.alerter.Alert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,7 +78,11 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.spec.ECField;
 import java.util.ArrayList;
+
+import static com.profile.activities.EditProfileHandling.getSharedPrefs;
+import static com.project.buildingsrent.HandlingLoginAuth.getPrefsName;
 
 /**
  * Created by Hesham on 5/26/2017.
@@ -202,6 +203,13 @@ Button hallSubmit;
 
                     //////////////////////////////////////
 
+                            // phone edit texts here \\
+
+     EditText phoneApartment, phoneChalet , phoneHall , phoneLand , phoneStore;
+
+
+
+
     public void sheetsWedgits(){
 
         //slider creation and sending image instance
@@ -278,6 +286,13 @@ other=(CheckBox)findViewById(R.id.other);
          hallBuffetSwitch=(Switch)findViewById(R.id.hallBuffetSwitch);;
          noOfSeatsEditText=(EditText) findViewById(R.id.noOfSeats);
         hallSubmit=(Button)findViewById(R.id.hallSubmit) ;
+
+
+        phoneApartment = (EditText) findViewById(R.id.phoneApartment);
+        phoneChalet = (EditText) findViewById(R.id.phoneChalet);
+        phoneHall = (EditText) findViewById(R.id.phoneHall);
+        phoneLand = (EditText) findViewById(R.id.phoneLand);
+        phoneStore = (EditText) findViewById(R.id.phoneStore);
 
 
     }
@@ -369,6 +384,9 @@ other=(CheckBox)findViewById(R.id.other);
 //        }catch (Exception e){
 //
 //        }
+
+
+
 
     }
 
@@ -933,5 +951,60 @@ other=(CheckBox)findViewById(R.id.other);
         }
         Log.d("Slider Demo", "Page Changed: " + position);
     }//
+
+
+
+    public void checkPhone(EditText phoneEditText) {
+
+        // Firebase and facebook user auth \\
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Profile profile = Profile.getCurrentProfile();
+
+        /////\\\\
+
+
+        // if logged in with email and password \\
+        if (currentUser != null && currentUser.isEmailVerified()) {
+            try {
+
+                SharedPreferences prefs = getSharedPreferences(getSharedPrefs(), 0);
+                String phone = prefs.getString("phone", "phone number");
+                if (!phone.equals("phone number")) {
+
+                    phoneEditText.setText(phone);
+
+                }
+
+            } catch (Exception e) {
+
+            }
+        }
+
+        ///\\\
+
+        // if logged in with facebook \\
+
+
+        if (currentUser != null && profile != null) {
+
+            try {
+
+                SharedPreferences prefs = getSharedPreferences(getPrefsName(), 0);
+                String phone = prefs.getString("phone", "");
+                if (!phone.equals("")) {
+
+                    phoneEditText.setText(phone);
+
+                }
+
+            } catch (Exception e) {
+
+            }
+
+        }
+    }
+
+
 
 }

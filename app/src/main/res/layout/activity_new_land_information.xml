@@ -70,7 +70,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="65dp">
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/landPrice"
@@ -86,6 +86,43 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:scrollHorizontally="true" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/phoneNumber"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="italic"
+
+                    />
+
+
+                <EditText
+                    android:id="@+id/phoneLand"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:ellipsize="end"
+                    android:hint="@string/phoneNumHint"
+                    android:textColorHint="#3f6468"
+                    android:textColor="@android:color/black"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:scrollHorizontally="true" />
+
 
             </LinearLayout>
 

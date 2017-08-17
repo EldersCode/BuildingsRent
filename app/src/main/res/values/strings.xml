@@ -67,7 +67,7 @@
     <string name="emailHint">Email</string>
     <string name="passwordHint">Password</string>
     <string name="confPassHint">Confirm Password</string>
-    <string name="phoneNumHint">Phone Number</string>
+    <string name="phoneNumHint">phone number</string>
     <string name="BirthdayProfile">* Birthday :</string>
     <string name="BirthdayText">Birthday here</string>
     <string name="noName">No name found</string>
@@ -89,6 +89,7 @@
     <string name="category">- Category :</string>
     <string name="userComment">User Comment IF Founded ..</string>
     <string name="available">* Available Features :-</string>
+    <string name="phoneNumber">- Phone Number :</string>
 
 
 </resources>

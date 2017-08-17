@@ -23,6 +23,7 @@ import com.facebook.login.widget.ProfilePictureView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.project.buildingsrent.MapsActivity;
 import com.project.buildingsrent.R;
 import com.squareup.picasso.Picasso;
 
@@ -227,7 +228,9 @@ public class ProfileHandling extends Activity {
 
     }
 
-
-
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext() , MapsActivity.class));
+        finish();
+    }
 }

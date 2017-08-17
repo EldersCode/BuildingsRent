@@ -201,7 +201,7 @@
                 <EditText
                     android:layout_width="300dp"
                     android:layout_height="35dp"
-                    android:inputType="text"
+                    android:inputType="phone"
                     android:background="@drawable/edit_text_profile"
                     android:gravity="center"
                     android:layout_gravity="center_horizontal"
