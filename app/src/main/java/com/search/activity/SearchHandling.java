@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.LocationCallback;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -220,42 +223,13 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
 
     }
 //retriving data according to country city region and categorie
-    private void fireRetrive(String country, String city, String area) {
+    private void fireRetrive(final String country, final String city, final String area) {
         final SearchActivity searchActivity=new SearchActivity();
 //getting the data and begin to felter
-        String adress=country+"/"+city+"/"+area+"/";
+        final String adress=country+"/"+city+"/"+area+"/"+searchActivity.getCategorieItem();
         FirebaseDatabase database=FirebaseDatabase.getInstance();
-        final DatabaseReference ref=database.getReference(adress+searchActivity.getCategorieItem());
-        ref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.e("aaaaaaaaaaaname", String.valueOf(dataSnapshot));
-                Log.e("aaaaaaaaaaaname", s);
+        final DatabaseReference ref=database.getReference(adress);
 
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Log.e("aaaaaaaaaaaname", String.valueOf(dataSnapshot));
-                Log.e("aaaaaaaaaaaname", s);
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
                 ref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -263,14 +237,62 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
 ////                        Log.e("aaaaaaaaaaa", String.valueOf(ref.orderByChild("1")));
 //                        Log.e("aaaaaaaaaaa", String.valueOf(ref.getParent()));
 //                        Log.e("aaaaaaaaaaa", String.valueOf(ref.));
-ref.getKey();
+dataSnapshot.getChildrenCount();
+                        Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+int x=1;
+
                         for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                            String name = (String) messageSnapshot.child("store").getValue();
+                            DatabaseReference refL = FirebaseDatabase.getInstance().getReference(adress+"/"+ x+"/location");
+                            GeoFire geoFire = new GeoFire(refL);
+                            final int finalX = x;
+                            geoFire.getLocation("firebase-hq", new LocationCallback() {
+                                @Override
+                                public void onLocationResult(String key, GeoLocation location) {
+                                    if (location != null) {
+//                                        System.out.println(String.format("The location for key %s is [%f,%f]", key, location.latitude, location.longitude));
+                                        Log.e("aaaaaaaaaaamessage",  finalX+"id" +key+location.latitude +location.longitude+"");
 
-//                            String message = (String) messageSnapshot.child("coolingSystem").getValue();
+                                    } else {
+//                                        System.out.println(String.format("There is no location for key %s in GeoFire", key));
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    System.err.println("There was an error getting the GeoFire location: " + databaseError);
+                                }
+                            });
+                            String coolingSystem = (String) messageSnapshot.child("coolingSystem").getValue();
+                            String area = (String) messageSnapshot.child("area").getValue();
+                            String price = (String) messageSnapshot.child("price").getValue();
+                            String descriptionEditText = (String) messageSnapshot.child("descriptionEditText").getValue();
+                            String bedRoomsNo = (String) messageSnapshot.child("bedRoomsNo").getValue();
+                            String bathNo = (String) messageSnapshot.child("bathNo").getValue();
+                            String kitchen = (String) messageSnapshot.child("kitchen").getValue();
+                            String livingRoom = (String) messageSnapshot.child("livingRoom").getValue();
+                            String negotiablePrice = (String) messageSnapshot.child("negotiablePrice").getValue();
+//                            String parking = (String) messageSnapshot.child("parking").getValue();
+//                            String location = (String) messageSnapshot.child("location").;
+
 //                            Log.e("aaaaaaaaaaaname", name);
-//                            Log.e("aaaaaaaaaaamessage", message);
+//                            Log.e("aaaaaaaaaaamessage", String.valueOf(name));
+                            try {
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(price) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(area) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(descriptionEditText) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(livingRoom) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(bathNo) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(kitchen) + x);
+//                                Log.e("aaaaaaaaaaamessage", String.valueOf(parking) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(negotiablePrice) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(bedRoomsNo) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(coolingSystem) + x);
 
+                                x++;
+                            }catch (Exception e){
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(e));
+
+                            }
                         }
                     }
 
