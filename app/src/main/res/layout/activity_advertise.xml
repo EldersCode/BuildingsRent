@@ -25,10 +25,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
+
         <com.daimajia.slider.library.SliderLayout
             android:layout_width="match_parent"
             android:layout_height="200dp" />
 
+
+        <Button
+            android:id="@+id/call_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="20dp"
+            android:layout_gravity="center"
+            android:background="@mipmap/mobilephone"
+            />
 
 
         <TextView
@@ -322,14 +333,7 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/call_btn"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_margin="10dp"
-            android:layout_gravity="end"
-            android:background="@mipmap/mobilephone"
-            />
+
 
 
     </LinearLayout>
