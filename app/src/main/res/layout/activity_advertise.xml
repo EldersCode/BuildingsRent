@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/btn_design"
+    tools:context="com.project.buildingsrent.AdvertiseActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.daimajia.slider.library.SliderLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/priceText"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="italic"
+
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp">
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/price"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@android:color/black"
+                 />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/apartment_area_english"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp">
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ellipsize="end"
+                android:text="@string/area_hint"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@android:color/black"
+                 />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/noOfBedrooms"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="italic"
+
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp">
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ellipsize="end"
+                android:text="@string/bedrooms_hint"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@android:color/black"
+                 />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/noOfBathrooms"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="italic"
+
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp">
+
+            <TextView
+                android:id="@+id/bathrooms"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/bathrooms_hint"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@android:color/black"
+                 />
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/available"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/Parking"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            >
+
+            <TextView
+                android:id="@+id/livingRoomSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/livingRoom"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/kitchenSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/kitchen"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/coolingSystemSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/coolingSystem"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/negotiablePriceSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/negotiablePrice"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/userComment"
+                    android:paddingEnd="10dp"
+                    android:textSize="18sp"
+                    android:paddingStart="10dp"
+                    android:textColor="@android:color/black"
+                     />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"/>
+
+            
+
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

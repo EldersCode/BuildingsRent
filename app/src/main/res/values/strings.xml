@@ -87,6 +87,8 @@
     <string name="searchHint">Enter your address here</string>
     <string name="submit">Submit</string>
     <string name="category">- Category :</string>
+    <string name="userComment">User Comment IF Founded ..</string>
+    <string name="available">* Available Features :-</string>
 
 
 </resources>

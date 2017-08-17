@@ -88,8 +88,10 @@
         <activity
             android:name="com.profile.activities.EditProfileActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
-        <activity android:name="com.search.activity.SearchActivity"
-        android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
+            android:name="com.search.activity.SearchActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity android:name=".AdvertiseActivity"></activity>
     </application>
 
 </manifest>
