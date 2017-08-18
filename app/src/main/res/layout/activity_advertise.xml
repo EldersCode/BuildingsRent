@@ -28,6 +28,7 @@
 
 
         <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/advSlider"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
 
@@ -58,6 +59,8 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/advPrice"
+
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -128,6 +131,7 @@
             android:layout_height="65dp">
 
             <TextView
+                android:id="@+id/areaAdv"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -157,6 +161,7 @@
             android:layout_height="65dp">
 
             <TextView
+                android:id="@+id/noOfBedRoomsAdv"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -166,6 +171,16 @@
                 android:paddingStart="10dp"
                 android:textColor="@android:color/black"
                  />
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ellipsize="end"
+                android:text="@string/bedrooms_hint"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@android:color/black"
+                />
 
         </LinearLayout>
 
@@ -180,7 +195,17 @@
 
             />
 
+        <TextView
+            android:id="@+id/noOfBathroomsAdv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/noOfBathrooms"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="italic"
 
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -196,90 +221,20 @@
                 android:textSize="20sp"
                 />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/Parking"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="italic" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            >
-
-            <TextView
-                android:id="@+id/livingRoomSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/livingRoom"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="italic" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-
-            <TextView
-                android:id="@+id/kitchenSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/kitchen"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="italic" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-
-            <TextView
-                android:id="@+id/coolingSystemSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/coolingSystem"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="italic" />
+           <TextView
+               android:id="@+id/advFeatures"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               />
 
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-
-            <TextView
-                android:id="@+id/negotiablePriceSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/negotiablePrice"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="italic" />
 
 
-        </LinearLayout>
+
+
+
 
 
         <LinearLayout
@@ -293,6 +248,7 @@
                 android:layout_height="150dp">
 
                 <TextView
+                    android:id="@+id/advDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"

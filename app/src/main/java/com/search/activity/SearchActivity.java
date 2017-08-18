@@ -16,29 +16,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends SearchHandling implements AdapterView.OnItemSelectedListener {
-private EditText priceFrom;
-    private EditText priceTo;
-    private EditText areaFrom;
-    private EditText areaTo;
+private static EditText priceFrom;
+    private static EditText priceTo;
+    private static EditText areaFrom;
+    private static EditText areaTo;
 
-    public String getPriceFrom() {
+    public static String getPriceFrom() {
         return priceFrom.getText().toString();
     }
 
 
-    public String getPriceTo() {
+    public static String getPriceTo() {
         return priceTo.getText().toString();
     }
 
 
 
-    public String getAreaFrom() {
+    public static String getAreaFrom() {
         return areaFrom.getText().toString();
     }
 
 
 
-    public String getAreaTo() {
+    public static String getAreaTo() {
         return areaTo.getText().toString();
     }
 

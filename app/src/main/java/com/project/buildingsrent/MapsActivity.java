@@ -1,22 +1,38 @@
 package com.project.buildingsrent;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.LocationCallback;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
@@ -46,6 +62,8 @@ public class MapsActivity extends HandlingMaps{
     String buildingType;
     boolean flag = true;
     LatLng latLng;
+    private Marker marker = null;
+
     private Button rentBtnAppartment , saleBtnAppartment
                   , chaletRentBtn    , chaletsaleBtn
                   , hallRentBtn      , hallSaleBtn
@@ -64,6 +82,121 @@ public class MapsActivity extends HandlingMaps{
         mRecyclerView.setVisibility(View.GONE);
     // declearing widgets for sheets
         sheetsWedgits();
+        ////check for searching instances to be feltered
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final String searchpath = preferences.getString("path", "");
+        final String priceFrom = preferences.getString("priceFrom", "");
+        final String priceTo = preferences.getString("priceTo", "");
+        final String areaFrom = preferences.getString("areaFrom", "");
+        final String areaTo = preferences.getString("areaTo", "");
+        if (searchpath!=null) {
+
+            FirebaseDatabase database=FirebaseDatabase.getInstance();
+            final DatabaseReference ref=database.getReference(searchpath);
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(final DataSnapshot dataSnapshot) {
+//                        Log.e("aaaaaaaaaaa", ref.getKey());
+////                        Log.e("aaaaaaaaaaa", String.valueOf(ref.orderByChild("1")));
+//                        Log.e("aaaaaaaaaaa", String.valueOf(ref.getParent()));
+//                        Log.e("aaaaaaaaaaa", String.valueOf(ref.));
+                    dataSnapshot.getChildrenCount();
+
+
+                    Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+
+                    int x=1;
+
+                    for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                        //instances retrived
+                        String coolingSystem = (String) messageSnapshot.child("coolingSystem").getValue();
+                        String area = (String) messageSnapshot.child("area").getValue();
+                        final String price = (String) messageSnapshot.child("price").getValue();
+                        String descriptionEditText = (String) messageSnapshot.child("descriptionEditText").getValue();
+                        String bedRoomsNo = (String) messageSnapshot.child("bedRoomsNo").getValue();
+                        String bathNo = (String) messageSnapshot.child("bathNo").getValue();
+                        String kitchen = (String) messageSnapshot.child("kitchen").getValue();
+                        String livingRoom = (String) messageSnapshot.child("livingRoom").getValue();
+                        String negotiablePrice = (String) messageSnapshot.child("negotiablePrice").getValue();
+                        String parking = (String) messageSnapshot.child("parking").getValue();
+                        //setting a firebase ref for retreiving markers
+                        DatabaseReference refL = FirebaseDatabase.getInstance().getReference(searchpath+"/"+ x+"/location");
+                        GeoFire geoFire = new GeoFire(refL);
+                        final int finalX = x;
+                        //feltering according to area and price and then setting markers on map
+                        try{
+                        if ( Integer.parseInt(priceFrom) <=  Integer.parseInt(price) &&
+                                Integer.parseInt(priceTo)>= Integer.parseInt(price) &&
+                                Integer.parseInt(areaFrom)<=  Integer.parseInt(area)&&
+                                Integer.parseInt(areaTo)>= Integer.parseInt(area)
+                                ) {
+                            final int finalX1 = x;
+                            geoFire.getLocation("firebase-hq", new LocationCallback() {
+                                @Override
+                                public void onLocationResult(String key, GeoLocation location) {
+                                    if (location != null) {
+                                        Log.e("aaaaaaaaaaamessage", finalX + "id" + key + location.latitude + location.longitude + "");
+                                       marker= mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
+                                        )).title(price).icon(BitmapDescriptorFactory.defaultMarker()));
+                                        marker.setTag(finalX1);
+
+mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Log.e("iiiiii", String.valueOf(marker.getTag()));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MapsActivity.this);
+        final SharedPreferences.Editor editor = preferences.edit();
+//        Log.e("ffffffff",searchActivity.getAreaFrom());
+        editor.putString("data",searchpath+"/"+marker.getTag() );
+        editor.apply();
+
+        startActivity(new Intent(getApplicationContext(),AdvertiseActivity.class));
+        return true;
+    }
+});
+                                    } else {
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+                        }}catch (Exception e){}
+//
+                        try {
+                            Log.e("aaaaaaaaaaamessage", String.valueOf(price) + x);
+                            Log.e("aaaaaaaaaaamessage", String.valueOf(area) + x);
+                            Log.e("aaaaaaaaaaamessage", String.valueOf(descriptionEditText) + x);
+                            Log.e("aaaaaaaaaaamessage", String.valueOf(livingRoom) + x);
+                            Log.e("aaaaaaaaaaamessage", String.valueOf(bathNo) + x);
+                            Log.e("aaaaaaaaaaamessage", String.valueOf(kitchen) + x);
+                            Log.e("aaaaaaaaaaamessage", String.valueOf(parking) + x);
+                            Log.e("aaaaaaaaaaamessage", String.valueOf(negotiablePrice) + x);
+                            Log.e("aaaaaaaaaaamessage", String.valueOf(bedRoomsNo) + x);
+                            Log.e("aaaaaaaaaaamessage", String.valueOf(coolingSystem) + x);
+
+                            x++;
+                        }catch (Exception e){
+                            Log.e("aaaaaaaaaaamessage", String.valueOf(e));
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+                //////////;//////////
+        }
+// edit sharedPref. values
+//        if(!name.equalsIgnoreCase(""))
+//        {
+//            name = name + "  Sethi";  /* Edit the value here*/
+//        }
         /////////////
         handleRentSaleBtns();
 
