@@ -44,6 +44,8 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.facebook.Profile;
 import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.LocationCallback;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -66,7 +68,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -325,65 +331,65 @@ other=(CheckBox)findViewById(R.id.other);
 
                                 // code of retrieving data from firebase \\
 
-//        try {
-//            DatabaseReference firebaseDatabase= FirebaseDatabase.getInstance().getReference("ref");
-//            firebaseDatabase.addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                    String st=dataSnapshot.getValue(String.class);
-//                    list.add(st);
-//                    Log.e("jjjj", String.valueOf(list));
-//                    for (int i =0 ;i< list.size() ;i++){
-//                        ref = FirebaseDatabase.getInstance().getReference("locations");
-//                        Log.e("jj", String.valueOf(list.size()));
-//
-//                        DatabaseReference databaseReference=ref.child(list.get(i));
-//                        geoFire = new GeoFire(databaseReference);
-//                        geoFire.getLocation(list.get(i), new LocationCallback() {
-//                            @Override
-//                            public void onLocationResult(String key, GeoLocation location) {
-//                                if (location != null) {
-//                                    Log.e("jj2",key);
-//
-//
-//                                    mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude)).title(key).icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
-//
-//                                } else {
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(DatabaseError databaseError) {
-//                                System.err.println("There was an error getting the GeoFire location: " + databaseError);
-//                            }
-//                        });
-//                    }
-//                }
-//
-//                @Override
-//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-//
-//        }catch (Exception e){
-//
-//        }
+        try {
+            DatabaseReference firebaseDatabase= FirebaseDatabase.getInstance().getReference("ref");
+            firebaseDatabase.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    String st=dataSnapshot.getValue(String.class);
+                    list.add(st);
+                    Log.e("jjjj", String.valueOf(list));
+                    for (int i =0 ;i< list.size() ;i++){
+                        ref = FirebaseDatabase.getInstance().getReference("locations");
+                        Log.e("jj", String.valueOf(list.size()));
+
+                        DatabaseReference databaseReference=ref.child(list.get(i));
+                        geoFire = new GeoFire(databaseReference);
+                        geoFire.getLocation(list.get(i), new LocationCallback() {
+                            @Override
+                            public void onLocationResult(String key, GeoLocation location) {
+                                if (location != null) {
+                                    Log.e("jj2",key);
+
+
+                                    mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude)).title(key).icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
+
+                                } else {
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                System.err.println("There was an error getting the GeoFire location: " + databaseError);
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }catch (Exception e){
+            Log.i("erroooooor" , "???");
+        }
 
 
 

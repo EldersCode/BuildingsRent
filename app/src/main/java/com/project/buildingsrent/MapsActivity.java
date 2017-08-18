@@ -89,108 +89,120 @@ public class MapsActivity extends HandlingMaps{
         final String priceTo = preferences.getString("priceTo", "");
         final String areaFrom = preferences.getString("areaFrom", "");
         final String areaTo = preferences.getString("areaTo", "");
-        if (searchpath!=null) {
+        try {
 
-            FirebaseDatabase database=FirebaseDatabase.getInstance();
-            final DatabaseReference ref=database.getReference(searchpath);
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(final DataSnapshot dataSnapshot) {
+            Bundle bundle = getIntent().getExtras();
+            String key = bundle.getString("ok");
+
+
+            if (searchpath != null && key.equals("ok")) {
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                final DatabaseReference ref = database.getReference(searchpath);
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
 //                        Log.e("aaaaaaaaaaa", ref.getKey());
 ////                        Log.e("aaaaaaaaaaa", String.valueOf(ref.orderByChild("1")));
 //                        Log.e("aaaaaaaaaaa", String.valueOf(ref.getParent()));
 //                        Log.e("aaaaaaaaaaa", String.valueOf(ref.));
-                    dataSnapshot.getChildrenCount();
+                        dataSnapshot.getChildrenCount();
 
 
-                    Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+                        Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
 
-                    int x=1;
+                        int x = 1;
 
-                    for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                        //instances retrived
-                        String coolingSystem = (String) messageSnapshot.child("coolingSystem").getValue();
-                        String area = (String) messageSnapshot.child("area").getValue();
-                        final String price = (String) messageSnapshot.child("price").getValue();
-                        String descriptionEditText = (String) messageSnapshot.child("descriptionEditText").getValue();
-                        String bedRoomsNo = (String) messageSnapshot.child("bedRoomsNo").getValue();
-                        String bathNo = (String) messageSnapshot.child("bathNo").getValue();
-                        String kitchen = (String) messageSnapshot.child("kitchen").getValue();
-                        String livingRoom = (String) messageSnapshot.child("livingRoom").getValue();
-                        String negotiablePrice = (String) messageSnapshot.child("negotiablePrice").getValue();
-                        String parking = (String) messageSnapshot.child("parking").getValue();
-                        //setting a firebase ref for retreiving markers
-                        DatabaseReference refL = FirebaseDatabase.getInstance().getReference(searchpath+"/"+ x+"/location");
-                        GeoFire geoFire = new GeoFire(refL);
-                        final int finalX = x;
-                        //feltering according to area and price and then setting markers on map
-                        try{
-                        if ( Integer.parseInt(priceFrom) <=  Integer.parseInt(price) &&
-                                Integer.parseInt(priceTo)>= Integer.parseInt(price) &&
-                                Integer.parseInt(areaFrom)<=  Integer.parseInt(area)&&
-                                Integer.parseInt(areaTo)>= Integer.parseInt(area)
-                                ) {
-                            final int finalX1 = x;
-                            geoFire.getLocation("firebase-hq", new LocationCallback() {
-                                @Override
-                                public void onLocationResult(String key, GeoLocation location) {
-                                    if (location != null) {
-                                        Log.e("aaaaaaaaaaamessage", finalX + "id" + key + location.latitude + location.longitude + "");
-                                       marker= mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
-                                        )).title(price).icon(BitmapDescriptorFactory.defaultMarker()));
-                                        marker.setTag(finalX1);
+                        for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                            //instances retrived
+                            String coolingSystem = (String) messageSnapshot.child("coolingSystem").getValue();
+                            String area = (String) messageSnapshot.child("area").getValue();
+                            final String price = (String) messageSnapshot.child("price").getValue();
+                            String descriptionEditText = (String) messageSnapshot.child("descriptionEditText").getValue();
+                            String bedRoomsNo = (String) messageSnapshot.child("bedRoomsNo").getValue();
+                            String bathNo = (String) messageSnapshot.child("bathNo").getValue();
+                            String kitchen = (String) messageSnapshot.child("kitchen").getValue();
+                            String livingRoom = (String) messageSnapshot.child("livingRoom").getValue();
+                            String negotiablePrice = (String) messageSnapshot.child("negotiablePrice").getValue();
+                            String parking = (String) messageSnapshot.child("parking").getValue();
+                            //setting a firebase ref for retreiving markers
+                            DatabaseReference refL = FirebaseDatabase.getInstance().getReference(searchpath + "/" + x + "/location");
+                            GeoFire geoFire = new GeoFire(refL);
+                            final int finalX = x;
+                            //feltering according to area and price and then setting markers on map
+                            try {
+                                if (Integer.parseInt(priceFrom) <= Integer.parseInt(price) &&
+                                        Integer.parseInt(priceTo) >= Integer.parseInt(price) &&
+                                        Integer.parseInt(areaFrom) <= Integer.parseInt(area) &&
+                                        Integer.parseInt(areaTo) >= Integer.parseInt(area)
+                                        ) {
+                                    final int finalX1 = x;
+                                    geoFire.getLocation("firebase-hq", new LocationCallback() {
+                                        @Override
+                                        public void onLocationResult(String key, GeoLocation location) {
+                                            if (location != null) {
+                                                Log.e("aaaaaaaaaaamessage", finalX + "id" + key + location.latitude + location.longitude + "");
+                                                marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
+                                                )).title(price).icon(BitmapDescriptorFactory.defaultMarker()));
+                                                marker.showInfoWindow();
+                                                marker.setTag(finalX1);
 
-mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        Log.e("iiiiii", String.valueOf(marker.getTag()));
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MapsActivity.this);
-        final SharedPreferences.Editor editor = preferences.edit();
+                                                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                                    @Override
+                                                    public boolean onMarkerClick(Marker marker) {
+                                                        Log.e("iiiiii", String.valueOf(marker.getTag()));
+                                                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MapsActivity.this);
+                                                        final SharedPreferences.Editor editor = preferences.edit();
 //        Log.e("ffffffff",searchActivity.getAreaFrom());
-        editor.putString("data",searchpath+"/"+marker.getTag() );
-        editor.apply();
+                                                        editor.putString("data", searchpath + "/" + marker.getTag());
+                                                        editor.apply();
 
-        startActivity(new Intent(getApplicationContext(),AdvertiseActivity.class));
-        return true;
-    }
-});
-                                    } else {
-                                    }
-                                }
+                                                        startActivity(new Intent(getApplicationContext(), AdvertiseActivity.class));
+                                                        return true;
+                                                    }
+                                                });
+                                            } else {
+                                            }
+                                        }
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+                                        }
+                                    });
                                 }
-                            });
-                        }}catch (Exception e){}
+                            } catch (Exception e) {
+                            }
 //
-                        try {
-                            Log.e("aaaaaaaaaaamessage", String.valueOf(price) + x);
-                            Log.e("aaaaaaaaaaamessage", String.valueOf(area) + x);
-                            Log.e("aaaaaaaaaaamessage", String.valueOf(descriptionEditText) + x);
-                            Log.e("aaaaaaaaaaamessage", String.valueOf(livingRoom) + x);
-                            Log.e("aaaaaaaaaaamessage", String.valueOf(bathNo) + x);
-                            Log.e("aaaaaaaaaaamessage", String.valueOf(kitchen) + x);
-                            Log.e("aaaaaaaaaaamessage", String.valueOf(parking) + x);
-                            Log.e("aaaaaaaaaaamessage", String.valueOf(negotiablePrice) + x);
-                            Log.e("aaaaaaaaaaamessage", String.valueOf(bedRoomsNo) + x);
-                            Log.e("aaaaaaaaaaamessage", String.valueOf(coolingSystem) + x);
+                            try {
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(price) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(area) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(descriptionEditText) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(livingRoom) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(bathNo) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(kitchen) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(parking) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(negotiablePrice) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(bedRoomsNo) + x);
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(coolingSystem) + x);
 
-                            x++;
-                        }catch (Exception e){
-                            Log.e("aaaaaaaaaaamessage", String.valueOf(e));
+                                x++;
+                            } catch (Exception e) {
+                                Log.e("aaaaaaaaaaamessage", String.valueOf(e));
 
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
+                    }
+                });
 
                 //////////;//////////
+            }
+        }catch (Exception e){
+
         }
 // edit sharedPref. values
 //        if(!name.equalsIgnoreCase(""))
@@ -211,7 +223,7 @@ mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
         try{
             Profile profile = Profile.getCurrentProfile();
-            Toast.makeText(getApplicationContext(), "     Login Successfully\nWelcome "+ profile.getName() , Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Welcome "+ profile.getName() , Toast.LENGTH_LONG).show();
         }catch (Exception e){
 
         }
@@ -326,7 +338,12 @@ mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
                     //buttom sheets activated and ready for submtting a proberty
                         //alertdialog for asking where is the property location
+                        try{
 
+                            mMap.clear();
+
+                        }catch (Exception e){
+                        }
                         flag = false;
                             final FindLocatinDialog findLocatinDialog = new FindLocatinDialog(MapsActivity.this);
 

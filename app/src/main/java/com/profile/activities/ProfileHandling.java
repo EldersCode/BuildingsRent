@@ -103,12 +103,6 @@ public class ProfileHandling extends Activity {
             }
         });
 
-        profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context , AdvertiseActivity.class));
-            }
-        });
 
     }
 

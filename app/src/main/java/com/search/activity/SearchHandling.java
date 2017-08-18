@@ -1,6 +1,7 @@
 package com.search.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -241,7 +243,9 @@ Log.e("ffffffff",searchActivity.getAreaFrom());
         editor.putString("priceFrom",searchActivity.getPriceFrom());
         editor.putString("priceTo",searchActivity.getPriceTo());
         editor.apply();
-        startActivity(new Intent(contex , MapsActivity.class));
+        Intent intent = new Intent(contex , MapsActivity.class);
+        intent.putExtra("ok" , "ok");
+        startActivity(intent);
 
         /////////////////////////////
 
@@ -263,6 +267,10 @@ Log.e("ffffffff",searchActivity.getAreaFrom());
             } else {
 
 
+                ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage(getString(R.string.pleaseWait));
+                progressDialog.show();
+
                 //hn5ally el activity_search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
 
                 String encodedAddress = URLEncoder.encode(search_editText.getText().toString(), "UTF-8");
@@ -282,14 +290,14 @@ Log.e("ffffffff",searchActivity.getAreaFrom());
 
                     //country , city , area from searching battern
                     DataFromLatLng dataFromLatLng=new DataFromLatLng(filterLatLng.latitude,filterLatLng.longitude,
-                            getApplicationContext());
+                            this);
                     String country=dataFromLatLng.getMyCountry();
                     String city=dataFromLatLng.getMyCity();
                     String area=dataFromLatLng.getMyArea();
-                    fireRetrive(country,city,area);
+//                    fireRetrive(country,city,area);
                     //////////////////
                 }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), filterLatLng.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, filterLatLng.toString(), Toast.LENGTH_SHORT).show();
                 }
 
 

@@ -90,6 +90,7 @@
     <string name="userComment">User Comment IF Founded ..</string>
     <string name="available">* Is Available :</string>
     <string name="phoneNumber">- Phone Number :</string>
+    <string name="pleaseWait">Please wait ...</string>
 
 
 </resources>
