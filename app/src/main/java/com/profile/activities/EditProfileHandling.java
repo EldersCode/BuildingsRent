@@ -177,7 +177,7 @@ public class EditProfileHandling extends Activity  implements AdapterView.OnItem
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Something went wrong !", Toast.LENGTH_SHORT).show();
             }
-            editor.commit();
+            editor.apply();
         }
 
         if(currentUser != null && profile != null){
@@ -210,7 +210,7 @@ public class EditProfileHandling extends Activity  implements AdapterView.OnItem
             }catch (Exception e){
                 Toast.makeText(context, "Something went wrong !", Toast.LENGTH_SHORT).show();
             }
-            edit.commit();
+            edit.apply();
         }
     }
 

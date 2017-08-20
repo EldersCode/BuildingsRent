@@ -218,7 +218,12 @@ public class HandlingLoginAuth extends Activity {
             public void onSuccess(LoginResult loginResult) {
                 String accessToken = loginResult.getAccessToken().getToken();
                 Log.i("accessToken", accessToken);
+                try{
+                    Profile profile = Profile.getCurrentProfile();
+                    Toast.makeText(getApplicationContext(),"      Login Successfully \n" + "Welcome "+ profile.getName() , Toast.LENGTH_LONG).show();
+                }catch (Exception e){
 
+                }
                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
                     @Override
@@ -635,7 +640,7 @@ public class HandlingLoginAuth extends Activity {
             Toast.makeText(getApplicationContext(), "Something went wrong !", Toast.LENGTH_SHORT).show();
         }
 
-        editor.commit();
+        editor.apply();
 
     }
 

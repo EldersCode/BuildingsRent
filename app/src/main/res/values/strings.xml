@@ -91,6 +91,11 @@
     <string name="available">* Is Available :</string>
     <string name="phoneNumber">- Phone Number :</string>
     <string name="pleaseWait">Please wait ...</string>
+    <string name="category2">* Category *</string>
+    <string name="priceText2">* Price *</string>
+    <string name="apartment_area_english2">* Area *</string>
+    <string name="searchType">* Search Type *</string>
+    <string name="required">required !</string>
 
 
 </resources>

@@ -99,11 +99,12 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
         GoogleApiClient.OnConnectionFailedListener ,
         AsyncResponse ,
         LocationListener ,BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
+
+
+
     private static final int REQUEST_CODE = 1;
     Button button;    Bitmap bitmap;
     public static SliderLayout mDemoSlider;
-
-
     GoogleMap mMap;
     GoogleApiClient mGoogleApiClient ;
     Location mLastLocation;
@@ -127,10 +128,10 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
     EditText noOfBathRoomsEditText;
     Switch LivingRoomSwitch;
     Switch KitchenSwitch;
-CheckBox smallDogs;
-CheckBox bigDogs;
-CheckBox cats;
-CheckBox other;
+    CheckBox smallDogs;
+    CheckBox bigDogs;
+    CheckBox cats;
+    CheckBox other;
 
     EditText priceEditText;
     EditText ApartmentAreaEditText;
@@ -170,8 +171,8 @@ CheckBox other;
     EditText landAreaEditText;
     EditText landDescriptionEditText;
     Switch landNegotiablePriceSwitch;
-CheckBox landCheckBoxFarm;
-CheckBox landCheckBoxbuild;
+    CheckBox landCheckBoxFarm;
+    CheckBox landCheckBoxbuild;
     Button landSubmit;
 
     EditText hallPriceEditText;
@@ -182,7 +183,7 @@ CheckBox landCheckBoxbuild;
     Switch hallNegotiablePriceSwitch;
     Switch hallParkingLotsSwitch;
     Switch hallBuffetSwitch;
-Button hallSubmit;
+    Button hallSubmit;
 
     LinearLayout petsLayout;
     Switch petsSwitch;
@@ -212,7 +213,6 @@ Button hallSubmit;
                             // phone edit texts here \\
 
      EditText phoneApartment, phoneChalet , phoneHall , phoneLand , phoneStore;
-
 
 
 
@@ -329,67 +329,7 @@ other=(CheckBox)findViewById(R.id.other);
         AutocompleteApi();
 
 
-                                // code of retrieving data from firebase \\
 
-        try {
-            DatabaseReference firebaseDatabase= FirebaseDatabase.getInstance().getReference("ref");
-            firebaseDatabase.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    String st=dataSnapshot.getValue(String.class);
-                    list.add(st);
-                    Log.e("jjjj", String.valueOf(list));
-                    for (int i =0 ;i< list.size() ;i++){
-                        ref = FirebaseDatabase.getInstance().getReference("locations");
-                        Log.e("jj", String.valueOf(list.size()));
-
-                        DatabaseReference databaseReference=ref.child(list.get(i));
-                        geoFire = new GeoFire(databaseReference);
-                        geoFire.getLocation(list.get(i), new LocationCallback() {
-                            @Override
-                            public void onLocationResult(String key, GeoLocation location) {
-                                if (location != null) {
-                                    Log.e("jj2",key);
-
-
-                                    mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude)).title(key).icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
-
-                                } else {
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                System.err.println("There was an error getting the GeoFire location: " + databaseError);
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-        }catch (Exception e){
-            Log.i("erroooooor" , "???");
-        }
 
 
 
@@ -432,6 +372,32 @@ other=(CheckBox)findViewById(R.id.other);
         }
 
 
+        try {
+
+            Bundle bundle = getIntent().getExtras();
+
+            Double latFiltered =bundle.getDouble("lat");
+            Double lngFiltered =bundle.getDouble("lng");
+            String key = bundle.getString("ok");
+            String locationS = bundle.getString("location");
+            Log.i("lat F",latFiltered.toString());
+            Log.i("lng F",lngFiltered.toString());
+            LatLng latLngF = new LatLng(latFiltered , lngFiltered);
+            if (locationS.equals("city")) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngF));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(9));
+            }else if(locationS.equals("area")){
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngF));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+            }
+
+
+        }catch (Exception e){
+
+        }
+
+
+
     }
 
     @Override
@@ -456,6 +422,31 @@ other=(CheckBox)findViewById(R.id.other);
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }
+
+
+        try {
+
+            Bundle bundle = getIntent().getExtras();
+
+            Double latFiltered =bundle.getDouble("lat");
+            Double lngFiltered =bundle.getDouble("lng");
+            String key = bundle.getString("ok");
+            String locationS = bundle.getString("location");
+            Log.i("lat F",latFiltered.toString());
+            Log.i("lng F",lngFiltered.toString());
+            LatLng latLngF = new LatLng(latFiltered , lngFiltered);
+            if (locationS.equals("city")) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngF));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(9));
+            }else if(locationS.equals("area")){
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngF));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+            }
+
+
+        }catch (Exception e){
+
         }
 
 

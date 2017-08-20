@@ -1,19 +1,13 @@
 package com.project.buildingsrent;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.support.annotation.NonNull;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.design.widget.BottomSheetBehavior;
-import android.util.Base64;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,20 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.facebook.Profile;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,12 +34,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-
 import static com.profile.activities.EditProfileHandling.getSharedPrefs;
 import static com.project.buildingsrent.HandlingLoginAuth.getPrefsName;
-import static com.project.buildingsrent.HandlingMaps.mDemoSlider;
-import static com.project.buildingsrent.HandlingMaps.textSliderView;
 
 
 /**
@@ -69,7 +52,7 @@ public class SubmitBuildingInfo extends Activity {
     ////////////////////////////////
     DatabaseReference ref ;
     private DatabaseReference  users;
-
+    private View focus1 , focus2,focus3 , focus4 , focus5 , focus6;
     GeoFire geoFire;
     public SubmitBuildingInfo() {
 
@@ -94,7 +77,7 @@ public class SubmitBuildingInfo extends Activity {
         DataFromLatLng dataFromLatLng=new DataFromLatLng(latLng.latitude,latLng.longitude,context);
        String country= dataFromLatLng.getMyCountry();
         String city=dataFromLatLng.getMyCity();
-        String area=dataFromLatLng.getMyArea();
+        final String area=dataFromLatLng.getMyArea();
        adress=country+"/"+city+"/"+area+"/"  ;
         //////////////////////
 
@@ -141,51 +124,259 @@ public class SubmitBuildingInfo extends Activity {
             public void onClick(View v) {
 
 
-                if (phoneEditText.getText().toString().equals("") || phoneEditText.getText().toString().equals("phone number")){
-                    Toast.makeText(context, "Please enter your phone number !", Toast.LENGTH_SHORT).show();
+                if(phoneEditText.getText().toString().equals("") || phoneEditText.getText().toString().equals("phone number") ||
+                        priceEditText.getText().toString().equals("")
+                        || apartmentAreaEditText.getText().toString().equals("")
+                        ){
+
+                    Toast.makeText(context, "price , phone number and area are required !", Toast.LENGTH_SHORT).show();
+
+
                 }
+
+
                 else {
 
-
-
-                    submitType(descriptionEditText, bottomSheetBehavior1, context,
-                            latLng, mMap, building, locateFlat, petsLayout, petsSwitch, priceEditText, apartmentAreaEditText, noOfBedRoomsEditText, noOfBathRoomsEditText, parkingLotsSwitch, livingRoomSwitch, kitchenSwitch, coolingSystemSwitch, negotiablePriceSwitch,
-                            farmLand, buildLand);
-                    ref = FirebaseDatabase.getInstance().getReference(adress + building + "/" + flatsNo + "/location");
-
-                    geoFire = new GeoFire(ref);
-                    geoFire.setLocation("firebase-hq", new GeoLocation(latLng.latitude, latLng.longitude));
-
-                    //after submetting clear slider and sheet colapse
-                    bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
-//              refresh maps activity after submetting
-                    Activity a = (Activity) context;
-
-                    final Intent intent = a.getIntent();
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    a.finish();
-                    a.overridePendingTransition(0, 0);
-                    a.startActivity(intent);
-                    a.overridePendingTransition(0, 0);
-                    ////////////////////////////////
-
-                    /////////////////////////////////////
                     try {
-                        if (MapsActivity.myDefaultMarker.getTitle().equals("here")) {
-                            MapsActivity.myDefaultMarker.remove();
+
+                                 // Firebase and facebook user auth \\
+                        FirebaseAuth mAuth= FirebaseAuth.getInstance();
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        Profile profile = Profile.getCurrentProfile();
+
+                                             /////\\\\
+
+                        if (currentUser != null && currentUser.isEmailVerified()) {
+
+                            SharedPreferences shared = getSharedPreferences(getSharedPrefs(), 0);
+                            SharedPreferences.Editor editor = shared.edit();
+
+                            editor.putString("phone" , phoneEditText.getText().toString());
+
+                            editor.apply();
+
                         }
-                    } catch (Exception e) {
+                        if(currentUser != null && profile != null){
+
+                            SharedPreferences myPrefs = getSharedPreferences(getPrefsName(),0);
+                            SharedPreferences.Editor editor = myPrefs.edit();
+
+                            editor.putString("phone" , phoneEditText.getText().toString());
+
+                            editor.apply();
+
+
+                        }
+
+
+                        }catch (Exception e){
+
+
 
                     }
-                    mMap.addMarker(new MarkerOptions().position(latLng).title(priceEditText.getText().toString()).
-                            icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
 
-                    String PriceOnMarker = priceEditText.getText().toString();
+                        submitType(descriptionEditText, bottomSheetBehavior1, context,
+                                latLng, mMap, building, locateFlat, petsLayout, petsSwitch, priceEditText, apartmentAreaEditText, noOfBedRoomsEditText, noOfBathRoomsEditText, parkingLotsSwitch, livingRoomSwitch, kitchenSwitch, coolingSystemSwitch, negotiablePriceSwitch,
+                                farmLand, buildLand);
+                        ref = FirebaseDatabase.getInstance().getReference(adress + building + "/" + flatsNo + "/location");
+
+                        geoFire = new GeoFire(ref);
+                        geoFire.setLocation("firebase-hq", new GeoLocation(latLng.latitude, latLng.longitude));
+
+                        //after submetting clear slider and sheet colapse
+                        bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+//              refresh maps activity after submetting
+                        Activity a = (Activity) context;
+
+                        final Intent intent = a.getIntent();
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        a.finish();
+                        a.overridePendingTransition(0, 0);
+                        a.startActivity(intent);
+                        a.overridePendingTransition(0, 0);
+                        ////////////////////////////////
+
+                        /////////////////////////////////////
+                        try {
+                            if (MapsActivity.myDefaultMarker.getTitle().equals("here")) {
+                                MapsActivity.myDefaultMarker.remove();
+                            }
+                        } catch (Exception e) {
+
+                        }
+                        mMap.addMarker(new MarkerOptions().position(latLng).title(priceEditText.getText().toString()).
+                                icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
+
+                        String PriceOnMarker = priceEditText.getText().toString();
                 }
             }
         });
 
     }
+
+
+
+
+    public void SubmitBuildingInfoCity (final EditText descriptionEditText,
+                              final BottomSheetBehavior bottomSheetBehavior1, final Context context,
+                              final LatLng latLng, final GoogleMap mMap, final String building, final Button locateFlat,
+                              final LinearLayout petsLayout, final Switch petsSwitch, final EditText priceEditText,
+                              final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText,
+                              final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch,
+                              final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch,
+                              final CheckBox farmLand, final CheckBox buildLand , final EditText phoneEditText) {
+
+        petsLayout.setVisibility(View.GONE);
+//Button rentBtn=(Button) findViewById(R.id.forRentBtn);
+//Button saleBtn=(Button) findViewById(R.id.forSaleBtn);
+//        rentBtn.setEnabled(false);
+
+        /////geocoding get country ,city and region
+        DataFromLatLng dataFromLatLng=new DataFromLatLng(latLng.latitude,latLng.longitude,context);
+        String country= dataFromLatLng.getMyCountry();
+        String city=dataFromLatLng.getMyCity();
+        adress=country+"/"+city+"/"  ;
+        //////////////////////
+
+
+
+
+
+
+        ////\\\\
+
+
+
+        petsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    petsLayout.setVisibility(View.VISIBLE);
+                } else {
+                    petsLayout.setVisibility(View.GONE);
+
+                }
+
+            }
+        });
+        database = FirebaseDatabase.getInstance();
+
+        houses = database.getReference(adress+building);
+//
+        houses.addValueEventListener(new ValueEventListener() {
+            @Override
+
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                flatsNo= (int) dataSnapshot.getChildrenCount()+1;
+                Log.e("nnnnnnn", String.valueOf(flatsNo));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        locateFlat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if(phoneEditText.getText().toString().equals("") || phoneEditText.getText().toString().equals("phone number") ||
+                        priceEditText.getText().toString().equals("")
+                        || apartmentAreaEditText.getText().toString().equals("")
+                        ){
+
+                    Toast.makeText(context, "price , phone number and area are required !", Toast.LENGTH_SHORT).show();
+
+                }
+
+
+                else {
+
+
+                    try {
+
+                        // Firebase and facebook user auth \\
+                        FirebaseAuth mAuth= FirebaseAuth.getInstance();
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        Profile profile = Profile.getCurrentProfile();
+
+                        /////\\\\
+
+                        if (currentUser != null && currentUser.isEmailVerified()) {
+
+                            SharedPreferences shared = getSharedPreferences(getSharedPrefs(), 0);
+                            SharedPreferences.Editor editor = shared.edit();
+
+                            editor.putString("phone" , phoneEditText.getText().toString());
+
+                            editor.apply();
+
+                        }
+                        if(currentUser != null && profile != null){
+
+                            SharedPreferences myPrefs = getSharedPreferences(getPrefsName(),0);
+                            SharedPreferences.Editor editor = myPrefs.edit();
+
+                            editor.putString("phone" , phoneEditText.getText().toString());
+
+                            editor.apply();
+
+
+                        }
+
+
+                    }catch (Exception e){
+
+
+
+                    }
+
+
+
+                    submitType(descriptionEditText, bottomSheetBehavior1, context,
+                                latLng, mMap, building, locateFlat, petsLayout, petsSwitch, priceEditText, apartmentAreaEditText, noOfBedRoomsEditText, noOfBathRoomsEditText, parkingLotsSwitch, livingRoomSwitch, kitchenSwitch, coolingSystemSwitch, negotiablePriceSwitch,
+                                farmLand, buildLand);
+                        ref = FirebaseDatabase.getInstance().getReference(adress + building + "/" + flatsNo + "/location");
+
+                        geoFire = new GeoFire(ref);
+                        geoFire.setLocation("firebase-hq", new GeoLocation(latLng.latitude, latLng.longitude));
+
+                        //after submetting clear slider and sheet colapse
+                        bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
+//              refresh maps activity after submetting
+                        Activity a = (Activity) context;
+
+                        final Intent intent = a.getIntent();
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        a.finish();
+                        a.overridePendingTransition(0, 0);
+                        a.startActivity(intent);
+                        a.overridePendingTransition(0, 0);
+                        ////////////////////////////////
+
+                        /////////////////////////////////////
+                        try {
+                            if (MapsActivity.myDefaultMarker.getTitle().equals("here")) {
+                                MapsActivity.myDefaultMarker.remove();
+                            }
+                        } catch (Exception e) {
+
+                        }
+                        mMap.addMarker(new MarkerOptions().position(latLng).title(priceEditText.getText().toString()).
+                                icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
+
+                        String PriceOnMarker = priceEditText.getText().toString();
+
+                }
+            }
+        });
+
+    }
+
+
+
+
 
     public void rentOrSale(final Button rentBtn, final Button saleBtn){
         rentBtn.setOnClickListener(new View.OnClickListener() {

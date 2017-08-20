@@ -5,10 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -19,12 +19,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.firebase.geofire.GeoFire;
-import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.LocationCallback;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -32,19 +28,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.profile.activities.ProfileActivity;
 import com.project.buildingsrent.AsyncResponse;
 import com.project.buildingsrent.DataFromLatLng;
 import com.project.buildingsrent.DownloadTask;
@@ -59,7 +44,13 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Map;
+
+
+import static com.search.activity.SearchActivity.getAreaFrom;
+import static com.search.activity.SearchActivity.getAreaTo;
+import static com.search.activity.SearchActivity.getPriceFrom;
+import static com.search.activity.SearchActivity.getPriceTo;
+import static com.search.activity.SearchActivity.getSharedPrefsSearchType;
 
 /**
  * Created by Hesham on 8/14/2017.
@@ -192,17 +183,12 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
 
                                     //here the way I get the latLng of the location clicked on recyclerView \\
 
-             Toast.makeText(getApplicationContext(),String.valueOf(places.get(0).getLatLng()),Toast.LENGTH_SHORT).show();
+//             Toast.makeText(getApplicationContext(),String.valueOf(places.get(0).getLatLng()),Toast.LENGTH_SHORT).show();
                                     filterLatLng = places.get(0).getLatLng();
                                     Log.i("recycler latlng" , filterLatLng.toString());
                                     //country , city , area from searching battern
-//                                    DataFromLatLng dataFromLatLng=new DataFromLatLng(filterLatLng.latitude,filterLatLng.longitude,
-//                                            context);
-//                                    String country=dataFromLatLng.getMyCountry();
-//                                    String city=dataFromLatLng.getMyCity();
-//                                    String area=dataFromLatLng.getMyArea();
-//                                    fireRetrive(country,city,area);
-//                                           //////////////////
+
+
 //                                    // changing the editText text \\
 
                                     search_editText.setText(String.valueOf(places.get(0).getAddress()));
@@ -238,19 +224,57 @@ public class SearchHandling extends Activity implements GoogleApiClient.Connecti
         final SharedPreferences.Editor editor = preferences.edit();
 Log.e("ffffffff",searchActivity.getAreaFrom());
         editor.putString("path",adress);
+        editor.putString("type", searchActivity.getCategorieItem());
         editor.putString("areaFrom",searchActivity.getAreaFrom());
         editor.putString("areaTo",searchActivity.getAreaTo());
         editor.putString("priceFrom",searchActivity.getPriceFrom());
         editor.putString("priceTo",searchActivity.getPriceTo());
         editor.apply();
         Intent intent = new Intent(contex , MapsActivity.class);
+        intent.putExtra("lat" , filterLatLng.latitude);
+        intent.putExtra("lng" , filterLatLng.longitude);
         intent.putExtra("ok" , "ok");
+        intent.putExtra("location" , "area");
         startActivity(intent);
 
         /////////////////////////////
 
 
     }
+
+
+    private void fireRetriveCity(final String country, final String city) {
+        final SearchActivity searchActivity=new SearchActivity();
+
+//getting the data and begin to felter
+        final String adress=country+"/"+city+"/"+searchActivity.getCategorieItem();
+        //seaving searching instances to be showen in map's activity
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contex);
+        final SharedPreferences.Editor editor = preferences.edit();
+        Log.e("ffffffff",searchActivity.getAreaFrom());
+        editor.putString("type", searchActivity.getCategorieItem());
+        editor.putString("path",adress);
+        editor.putString("areaFrom",searchActivity.getAreaFrom());
+        editor.putString("areaTo",searchActivity.getAreaTo());
+        editor.putString("priceFrom",searchActivity.getPriceFrom());
+        editor.putString("priceTo",searchActivity.getPriceTo());
+        editor.apply();
+        Intent intent = new Intent(contex , MapsActivity.class);
+        intent.putExtra("lat" , filterLatLng.latitude);
+        intent.putExtra("lng" , filterLatLng.longitude);
+        intent.putExtra("ok" , "ok");
+        intent.putExtra("location" , "city");
+        startActivity(intent);
+
+
+        /////////////////////////////
+
+
+    }
+
+
+
+
 
     public void findAddress(View view) {
 //fireRetrive();
@@ -261,50 +285,56 @@ Log.e("ffffffff",searchActivity.getAreaFrom());
 
         try {
 
-            if (search_editText.length() == 0) {
+            if (search_editText.length() == 0 || getAreaFrom().equals("") || getAreaTo().equals("")
+                    || getPriceFrom().equals("")
+                    || getPriceTo().equals("")) {
                 Log.i("Empty" , "EditText is Empty");
-                Toast.makeText(this, "Please enter the address you want to activity_search for ..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please enter the full information to search ..", Toast.LENGTH_SHORT).show();
             } else {
 
-
-                ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setMessage(getString(R.string.pleaseWait));
-                progressDialog.show();
-
-                //hn5ally el activity_search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
-
-                String encodedAddress = URLEncoder.encode(search_editText.getText().toString(), "UTF-8");
-                String  httpWeb = fixedHttp + "address=" + encodedAddress + "&key=" + apiKey;
-
-                Log.i("httpWeb", httpWeb);
+                ConnectivityManager connectMan = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                if(connectMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                   connectMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState()   == NetworkInfo.State.CONNECTED  ) {
 
 
+                    ProgressDialog progressDialog = new ProgressDialog(this);
+                    progressDialog.setMessage(getString(R.string.pleaseWait));
+                    progressDialog.show();
 
-                DownloadTask task = new DownloadTask();
+                    //hn5ally el activity_search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
 
-                // we used the interface to get the data we have after the onPostExecute method finished to use it ..
+                    String encodedAddress = URLEncoder.encode(search_editText.getText().toString(), "UTF-8");
+                    String httpWeb = fixedHttp + "address=" + encodedAddress + "&key=" + apiKey;
 
-                task.delegate = this;
-                task.execute(httpWeb);
-                try{
+                    Log.i("httpWeb", httpWeb);
 
-                    //country , city , area from searching battern
-                    DataFromLatLng dataFromLatLng=new DataFromLatLng(filterLatLng.latitude,filterLatLng.longitude,
-                            this);
-                    String country=dataFromLatLng.getMyCountry();
-                    String city=dataFromLatLng.getMyCity();
-                    String area=dataFromLatLng.getMyArea();
+
+                    DownloadTask task = new DownloadTask();
+
+                    // we used the interface to get the data we have after the onPostExecute method finished to use it ..
+
+                    task.delegate = this;
+                    task.execute(httpWeb);
+                    try {
+
+                        //country , city , area from searching battern
+                        DataFromLatLng dataFromLatLng = new DataFromLatLng(filterLatLng.latitude, filterLatLng.longitude,
+                                this);
+                        String country = dataFromLatLng.getMyCountry();
+                        String city = dataFromLatLng.getMyCity();
+                        String area = dataFromLatLng.getMyArea();
 //                    fireRetrive(country,city,area);
-                    //////////////////
-                }catch (Exception e){
+                        //////////////////
+                    } catch (Exception e) {
 //                    Toast.makeText(this, filterLatLng.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(this, "Please check internet connection !", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         } catch(UnsupportedEncodingException e){
             e.printStackTrace();
-            Toast.makeText(this, "Please enter the address you want to activity_search for ..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -382,17 +412,36 @@ Log.e("ffffffff",searchActivity.getAreaFrom());
                 filterLatLng = new LatLng(latitude,longitude);
                 Log.i("process filter latlng" , filterLatLng.toString());
 
-                Toast.makeText(getApplicationContext(), filterLatLng.toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), filterLatLng.toString(), Toast.LENGTH_SHORT).show();
 
-//country , city , area from searching battern
-SearchActivity activity=new SearchActivity();
+            //country , city , area from searching battern
+                SearchActivity activity=new SearchActivity();
                 DataFromLatLng dataFromLatLng=new DataFromLatLng(filterLatLng.latitude,filterLatLng.longitude,
                         contex );
                 String country=dataFromLatLng.getMyCountry();
                 String city=dataFromLatLng.getMyCity();
                 String area=dataFromLatLng.getMyArea();
-                fireRetrive(country,city,area);
+
                 //////////////////
+
+                    SharedPreferences sharedPreferences =  getSharedPreferences(getSharedPrefsSearchType() , 0);
+                    if (sharedPreferences.contains("myType")){
+
+                        String type = sharedPreferences.getString("myType" , "");
+
+
+                        if(type.equals("city")){
+
+                            fireRetriveCity(country , city);
+
+
+                        }else if (type.equals("area")) {
+
+                            fireRetrive(country, city, area);
+
+                        }
+
+                    }
 
             }
 

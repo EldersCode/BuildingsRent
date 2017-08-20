@@ -21,6 +21,7 @@ import com.facebook.login.LoginManager;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.LocationCallback;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -41,6 +42,8 @@ import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 import com.profile.activities.ProfileActivity;
 import com.search.activity.SearchActivity;
+
+import java.util.ArrayList;
 
 import static com.project.buildingsrent.HandlingLoginAuth.getPrefsName;
 
@@ -74,16 +77,20 @@ public class MapsActivity extends HandlingMaps{
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         onCreateHandle();
         mRecyclerView.setVisibility(View.GONE);
+
+
     // declearing widgets for sheets
         sheetsWedgits();
         ////check for searching instances to be feltered
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final String typeBuilding = preferences.getString("type","");
         final String searchpath = preferences.getString("path", "");
         final String priceFrom = preferences.getString("priceFrom", "");
         final String priceTo = preferences.getString("priceTo", "");
@@ -92,8 +99,9 @@ public class MapsActivity extends HandlingMaps{
         try {
 
             Bundle bundle = getIntent().getExtras();
-            String key = bundle.getString("ok");
 
+
+            String key = bundle.getString("ok");
 
             if (searchpath != null && key.equals("ok")) {
 
@@ -142,14 +150,21 @@ public class MapsActivity extends HandlingMaps{
                                         public void onLocationResult(String key, GeoLocation location) {
                                             if (location != null) {
                                                 Log.e("aaaaaaaaaaamessage", finalX + "id" + key + location.latitude + location.longitude + "");
-                                                marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
-                                                )).title(price).icon(BitmapDescriptorFactory.defaultMarker()));
-                                                marker.showInfoWindow();
-                                                marker.setTag(finalX1);
-
+                                                if(typeBuilding.equals("home")){
+                                                    marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
+                                                    )).title(price).icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
+                                                    marker.showInfoWindow();
+                                                    marker.setTag(finalX1);
+                                                }else{
+                                                     marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
+                                                    )).title(price).icon(BitmapDescriptorFactory.defaultMarker()));
+                                                    marker.showInfoWindow();
+                                                    marker.setTag(finalX1);
+                                                }
                                                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                                     @Override
                                                     public boolean onMarkerClick(Marker marker) {
+                                                        marker.showInfoWindow();
                                                         Log.e("iiiiii", String.valueOf(marker.getTag()));
                                                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MapsActivity.this);
                                                         final SharedPreferences.Editor editor = preferences.edit();
@@ -161,6 +176,9 @@ public class MapsActivity extends HandlingMaps{
                                                         return true;
                                                     }
                                                 });
+
+
+
                                             } else {
                                             }
                                         }
@@ -201,6 +219,9 @@ public class MapsActivity extends HandlingMaps{
 
                 //////////;//////////
             }
+
+
+
         }catch (Exception e){
 
         }
@@ -221,12 +242,7 @@ public class MapsActivity extends HandlingMaps{
 
 
 
-        try{
-            Profile profile = Profile.getCurrentProfile();
-            Toast.makeText(getApplicationContext(), "Welcome "+ profile.getName() , Toast.LENGTH_LONG).show();
-        }catch (Exception e){
 
-        }
 
 //        logout fab button handling
 
@@ -614,10 +630,21 @@ public void categoriesBtnSheets() {
                             , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
                             NegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild, phoneApartment);
 
+                    SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
+                    submitBuildingInfo.SubmitBuildingInfoCity(descriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                            , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
+                            NegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild, phoneApartment);
+
                 } else if (buildingType.equals("home") && latLng == null) {
                     new SubmitBuildingInfo(descriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
                             , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
                             NegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild, phoneApartment);
+
+                    SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
+                    submitBuildingInfo.SubmitBuildingInfoCity(descriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                            , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
+                            NegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild, phoneApartment);
+
                 }
 
 
@@ -639,11 +666,26 @@ public void categoriesBtnSheets() {
                         storeParkingLotsSwitch,
                         LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneStore);
 
+
+                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
+                submitBuildingInfo.SubmitBuildingInfoCity(storeDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap, buildingType, submit_store, petsLayout, petsSwitch, storePriceEditText, storeAreaEditText, noOfBedRoomsEditText
+                        , noOfBathRoomsEditText,
+                        storeParkingLotsSwitch,
+                        LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneStore);
+
+
             } else if (buildingType.equals("store") && latLng == null) {
                 new SubmitBuildingInfo(storeDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap, buildingType, submit_store, petsLayout, petsSwitch, storePriceEditText, storeAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText,
                         storeParkingLotsSwitch,
                         LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneStore);
+
+                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
+                submitBuildingInfo.SubmitBuildingInfoCity(storeDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap, buildingType, submit_store, petsLayout, petsSwitch, storePriceEditText, storeAreaEditText, noOfBedRoomsEditText
+                        , noOfBathRoomsEditText,
+                        storeParkingLotsSwitch,
+                        LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneStore);
+
 
             }
 
@@ -667,11 +709,27 @@ public void categoriesBtnSheets() {
                         landNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneLand);
 
 
+                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
+                submitBuildingInfo.SubmitBuildingInfoCity(landDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap,
+                        buildingType, landSubmit, petsLayout, petsSwitch, landPriceEditText, landAreaEditText, noOfBedRoomsEditText
+                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
+                        landNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneLand);
+
+
+
             } else if (buildingType.equals("land") && latLng == null) {
                 new SubmitBuildingInfo(landDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap,
                         buildingType, landSubmit, petsLayout, petsSwitch, landPriceEditText, landAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
                         landNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneLand);
+
+
+                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
+                submitBuildingInfo.SubmitBuildingInfoCity(landDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap,
+                        buildingType, landSubmit, petsLayout, petsSwitch, landPriceEditText, landAreaEditText, noOfBedRoomsEditText
+                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
+                        landNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneLand);
+
 
             }
 
@@ -696,6 +754,16 @@ public void categoriesBtnSheets() {
                         hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
                         hallNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneHall);
 
+                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
+                submitBuildingInfo.SubmitBuildingInfoCity(hallDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
+                        latLng, mMap, buildingType, hallSubmit,
+                        petsLayout, petsSwitch, hallPriceEditText, hallAreaEditText, noOfSeatsEditText
+                        , noOfBathRoomsEditText,
+                        hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
+                        hallNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneHall);
+
+
+
             } else if (buildingType.equals("hall") && latLng == null) {
                 new SubmitBuildingInfo(hallDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
                         myLatLng, mMap, buildingType, hallSubmit,
@@ -703,6 +771,17 @@ public void categoriesBtnSheets() {
                         , noOfBathRoomsEditText,
                         hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
                         hallNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneHall);
+
+
+                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
+                submitBuildingInfo.SubmitBuildingInfoCity(hallDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
+                        myLatLng, mMap, buildingType, hallSubmit,
+                        petsLayout, petsSwitch, hallPriceEditText, hallAreaEditText, noOfSeatsEditText
+                        , noOfBathRoomsEditText,
+                        hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
+                        hallNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneHall);
+
+
 
             }
 
@@ -728,6 +807,15 @@ public void categoriesBtnSheets() {
                         , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
                         chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneChalet);
 
+
+                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
+                submitBuildingInfo.SubmitBuildingInfoCity(chaletDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
+                        latLng, mMap, buildingType, chaletSubmit, petsLayout, petsSwitch, chaletPriceEditText
+                        , chaletAreaEditText, chaletNoOfBedRoomsEditText
+                        , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
+                        chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneChalet);
+
+
             } else if (buildingType.equals("chalet") && latLng == null) {
 
                 new SubmitBuildingInfo(chaletDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
@@ -735,6 +823,16 @@ public void categoriesBtnSheets() {
                         , chaletAreaEditText, chaletNoOfBedRoomsEditText
                         , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
                         chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneChalet);
+
+                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
+                submitBuildingInfo.SubmitBuildingInfoCity(chaletDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
+                        myLatLng, mMap, buildingType, chaletSubmit, petsLayout, petsSwitch, chaletPriceEditText
+                        , chaletAreaEditText, chaletNoOfBedRoomsEditText
+                        , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
+                        chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneChalet);
+
+
+
 
             }
 
