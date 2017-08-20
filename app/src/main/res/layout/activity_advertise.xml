@@ -12,289 +12,274 @@
         android:layout_height="wrap_content">
 
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
-
-        <com.daimajia.slider.library.SliderLayout
-            android:id="@+id/advSlider"
-            android:layout_width="match_parent"
-            android:layout_height="200dp" />
-
-
-        <Button
-            android:id="@+id/call_btn"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_margin="20dp"
-            android:layout_gravity="center"
-            android:background="@mipmap/mobilephone"
-            />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/priceText"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="italic"
-
-            />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/advPrice"
-
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@string/price"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:textColor="@android:color/black"
-                 />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp"
-            >
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/phoneNumber"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="italic"
-
-                />
-
-            <TextView
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@string/phoneNumHint"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:textColor="@android:color/black"
-                />
-
-
-            <TextView
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:textColorHint="#3f6468"
-                android:textColor="@android:color/black"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:scrollHorizontally="true" />
-
-
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/apartment_area_english"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="italic" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="65dp">
-
-            <TextView
-                android:id="@+id/areaAdv"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:ellipsize="end"
-                android:text="@string/area_hint"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:textColor="@android:color/black"
-                 />
-
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/noOfBedrooms"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="italic"
-
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="65dp">
-
-            <TextView
-                android:id="@+id/noOfBedRoomsAdv"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:ellipsize="end"
-                android:text="@string/bedrooms_hint"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:textColor="@android:color/black"
-                 />
-            <TextView
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:ellipsize="end"
-                android:text="@string/bedrooms_hint"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:textColor="@android:color/black"
-                />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/noOfBathrooms"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="italic"
-
-            />
-
-        <TextView
-            android:id="@+id/noOfBathroomsAdv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/noOfBathrooms"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="italic"
-
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/available"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                />
-
-           <TextView
-               android:id="@+id/advFeatures"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               />
-
-        </LinearLayout>
-
-
-
-
-
-
-
-
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/advSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+
+                <Button
+                    android:id="@+id/call_btn"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:background="@mipmap/mobilephone" />
+
 
                 <TextView
-                    android:id="@+id/advDescription"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/userComment"
-                    android:paddingEnd="10dp"
-                    android:textSize="18sp"
-                    android:paddingStart="10dp"
+                    android:layout_margin="10dp"
+                    android:text="@string/priceText"
                     android:textColor="@android:color/black"
-                     />
+                    android:textSize="18sp"
+                    android:textStyle="italic"
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/advPrice"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/price"
+                        android:textColor="@android:color/black" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/phoneNumber"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/phoneAdv"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/phoneNumHint"
+                        android:textColor="@android:color/black" />
+
+
+                    <TextView
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:scrollHorizontally="true"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="#3f6468" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/apartment_area_english"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/areaAdv"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:ellipsize="end"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/area"
+                        android:textColor="@android:color/black" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/noOfBedrooms"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+
+                        />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/bedroomsNum"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:ellipsize="end"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/bedrooms_hint"
+                        android:textColor="@android:color/black" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/noOfBathrooms"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/bathroomsNum"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:ellipsize="end"
+                        android:hint="@string/noOfBathrooms"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/bathrooms_hint"
+                        android:textColor="@android:color/black"
+
+                        />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/available"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/advFeatures"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+
+                        />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/advDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="center"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="10dp"
+                            android:text="@string/userComment"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal" />
+
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"/>
-
-
-
-
-
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/bathrooms"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:text="@string/bathrooms_hint"
-                android:textColor="@android:color/black" />
-
-        </LinearLayout>
-
-
-
-
-    </LinearLayout>
-
-    </LinearLayout>
 
     </ScrollView>
 

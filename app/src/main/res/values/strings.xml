@@ -88,7 +88,7 @@
     <string name="submit">Submit</string>
     <string name="category">- Category :</string>
     <string name="userComment">User Comment IF Founded ..</string>
-    <string name="available">* Is Available :</string>
+    <string name="available">* Available Features :</string>
     <string name="phoneNumber">- Phone Number :</string>
     <string name="pleaseWait">Please wait ...</string>
     <string name="category2">* Category *</string>
@@ -96,6 +96,7 @@
     <string name="apartment_area_english2">* Area *</string>
     <string name="searchType">* Search Type *</string>
     <string name="required">required !</string>
+    <string name="area">area ..</string>
 
 
 </resources>

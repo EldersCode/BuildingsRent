@@ -44,6 +44,7 @@ import com.profile.activities.ProfileActivity;
 import com.search.activity.SearchActivity;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import static com.project.buildingsrent.HandlingLoginAuth.getPrefsName;
 
@@ -133,6 +134,12 @@ public class MapsActivity extends HandlingMaps{
                             String livingRoom = (String) messageSnapshot.child("livingRoom").getValue();
                             String negotiablePrice = (String) messageSnapshot.child("negotiablePrice").getValue();
                             String parking = (String) messageSnapshot.child("parking").getValue();
+                            String phoneNum = "";
+                            try {
+                                 phoneNum = (String) messageSnapshot.child("phone number").getValue();
+                            }catch (Exception e){
+
+                            }
                             //setting a firebase ref for retreiving markers
                             DatabaseReference refL = FirebaseDatabase.getInstance().getReference(searchpath + "/" + x + "/location");
                             GeoFire geoFire = new GeoFire(refL);
@@ -165,18 +172,23 @@ public class MapsActivity extends HandlingMaps{
                                                     @Override
                                                     public boolean onMarkerClick(Marker marker) {
                                                         marker.showInfoWindow();
-                                                        Log.e("iiiiii", String.valueOf(marker.getTag()));
-                                                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MapsActivity.this);
-                                                        final SharedPreferences.Editor editor = preferences.edit();
-//        Log.e("ffffffff",searchActivity.getAreaFrom());
-                                                        editor.putString("data", searchpath + "/" + marker.getTag());
-                                                        editor.apply();
-
-                                                        startActivity(new Intent(getApplicationContext(), AdvertiseActivity.class));
                                                         return true;
                                                     }
                                                 });
 
+                                                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                                    @Override
+                                                    public void onInfoWindowClick(Marker marker) {
+                                                        marker.showInfoWindow();
+                                                        Log.e("iiiiii", String.valueOf(marker.getTag()));
+                                                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MapsActivity.this);
+                                                        final SharedPreferences.Editor editor = preferences.edit();
+                                                        editor.putString("data", searchpath + "/" + marker.getTag());
+                                                        editor.apply();
+
+                                                        startActivity(new Intent(getApplicationContext(), AdvertiseActivity.class));
+                                                    }
+                                                });
 
 
                                             } else {
@@ -202,6 +214,7 @@ public class MapsActivity extends HandlingMaps{
                                 Log.e("aaaaaaaaaaamessage", String.valueOf(negotiablePrice) + x);
                                 Log.e("aaaaaaaaaaamessage", String.valueOf(bedRoomsNo) + x);
                                 Log.e("aaaaaaaaaaamessage", String.valueOf(coolingSystem) + x);
+                                Log.e("Phone Number here !!!! " , String.valueOf(phoneNum) + x);
 
                                 x++;
                             } catch (Exception e) {
