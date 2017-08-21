@@ -168,6 +168,7 @@ public class MapsActivity extends HandlingMaps{
                                                     )).title(price).icon(BitmapDescriptorFactory.fromResource(R.mipmap.beachhouse5)));
                                                     marker.showInfoWindow();
                                                     marker.setTag(finalX1);
+                                                    Log.i("Chalet here : " , "It's okay");
                                                 }
                                                 else{
                                                      marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude

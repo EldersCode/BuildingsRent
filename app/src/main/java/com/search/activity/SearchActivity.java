@@ -81,7 +81,7 @@ setContext(SearchActivity.this);
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
         categories.add("home");
-        categories.add("chalet ");
+        categories.add("chalet");
         categories.add("hall");
         categories.add("store");
         categories.add("land");
