@@ -97,6 +97,9 @@
     <string name="searchType">* Search Type *</string>
     <string name="required">required !</string>
     <string name="area">area ..</string>
+    <string name="priceCard">* Price :</string>
+    <string name="priceHere">price here</string>
+    <string name="addressHere">address here</string>
 
 
 </resources>

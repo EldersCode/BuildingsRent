@@ -162,7 +162,14 @@ public class MapsActivity extends HandlingMaps{
                                                     )).title(price).icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
                                                     marker.showInfoWindow();
                                                     marker.setTag(finalX1);
-                                                }else{
+                                                }
+                                                else if(typeBuilding.equals("chalet")){
+                                                    marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
+                                                    )).title(price).icon(BitmapDescriptorFactory.fromResource(R.mipmap.beachhouse5)));
+                                                    marker.showInfoWindow();
+                                                    marker.setTag(finalX1);
+                                                }
+                                                else{
                                                      marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
                                                     )).title(price).icon(BitmapDescriptorFactory.defaultMarker()));
                                                     marker.showInfoWindow();

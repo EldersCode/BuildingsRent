@@ -118,6 +118,7 @@ public class EditProfileHandling extends Activity  implements AdapterView.OnItem
             @Override
             public void onClick(View v) {
                 SharedPreferencesChangeData(context);
+                Toast.makeText(context, "Data Saved Successfully ! :)", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext() , ProfileActivity.class));
                 finish();
 
@@ -337,7 +338,7 @@ public class EditProfileHandling extends Activity  implements AdapterView.OnItem
 
 
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "Something went wrong !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Something went wrong ! :(", Toast.LENGTH_SHORT).show();
             }
     }
 

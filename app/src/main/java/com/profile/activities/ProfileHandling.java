@@ -6,37 +6,38 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.ParseException;
-import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.Profile;
-import com.facebook.internal.ImageRequest;
-import com.facebook.login.widget.ProfilePictureView;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.LocationCallback;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.mikhaellopez.circularimageview.CircularImageView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.project.buildingsrent.AdvertiseActivity;
 import com.project.buildingsrent.MapsActivity;
 import com.project.buildingsrent.R;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-
-import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -54,6 +55,9 @@ public class ProfileHandling extends Activity {
     private TextView profileName , profileEmail , profileAddress , profilePhone , profileGender , profileBirthday ;
     private CircleImageView profilePic;
     private Button editBtn;
+    private ListView myAdListView;
+    private ArrayList<HashMap<String , String>> AdvCardArrayList;
+    private  CustomAdAdapter customAdAdapter;
 
                              // Firebase and facebook user auth \\
                              FirebaseAuth mAuth= FirebaseAuth.getInstance();
@@ -64,7 +68,7 @@ public class ProfileHandling extends Activity {
 
     public void ProfileHandlingMain(Context context){
 
-        initializingViews();
+        initializingViews(context);
         getUserData(context);
         functions(context);
 
@@ -73,7 +77,7 @@ public class ProfileHandling extends Activity {
 
                             // initializing views here in this method \\
 
-    public void initializingViews(){
+    public void initializingViews(Context context){
 
         profileName = (TextView) findViewById(R.id.profile_name);
         profileEmail = (TextView) findViewById(R.id.profile_email);
@@ -83,6 +87,12 @@ public class ProfileHandling extends Activity {
         profilePic = (CircleImageView) findViewById(R.id.profile_image);
         profileBirthday = (TextView) findViewById(R.id.profile_birthday);
         editBtn = (Button) findViewById(R.id.edit_profile_btn);
+//        myAdListView = (ListView) findViewById(R.id.userAdsListId);
+//        AdvCardArrayList = new ArrayList<>();
+//        customAdAdapter = new CustomAdAdapter(context , AdvCardArrayList);
+//
+//                // here the HashMap Method \\ //HashMapAdvList(arrayList)-
+//        myAdListView.setAdapter(customAdAdapter);
 
     }
 
@@ -235,4 +245,98 @@ public class ProfileHandling extends Activity {
         startActivity(new Intent(getApplicationContext() , MapsActivity.class));
         finish();
     }
-}
+
+//    public void HashMapAdvList(){
+//        try {
+//
+//                            // I will make an arrayList to add the Ads of the user on it \\
+//                                      // and make for loop with it's size \\
+//               final HashMap<String , String> data = new HashMap<>();
+//
+//
+//
+//
+//                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                final DatabaseReference ref = database.getReference(currentUser.getUid());
+//                ref.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(final DataSnapshot dataSnapshot) {
+//
+//                        dataSnapshot.getChildrenCount();
+//
+//                        Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+//
+//                        int x = 1;
+//
+//                        for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+//                            //instances retrived
+//                            String coolingSystem = (String) messageSnapshot.child("coolingSystem").getValue();
+//                            String area = (String) messageSnapshot.child("area").getValue();
+//                            String price = (String) messageSnapshot.child("price").getValue();
+//                            String descriptionEditText = (String) messageSnapshot.child("descriptionEditText").getValue();
+//                            String bedRoomsNo = (String) messageSnapshot.child("bedRoomsNo").getValue();
+//                            String bathNo = (String) messageSnapshot.child("bathNo").getValue();
+//                            String kitchen = (String) messageSnapshot.child("kitchen").getValue();
+//                            String livingRoom = (String) messageSnapshot.child("livingRoom").getValue();
+//                            String negotiablePrice = (String) messageSnapshot.child("negotiablePrice").getValue();
+//                            String parking = (String) messageSnapshot.child("parking").getValue();
+//                            String phoneNum = "";
+//                            try {
+//                                phoneNum = (String) messageSnapshot.child("phone number").getValue();
+//                            }catch (Exception e){
+//
+//                            }
+//
+//                            Log.i("area Firebase : " , area);
+//                            Log.i("price Firebase : " , price);
+//
+//                            data.put("price" , price);
+//
+//                            data.put("address" , area);
+//
+////                            data.put("cardImage" , arrayList.get(i).get("cardImage"));
+//
+//                            //setting a firebase ref for retreiving markers
+//                            DatabaseReference refL = FirebaseDatabase.getInstance().getReference(currentUser.getUid() + "/" + x );
+//                            final int finalX = x;
+//                            //feltering according to area and price and then setting markers on map
+//                            try {
+//
+//                                    final int finalX1 = x;
+//
+//
+//                            } catch (Exception e) {
+//                            }
+////
+//                            try {
+//
+//
+//                                x++;
+//                            } catch (Exception e) {
+//                                Log.e("aaaaaaaaaaamessage", String.valueOf(e));
+//
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+//
+//                //////////;//////////
+//
+//
+//
+//
+//        }catch (Exception e){
+//
+//            Toast.makeText(this, "you haven't set an advertisement yet ..", Toast.LENGTH_SHORT).show();
+//
+//        }
+//            }
+
+    }
+
+
