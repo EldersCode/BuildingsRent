@@ -11,6 +11,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -753,53 +755,60 @@ other=(CheckBox)findViewById(R.id.other);
     public void findAddress(View view) {
         //hn5ally el keyboard te5tfy b3d ma el user y5allas ketaba
 
-        mRecyclerView.setVisibility(View.GONE);
-
-        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Your Guide");
-        alert.setCancelable(false);
-        alert.setIcon(R.mipmap.alarm);
-        alert.setMessage("You can long click on marker and drag the nearest marker to the location of your apartment");
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                alert.setCancelable(true);
-            }
-        });
-        alert.create().show();
-
-        InputMethodManager inputMethod = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethod.hideSoftInputFromWindow(search_editText.getWindowToken(),0);
-
-        try {
+        ConnectivityManager connectMan = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState()   == NetworkInfo.State.CONNECTED  ) {
 
             if (search_editText.length() == 0) {
-                Log.i("Empty" , "EditText is Empty");
-                Toast.makeText(this, "Please enter the address you want to activity_search for ..", Toast.LENGTH_SHORT).show();
-            } else {
+                Log.i("Empty", "EditText is Empty");
+                Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
+            }else {
+
+                mRecyclerView.setVisibility(View.GONE);
+
+                final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("Your Guide");
+                alert.setCancelable(false);
+                alert.setIcon(R.mipmap.alarm);
+                alert.setMessage("You can long click on marker and drag the nearest marker to the location of your apartment");
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alert.setCancelable(true);
+                    }
+                });
+                alert.create().show();
+
+                InputMethodManager inputMethod = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethod.hideSoftInputFromWindow(search_editText.getWindowToken(), 0);
+
+                try {
 
 
-                //hn5ally el activity_search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
+                    //hn5ally el activity_search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
 
-                String encodedAddress = URLEncoder.encode(search_editText.getText().toString(), "UTF-8");
-                String  httpWeb = fixedHttp + "address=" + encodedAddress + "&key=" + apiKey;
+                    String encodedAddress = URLEncoder.encode(search_editText.getText().toString(), "UTF-8");
+                    String httpWeb = fixedHttp + "address=" + encodedAddress + "&key=" + apiKey;
 
-                Log.i("httpWeb", httpWeb);
+                    Log.i("httpWeb", httpWeb);
 
-                // I will send the httpWeb which contains the full http site for what the user searchs for ..
+                    // I will send the httpWeb which contains the full http site for what the user searchs for ..
 
-                // we open connection by the DownloadTask Class
-                DownloadTask task = new DownloadTask();
-                // we used the interface to get the data we have after the onPostExecute method finished to use it ..
-                task.delegate = this;
-                task.execute(httpWeb);
+                    // we open connection by the DownloadTask Class
+                    DownloadTask task = new DownloadTask();
+                    // we used the interface to get the data we have after the onPostExecute method finished to use it ..
+                    task.delegate = this;
+                    task.execute(httpWeb);
 
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
+                }
             }
-        } catch(UnsupportedEncodingException e){
-            e.printStackTrace();
-            Toast.makeText(this, "Please enter the address you want to activity_search for ..", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Please check internet connection and try again!", Toast.LENGTH_SHORT).show();
         }
-
 
     }
 
