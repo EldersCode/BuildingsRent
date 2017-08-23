@@ -438,7 +438,6 @@ categoriesBtnSheets();
                                 search_layout.setVisibility(View.VISIBLE);
                                 findLocatinDialog.dialog.dismiss();
 
-
                                             // in case of finding the location of the user's apartment
 
                                 confirm_btn.setOnClickListener(new View.OnClickListener() {
@@ -448,7 +447,7 @@ categoriesBtnSheets();
                                         if(myLatLng == null){
                                             Toast.makeText(MapsActivity.this, "please choose your location first", Toast.LENGTH_SHORT).show();
                                         }else {
-                                            // here what happen when we confirm a location after activity_search
+                                                // here what happen when we confirm a location after activity_search
 
                                             final AlertDialog.Builder alert = new AlertDialog.Builder(MapsActivity.this)
                                                     .setTitle("Notification")
@@ -467,16 +466,11 @@ categoriesBtnSheets();
 
                                                     search_editText.getText().clear();
 
-
-                                                                      // get Location Data from latLng here \\
+                                                                   // get Location Data from latLng here \\
 
                                                     DataFromLatLng dataFromLatLng = new DataFromLatLng(myLatLng.latitude ,myLatLng.longitude , MapsActivity.this);
 
                                                                                     ///\\\\
-
-
-
-
 
                                                     //when the latLong is ready btn sheets activated
 
@@ -519,7 +513,6 @@ categoriesBtnSheets();
 
                                 ///////////////////////////////////////////////////////////
 
-
                     }
 
                 }
@@ -533,8 +526,6 @@ categoriesBtnSheets();
             bmb.addBuilder(builder);
         }
     }
-
-
 
 
     @Override
@@ -638,8 +629,6 @@ public void categoriesBtnSheets() {
 
             buildingType = "home";
 
-
-
                 bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
 
                 homeBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -647,22 +636,13 @@ public void categoriesBtnSheets() {
                 //if a home btn sheet selected
 
                 if (buildingType.equals("home") && myLatLng == null) {
-                    new SubmitBuildingInfo(descriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
-                            , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
-                            NegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild, phoneApartment);
 
-                    SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
-                    submitBuildingInfo.SubmitBuildingInfoCity(descriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
+                     new SubmitBuildingInfo(descriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
                             , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
                             NegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild, phoneApartment);
 
                 } else if (buildingType.equals("home") && latLng == null) {
                     new SubmitBuildingInfo(descriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
-                            , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
-                            NegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild, phoneApartment);
-
-                    SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
-                    submitBuildingInfo.SubmitBuildingInfoCity(descriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap, buildingType, locateFlat, petsLayout, petsSwitch, priceEditText, ApartmentAreaEditText, noOfBedRoomsEditText
                             , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
                             NegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild, phoneApartment);
 
@@ -687,29 +667,13 @@ public void categoriesBtnSheets() {
                         storeParkingLotsSwitch,
                         LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneStore);
 
-
-                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
-                submitBuildingInfo.SubmitBuildingInfoCity(storeDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap, buildingType, submit_store, petsLayout, petsSwitch, storePriceEditText, storeAreaEditText, noOfBedRoomsEditText
-                        , noOfBathRoomsEditText,
-                        storeParkingLotsSwitch,
-                        LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneStore);
-
-
             } else if (buildingType.equals("store") && latLng == null) {
                 new SubmitBuildingInfo(storeDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap, buildingType, submit_store, petsLayout, petsSwitch, storePriceEditText, storeAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText,
                         storeParkingLotsSwitch,
                         LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneStore);
 
-                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
-                submitBuildingInfo.SubmitBuildingInfoCity(storeDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap, buildingType, submit_store, petsLayout, petsSwitch, storePriceEditText, storeAreaEditText, noOfBedRoomsEditText
-                        , noOfBathRoomsEditText,
-                        storeParkingLotsSwitch,
-                        LivingRoomSwitch, KitchenSwitch, storeCoolingSystemSwitch, storeNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneStore);
-
-
             }
-
 
         }
     });
@@ -724,19 +688,10 @@ public void categoriesBtnSheets() {
             //if a land btn sheet selected
 
             if (buildingType.equals("land") && myLatLng == null) {
-                new SubmitBuildingInfo(landDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap,
+                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo(landDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap,
                         buildingType, landSubmit, petsLayout, petsSwitch, landPriceEditText, landAreaEditText, noOfBedRoomsEditText
                         , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
                         landNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneLand);
-
-
-                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
-                submitBuildingInfo.SubmitBuildingInfoCity(landDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, latLng, mMap,
-                        buildingType, landSubmit, petsLayout, petsSwitch, landPriceEditText, landAreaEditText, noOfBedRoomsEditText
-                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
-                        landNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneLand);
-
-
 
             } else if (buildingType.equals("land") && latLng == null) {
                 new SubmitBuildingInfo(landDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap,
@@ -744,16 +699,7 @@ public void categoriesBtnSheets() {
                         , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
                         landNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneLand);
 
-
-                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
-                submitBuildingInfo.SubmitBuildingInfoCity(landDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this, myLatLng, mMap,
-                        buildingType, landSubmit, petsLayout, petsSwitch, landPriceEditText, landAreaEditText, noOfBedRoomsEditText
-                        , noOfBathRoomsEditText, parkingLotsSwitch, LivingRoomSwitch, KitchenSwitch, coolingSystemSwitch,
-                        landNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneLand);
-
-
             }
-
 
         }
     });
@@ -775,16 +721,6 @@ public void categoriesBtnSheets() {
                         hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
                         hallNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneHall);
 
-                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
-                submitBuildingInfo.SubmitBuildingInfoCity(hallDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
-                        latLng, mMap, buildingType, hallSubmit,
-                        petsLayout, petsSwitch, hallPriceEditText, hallAreaEditText, noOfSeatsEditText
-                        , noOfBathRoomsEditText,
-                        hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
-                        hallNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneHall);
-
-
-
             } else if (buildingType.equals("hall") && latLng == null) {
                 new SubmitBuildingInfo(hallDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
                         myLatLng, mMap, buildingType, hallSubmit,
@@ -793,23 +729,11 @@ public void categoriesBtnSheets() {
                         hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
                         hallNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneHall);
 
-
-                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
-                submitBuildingInfo.SubmitBuildingInfoCity(hallDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
-                        myLatLng, mMap, buildingType, hallSubmit,
-                        petsLayout, petsSwitch, hallPriceEditText, hallAreaEditText, noOfSeatsEditText
-                        , noOfBathRoomsEditText,
-                        hallParkingLotsSwitch, LivingRoomSwitch, hallBuffetSwitch, hallCoolingSystemSwitch,
-                        hallNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneHall);
-
-
-
             }
-
 
         }
     });
-    //////////////////////
+                                  //////////////////////
     chaletSheetBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -820,17 +744,8 @@ public void categoriesBtnSheets() {
             chaletBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             //if a chalete btn sheet selected
 
-
             if (buildingType.equals("chalet") && myLatLng == null) {
                 new SubmitBuildingInfo(chaletDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
-                        latLng, mMap, buildingType, chaletSubmit, petsLayout, petsSwitch, chaletPriceEditText
-                        , chaletAreaEditText, chaletNoOfBedRoomsEditText
-                        , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
-                        chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneChalet);
-
-
-                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
-                submitBuildingInfo.SubmitBuildingInfoCity(chaletDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
                         latLng, mMap, buildingType, chaletSubmit, petsLayout, petsSwitch, chaletPriceEditText
                         , chaletAreaEditText, chaletNoOfBedRoomsEditText
                         , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
@@ -845,22 +760,13 @@ public void categoriesBtnSheets() {
                         , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
                         chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneChalet);
 
-                SubmitBuildingInfo submitBuildingInfo = new SubmitBuildingInfo();
-                submitBuildingInfo.SubmitBuildingInfoCity(chaletDescriptionEditText, homeBottomSheetBehavior, MapsActivity.this,
-                        myLatLng, mMap, buildingType, chaletSubmit, petsLayout, petsSwitch, chaletPriceEditText
-                        , chaletAreaEditText, chaletNoOfBedRoomsEditText
-                        , chaletNoOfBathRoomsEditText, chaletParkingLotsSwitch, chaletLivingRoomSwitch, chaletKitchenSwitch,
-                        chaletCoolingSystemSwitch, chaletNegotiablePriceSwitch, landCheckBoxFarm, landCheckBoxbuild , phoneChalet);
-
-
-
 
             }
 
 
         }
     });
-    //////////////////////
+                                       //////////////////////
 }
 
     public void handleRentSaleBtns(){
@@ -892,7 +798,6 @@ public void categoriesBtnSheets() {
             }
         });
 
-
         saleBtnAppartment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -910,7 +815,6 @@ public void categoriesBtnSheets() {
                                   ///\\\
 
                     // performing functions chalet btns here \\
-
 
         chaletRentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1009,7 +913,6 @@ public void categoriesBtnSheets() {
 
                            // performing functions store btns here \\
 
-
         storeRentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1038,10 +941,6 @@ public void categoriesBtnSheets() {
         storeRentBtn.performClick();
 
                                           ///\\\
-
-
-
-
     }
 
 }
