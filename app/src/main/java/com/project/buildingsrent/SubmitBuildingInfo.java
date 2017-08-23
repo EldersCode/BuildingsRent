@@ -297,7 +297,7 @@ public class SubmitBuildingInfo extends Activity {
         switch (building){
             case "home":
             {
-               DatabaseReference users = database.getReference("users/"+me());
+                users = database.getReference("users/"+me());
 
                 users.child("userId/" + building + "/owened/" + "houseId/"+flatsNo).setValue(flatsNo);
 
@@ -324,8 +324,8 @@ break;
             //type hall
             case "hall":{
                 users = database.getReference("users/"+me());
-
                 users.child("userId/" + building + "/owened/" + "houseId/"+flatsNo).setValue(flatsNo);
+
                 houses.child(flatsNo + "/noOfSeats/").setValue(noOfBedRoomsEditText.getText().toString());
                 houses.child(flatsNo + "/buffet/").setValue(String.valueOf(kitchenSwitch.isChecked()));
                 houses.child(flatsNo + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
@@ -346,7 +346,6 @@ break;
             //type store
             case "store":{
                 users = database.getReference("users/"+me());
-
                 users.child("userId/" + building + "/owened/" + "houseId/"+flatsNo).setValue(flatsNo);
 
                 houses.child(flatsNo + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
@@ -368,8 +367,6 @@ break;
             //type chalet
             case "chalet" :{
                 users = database.getReference("users/"+me());
-                Toast.makeText(context , ".." , Toast.LENGTH_SHORT).show();
-
                 users.child("userId/" + building + "/owened/" + "houseId/"+flatsNo).setValue(flatsNo);
 
                 houses.child(flatsNo + "/bedRoomsNo/").setValue(noOfBedRoomsEditText.getText().toString());
@@ -426,12 +423,6 @@ break;
         switch (building){
             case "home":
             {
-//                users2 = database2.getReference("users/"+me());
-//
-//                users2.child("userId/" + building + "/owened/" + "houseId/"+flatsNo2).setValue(flatsNo2);
-
-
-
 
                 houses2.child(flatsNo2 + "/bedRoomsNo/").setValue(noOfBedRoomsEditText.getText().toString());
                 houses2.child(flatsNo2 + "/bathNo/").setValue(noOfBathRoomsEditText.getText().toString());
@@ -455,9 +446,7 @@ break;
             }
             //type hall
             case "hall":{
-                users2 = database2.getReference("users/"+me());
 
-                users2.child("userId/" + building + "/owened/" + "houseId/"+flatsNo2).setValue(flatsNo2);
                 houses2.child(flatsNo2 + "/noOfSeats/").setValue(noOfBedRoomsEditText.getText().toString());
                 houses2.child(flatsNo2 + "/buffet/").setValue(String.valueOf(kitchenSwitch.isChecked()));
                 houses2.child(flatsNo2 + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
@@ -477,9 +466,6 @@ break;
             }
             //type store
             case "store":{
-                users2 = database2.getReference("users/"+me());
-
-                users2.child("userId/" + building + "/owened/" + "houseId/"+flatsNo2).setValue(flatsNo2);
 
                 houses2.child(flatsNo2 + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
                 houses2.child(flatsNo2 + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
@@ -499,10 +485,6 @@ break;
             }
             //type chalet
             case "chalet" :{
-                users2 = database2.getReference("users/"+me());
-                Toast.makeText(context , ".." , Toast.LENGTH_SHORT).show();
-
-                users2.child("userId/" + building + "/owened/" + "houseId/"+flatsNo2).setValue(flatsNo2);
 
                 houses2.child(flatsNo2 + "/bedRoomsNo/").setValue(noOfBedRoomsEditText.getText().toString());
                 houses2.child(flatsNo2 + "/bathNo/").setValue(noOfBathRoomsEditText.getText().toString());
@@ -527,8 +509,6 @@ break;
             }
             //type land
             case "land":{
-                users2 = database2.getReference("users/"+me());
-                users2.child("userId/" + building + "owened/" + "houseId/"+flatsNo2).setValue(flatsNo2);
 
                 houses2.child(flatsNo2 + "/price/").setValue(priceEditText.getText().toString());
                 houses2.child(flatsNo2 + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
