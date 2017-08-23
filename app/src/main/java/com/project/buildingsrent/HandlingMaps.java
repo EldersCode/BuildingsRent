@@ -106,7 +106,11 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
 
     private static final int REQUEST_CODE = 1;
     Button button;    Bitmap bitmap;
-    public static SliderLayout mDemoSlider;
+    public static SliderLayout houseSlider;
+    public static SliderLayout hallSlider;
+    public static SliderLayout chaletSlider;
+    public static SliderLayout landSlider;
+    public static SliderLayout storeSlider;
     GoogleMap mMap;
     GoogleApiClient mGoogleApiClient ;
     Location mLastLocation;
@@ -189,7 +193,11 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
 
     LinearLayout petsLayout;
     Switch petsSwitch;
-    static TextSliderView textSliderView;
+    static TextSliderView hallTextSliderView;
+    static TextSliderView landTextSliderView;
+    static TextSliderView chaletTextSliderView;
+    static TextSliderView homeTextSliderView;
+    static TextSliderView storeTextSliderView;
     private StorageReference storageReference;
 
                  //activity_search location on map components here ..
@@ -223,13 +231,41 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
         //slider creation and sending image instance
         storageReference= FirebaseStorage.getInstance().getReference();
 
-        mDemoSlider = (SliderLayout)findViewById(R.id.slider);
+        houseSlider = (SliderLayout)findViewById(R.id.houseSlider);
+        hallSlider = (SliderLayout)findViewById(R.id.hallSlider);
+        storeSlider = (SliderLayout)findViewById(R.id.storeSlider);
+        landSlider = (SliderLayout)findViewById(R.id.landSlider);
+        chaletSlider = (SliderLayout)findViewById(R.id.chaletSlider);
 
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(4000);
-        mDemoSlider.addOnPageChangeListener(this);
+        houseSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        houseSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        houseSlider.setCustomAnimation(new DescriptionAnimation());
+        houseSlider.setDuration(4000);
+        houseSlider.addOnPageChangeListener(this);
+
+  hallSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        hallSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        hallSlider.setCustomAnimation(new DescriptionAnimation());
+        hallSlider.setDuration(4000);
+        hallSlider.addOnPageChangeListener(this);
+
+        storeSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        storeSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        storeSlider.setCustomAnimation(new DescriptionAnimation());
+        storeSlider.setDuration(4000);
+        storeSlider.addOnPageChangeListener(this);
+
+        landSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        landSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        landSlider.setCustomAnimation(new DescriptionAnimation());
+        landSlider.setDuration(4000);
+        landSlider.addOnPageChangeListener(this);
+
+        chaletSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        chaletSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        chaletSlider.setCustomAnimation(new DescriptionAnimation());
+        chaletSlider.setDuration(4000);
+        chaletSlider.addOnPageChangeListener(this);
 
 //////////slider creation end
         //declearing inistances for home
@@ -864,15 +900,16 @@ other=(CheckBox)findViewById(R.id.other);
 //
 
                         InputStream stream = null;
-                        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK)
+                        if ( resultCode == Activity.RESULT_OK) {
                             try {
                                 //sending image to firebase and store it
-                                final Uri uri =data.getData();
-                                StorageReference filepath =storageReference.child("flats").child("userId");
+                                final Uri uri = data.getData();
+                                StorageReference filepath = storageReference.child("flats").child("userId");
                                 filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                                                               @Override
-                                                                               public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                                                   Toast.makeText(getApplicationContext(),"sent",Toast.LENGTH_SHORT).show();}
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        Toast.makeText(getApplicationContext(), "sent", Toast.LENGTH_SHORT).show();
+                                    }
                                 });
                                 ///////////////////////sending image end
                                 // recyle unused bitmaps
@@ -884,21 +921,56 @@ other=(CheckBox)findViewById(R.id.other);
 
                                 bitmap = BitmapFactory.decodeStream(stream);
                                 //setting the image in the slider
-                                 textSliderView = new TextSliderView(this);
-                                textSliderView
-                                        .image(data.getDataString())
-                                        .description("image")
+                                Log.e("requestCode", String.valueOf(requestCode));
 
-                                        .setScaleType(BaseSliderView.ScaleType.Fit)
-                                        ;
+                                switch (requestCode){
+                                    case 1:
+                                        Log.e("requestCode", String.valueOf(requestCode));
 
-                                mDemoSlider.addSlider(textSliderView);
+                                        this.slider(homeTextSliderView, data,houseSlider );
+
+
+                                        break;
+
+                                    case 2:
+                                        Log.e("requestCode", String.valueOf(requestCode));
+
+                                        this.slider(storeTextSliderView, data,storeSlider);
+                                        break;
+
+                                    case 3:
+                                        Log.e("requestCode", String.valueOf(requestCode));
+
+                                        this.slider(chaletTextSliderView, data,chaletSlider);
+                                        break;
+
+                                    case 4:
+                                        Log.e("requestCode", String.valueOf(requestCode));
+
+                                        this.slider(landTextSliderView, data,landSlider);
+                                        break;
+
+                                    case 5:
+                                        Log.e("requestCode", String.valueOf(requestCode));
+
+                                        this.slider(hallTextSliderView, data,hallSlider);
+break;
+                                }
+//                                 textSliderView = new TextSliderView(this);
+//                                textSliderView
+//                                        .image(data.getDataString())
+//                                        .description("image")
+//
+//                                        .setScaleType(BaseSliderView.ScaleType.Fit)
+//                                        ;
+//
+//                                mDemoSlider.addSlider(textSliderView);
 
 
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-
+                        }
                     }
 /////////////////// on sheets result end
 
@@ -912,13 +984,27 @@ other=(CheckBox)findViewById(R.id.other);
 
 
 
+    public void slider(TextSliderView textSliderView,Intent data,SliderLayout mSlider ){
+        //setting the image in the slider
+
+        textSliderView = new TextSliderView(this);
+        textSliderView
+                .image(data.getDataString())
+                .description("image")
+
+                .setScaleType(BaseSliderView.ScaleType.Fit)
+        ;
+
+        mSlider.addSlider(textSliderView);
+
+    }
 
 
 //slider images on submit info class
     @Override//
     protected void onStop() {//
         // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
-        mDemoSlider.stopAutoCycle();//
+//        mDemoSlider.stopAutoCycle();//
         super.onStop();//
     }//
 
@@ -933,14 +1019,46 @@ other=(CheckBox)findViewById(R.id.other);
 
     @Override//
     public void onPageScrollStateChanged(int state) {}//
-    public void onClick(View View) {//
+    public void onClickHome(View View) {//
         Intent intent = new Intent();//
         intent.setType("image/*");//
         intent.setAction(Intent.ACTION_GET_CONTENT);//
         intent.addCategory(Intent.CATEGORY_OPENABLE);//
-        startActivityForResult(intent, REQUEST_CODE);//
-    }//
 
+        startActivityForResult(intent, 1);//
+    }//
+    public void onClickStore(View View) {//
+        Intent intent = new Intent();//
+        intent.setType("image/*");//
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        intent.addCategory(Intent.CATEGORY_OPENABLE);//
+
+        startActivityForResult(intent, 2);//
+    }//
+public void onClickHall(View View) {//
+        Intent intent = new Intent();//
+        intent.setType("image/*");//
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        intent.addCategory(Intent.CATEGORY_OPENABLE);//
+
+        startActivityForResult(intent, 5);//
+    }//
+public void onClickChalet(View View) {//
+        Intent intent = new Intent();//
+        intent.setType("image/*");//
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        intent.addCategory(Intent.CATEGORY_OPENABLE);//
+
+        startActivityForResult(intent, 3);//
+    }//
+public void onClickLand(View View) {//
+        Intent intent = new Intent();//
+        intent.setType("image/*");//
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        intent.addCategory(Intent.CATEGORY_OPENABLE);//
+
+        startActivityForResult(intent, 4);//
+    }//
 
     @Override//
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}//

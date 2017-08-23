@@ -269,13 +269,13 @@
                         android:background="@drawable/btn_design"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="onClick"
+                        android:onClick="onClickStore"
                         android:text="@string/galary"/>
 
 
                 </LinearLayout>
                 <com.daimajia.slider.library.SliderLayout
-                    android:id="@+id/slider"
+                    android:id="@+id/storeSlider"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     />
@@ -302,6 +302,7 @@
                     />
 
                 <Button
+                    android:id="@+id/storeCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cancel"

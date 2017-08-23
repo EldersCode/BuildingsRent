@@ -317,7 +317,7 @@
                         android:id="@+id/galary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="onClick"
+                        android:onClick="onClickHall"
                         android:textAllCaps="false"
                         android:background="@drawable/btn_design"
                         android:text="@string/galary"/>
@@ -325,7 +325,7 @@
 
                 </LinearLayout>
                 <com.daimajia.slider.library.SliderLayout
-                    android:id="@+id/slider"
+                    android:id="@+id/hallSlider"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     />
@@ -352,6 +352,7 @@
                     />
 
                 <Button
+                    android:id="@+id/hallCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cancel"
