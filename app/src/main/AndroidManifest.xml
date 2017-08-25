@@ -92,7 +92,7 @@
         <activity
             android:name="com.search.activity.SearchActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
-        <activity android:name=".AdvertiseActivity"></activity>
+        <activity android:name=".AdvertiseActivity" />
     </application>
 
 </manifest>

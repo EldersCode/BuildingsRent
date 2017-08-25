@@ -3,28 +3,39 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     >
 
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView1"
-        android:layout_width="160dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="10dp"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardCornerRadius="1dp"
-        card_view:cardElevation="7dp">
 
-        <ImageView
-            android:id="@+id/imageAdsList"
-            android:layout_width="120dp"
-            android:padding="5dp"
-            android:layout_height="150dp"
-            android:background="@drawable/mepng"
-            android:layout_gravity="center_horizontal" />
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView1"
+            android:layout_width="160dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="1dp"
+            card_view:cardElevation="7dp">
 
 
+
+            <ImageView
+                android:id="@+id/imageAdsList"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:layout_height="150dp"
+                android:background="@mipmap/house"
+                android:layout_gravity="center_horizontal" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="right"
+                android:background="@mipmap/close"
+                android:id="@+id/removeAd"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,28 +56,31 @@
                 android:id="@+id/priceAdsList"
                 />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="200dp"
-            android:maxLines="1"
-            android:text="@string/AddressProfile"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/addressHere"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:gravity="center_horizontal"
-            android:maxLines="1"
-            android:layout_marginTop="225dp"
-            android:id="@+id/addressAdsList"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="200dp"
+                android:maxLines="1"
+                android:text="@string/AddressProfile"
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/addressHere"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="225dp"
+                android:id="@+id/addressAdsList"
+                />
 
 
-    </android.support.v7.widget.CardView>
+        </android.support.v7.widget.CardView>
+
+
+
+
 
 </LinearLayout>

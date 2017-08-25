@@ -100,6 +100,12 @@
     <string name="priceCard">* Price :</string>
     <string name="priceHere">price here</string>
     <string name="addressHere">address here</string>
+    <string name="noAds">you haven\'t set any advertise yet ..</string>
+    <string name="noFav">No favourites yet</string>
+    <string name="remove">Remove</string>
+    <string name="removeMsg">Do you want to remove this advertisement ?!</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
 
 
 </resources>

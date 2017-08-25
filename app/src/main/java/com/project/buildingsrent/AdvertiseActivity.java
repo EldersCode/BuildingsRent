@@ -42,56 +42,79 @@ public class AdvertiseActivity extends HandlingAdvertise {
         phone =(TextView) findViewById(R.id.phoneAdv);
 
 
+        try {
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final String data = preferences.getString("data", "");
-        Log.e("dddddddd",data);
-        FirebaseDatabase database=FirebaseDatabase.getInstance();
-        final DatabaseReference ref=database.getReference(data);
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String coolingSystem = (String) dataSnapshot.child("coolingSystem").getValue();
-                Log.e("ddddd",coolingSystem);
-                String area = (String) dataSnapshot.child("area").getValue();
-                final String price = (String) dataSnapshot.child("price").getValue();
-                String descriptionS = (String) dataSnapshot.child("descriptionEditText").getValue();
-                String bedRoomsNo = (String) dataSnapshot.child("bedRoomsNo").getValue();
-                String bathNo = (String) dataSnapshot.child("bathNo").getValue();
-                String kitchen = (String) dataSnapshot.child("kitchen").getValue();
-                String livingRoom = (String) dataSnapshot.child("livingRoom").getValue();
-                String negotiablePrice = (String) dataSnapshot.child("negotiablePrice").getValue();
-                String parking = (String) dataSnapshot.child("parking").getValue();
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            final String data = preferences.getString("data", "");
+            Log.e("dddddddd", data);
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final DatabaseReference ref = database.getReference(data);
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String coolingSystem = (String) dataSnapshot.child("coolingSystem").getValue();
+                    Log.e("ddddd", coolingSystem);
+                    String area = (String) dataSnapshot.child("area").getValue();
+                    final String price = (String) dataSnapshot.child("price").getValue();
+                    String descriptionS = (String) dataSnapshot.child("descriptionEditText").getValue();
+                    String bedRoomsNo = (String) dataSnapshot.child("bedRoomsNo").getValue();
+                    String bathNo = (String) dataSnapshot.child("bathNo").getValue();
+                    String kitchen = (String) dataSnapshot.child("kitchen").getValue();
+                    String livingRoom = (String) dataSnapshot.child("livingRoom").getValue();
+                    String negotiablePrice = (String) dataSnapshot.child("negotiablePrice").getValue();
+                    String parking = (String) dataSnapshot.child("parking").getValue();
 
-                try {
-                    phoneNum = (String) dataSnapshot.child("phone number").getValue();
-                }catch (Exception e){
+                    try {
+                        phoneNum = (String) dataSnapshot.child("phone number").getValue();
+                    } catch (Exception e) {
+
+                    }
+
+                    if (coolingSystem.equals("true")) {
+                        features.setText(features.getText() + "\n cooling System");
+                    }
+                    if (parking.equals("true")) {
+                        features.setText(features.getText().toString() + "\n parking");
+                    }
+                    if (negotiablePrice.equals("true")) {
+                        features.setText(features.getText().toString() + "\n Negotiable Price");
+                    }
+                    if (livingRoom.equals("true")) {
+                        features.setText(features.getText().toString() + "\n LivingRoom");
+                    }
+                    if (kitchen.equals("true")) {
+                        features.setText(features.getText().toString() + "\n kitchen");
+                    }
+                    if (bathNo != null) {
+                        bathRooms.setText(bathNo);
+                    }
+                    if (bedRooms != null) {
+                        bedRooms.setText(bedRoomsNo);
+                    }
+                    if (descriptionS != null) {
+                        description.setText(descriptionS);
+                    }
+                    if (area != null) {
+                        advArea.setText(area);
+                    }
+                    if (price != null) {
+                        advPrice.setText(price);
+                    }
+                    if (phoneNum != null) {
+                        phone.setText(phoneNum);
+                    }
 
                 }
 
-                if (coolingSystem.equals("true")){
-                    features.setText(features.getText() +"\n cooling System");}
-                if (parking.equals("true")){  features.setText(features.getText().toString() + "\n parking");}
-                if (negotiablePrice.equals("true")){  features.setText(features.getText().toString() + "\n Negotiable Price");}
-                if (livingRoom.equals("true")){  features.setText(features.getText().toString()+ "\n LivingRoom");}
-                if (kitchen.equals("true")){  features.setText(features.getText().toString()+ "\n kitchen");}
-                if (bathNo != null){  bathRooms.setText(bathNo);}
-                if (bedRooms !=null){  bedRooms.setText(bedRoomsNo);}
-                if (descriptionS !=null){  description.setText(descriptionS);}
-                if (area !=null){  advArea.setText(area);}
-                if (price !=null){  advPrice.setText(price);}
-                if (phoneNum != null){
-                    phone.setText(phoneNum);
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
                 }
+            });
+        }catch (Exception e ){
 
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        }
     }
 
     public void functions(final Context context) {

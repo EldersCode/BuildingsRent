@@ -1065,7 +1065,7 @@ public void onClickLand(View View) {//
 
     @Override//
     public void onPageSelected(int position) {
-        Toast.makeText(getApplicationContext(),position+"",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(),position+"",Toast.LENGTH_SHORT).show();
         try {
 //            mDemoSlider.setDrawingCacheEnabled(false);
 

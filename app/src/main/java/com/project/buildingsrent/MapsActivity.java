@@ -398,7 +398,7 @@ public class MapsActivity extends HandlingMaps{
 
                                             latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
-                                            // get Location Data from latLng here \\
+                                            // get Location Data from latLng \\
 
                                         DataFromLatLng dataFromLatLng = new DataFromLatLng(mLastLocation.getLatitude() , mLastLocation.getLongitude() , MapsActivity.this);
 

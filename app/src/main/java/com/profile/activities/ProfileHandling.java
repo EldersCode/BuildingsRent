@@ -6,11 +6,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,11 +53,11 @@ import static com.project.buildingsrent.HandlingLoginAuth.getPrefsName;
  * Created by Hesham on 8/6/2017.
  */
 
-public class ProfileHandling extends Activity {
+public class ProfileHandling extends Activity implements AdapterView.OnItemClickListener {
 
                     // declaration of layout views here \\
 
-    private TextView profileName , profileEmail , profileAddress , profilePhone , profileGender , profileBirthday ;
+    private TextView profileName , profileEmail , profileAddress , profilePhone , profileGender , profileBirthday , noAdsText ;
     private CircleImageView profilePic;
     private Button editBtn;
     private ListView myAdListView;
@@ -87,13 +92,27 @@ public class ProfileHandling extends Activity {
         profilePic = (CircleImageView) findViewById(R.id.profile_image);
         profileBirthday = (TextView) findViewById(R.id.profile_birthday);
         editBtn = (Button) findViewById(R.id.edit_profile_btn);
-//        myAdListView = (ListView) findViewById(R.id.userAdsListId);
-//        AdvCardArrayList = new ArrayList<>();
-//        customAdAdapter = new CustomAdAdapter(context , AdvCardArrayList);
-//
-//                // here the HashMap Method \\ //HashMapAdvList(arrayList)-
-//        myAdListView.setAdapter(customAdAdapter);
+        noAdsText = (TextView)findViewById(R.id.noAdsText);
+        AdvCardArrayList = new ArrayList<>();
 
+
+        HashMapAdvList(AdvCardArrayList);
+
+        myAdListView = (ListView) findViewById(R.id.userAdsListId);
+
+
+        myAdListView.setOnItemClickListener(this);
+
+        if(AdvCardArrayList.size() >0) {
+            if(noAdsText.getText().length() >0){
+                noAdsText.setText("");
+            }
+                customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList , myAdListView);
+                myAdListView.setAdapter(customAdAdapter);
+                setListSize(myAdListView);
+        }else{
+            noAdsText.setText(R.string.noAds);
+        }
     }
 
                                                 ///\\\
@@ -246,97 +265,83 @@ public class ProfileHandling extends Activity {
         finish();
     }
 
-//    public void HashMapAdvList(){
-//        try {
-//
-//                            // I will make an arrayList to add the Ads of the user on it \\
-//                                      // and make for loop with it's size \\
-//               final HashMap<String , String> data = new HashMap<>();
-//
-//
-//
-//
-//                FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                final DatabaseReference ref = database.getReference(currentUser.getUid());
-//                ref.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(final DataSnapshot dataSnapshot) {
-//
-//                        dataSnapshot.getChildrenCount();
-//
-//                        Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
-//
-//                        int x = 1;
-//
-//                        for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
-//                            //instances retrived
-//                            String coolingSystem = (String) messageSnapshot.child("coolingSystem").getValue();
-//                            String area = (String) messageSnapshot.child("area").getValue();
-//                            String price = (String) messageSnapshot.child("price").getValue();
-//                            String descriptionEditText = (String) messageSnapshot.child("descriptionEditText").getValue();
-//                            String bedRoomsNo = (String) messageSnapshot.child("bedRoomsNo").getValue();
-//                            String bathNo = (String) messageSnapshot.child("bathNo").getValue();
-//                            String kitchen = (String) messageSnapshot.child("kitchen").getValue();
-//                            String livingRoom = (String) messageSnapshot.child("livingRoom").getValue();
-//                            String negotiablePrice = (String) messageSnapshot.child("negotiablePrice").getValue();
-//                            String parking = (String) messageSnapshot.child("parking").getValue();
-//                            String phoneNum = "";
-//                            try {
-//                                phoneNum = (String) messageSnapshot.child("phone number").getValue();
-//                            }catch (Exception e){
-//
-//                            }
-//
-//                            Log.i("area Firebase : " , area);
-//                            Log.i("price Firebase : " , price);
-//
-//                            data.put("price" , price);
-//
-//                            data.put("address" , area);
-//
-////                            data.put("cardImage" , arrayList.get(i).get("cardImage"));
-//
-//                            //setting a firebase ref for retreiving markers
-//                            DatabaseReference refL = FirebaseDatabase.getInstance().getReference(currentUser.getUid() + "/" + x );
-//                            final int finalX = x;
-//                            //feltering according to area and price and then setting markers on map
-//                            try {
-//
-//                                    final int finalX1 = x;
-//
-//
-//                            } catch (Exception e) {
-//                            }
-////
-//                            try {
-//
-//
-//                                x++;
-//                            } catch (Exception e) {
-//                                Log.e("aaaaaaaaaaamessage", String.valueOf(e));
-//
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//
-//                //////////;//////////
-//
-//
-//
-//
-//        }catch (Exception e){
-//
-//            Toast.makeText(this, "you haven't set an advertisement yet ..", Toast.LENGTH_SHORT).show();
-//
-//        }
-//            }
+    public void HashMapAdvList(ArrayList<HashMap<String,String>> arrayListAdd ){
+
+        try{
+
+            Bundle bundle = getIntent().getExtras();
+            String key = bundle.getString("change");
+            if(key.equals("change")){
+
+                String[] address = {"Sedi gaber , Alexandria , Egypt" , "Mandara , Alexandria , Egypt" , "ibrahimia , Alexandria , Egypt" , "Sedi beshr , Alexandria , Egypt" };
+                String[] price = {"3500" , "1200" , "2500" , "900"};
+
+                for(int i=0 ; i <price.length ; i++){
+                    HashMap<String , String> data = new HashMap<>();
+                    data.put("price" , price[i]);
+                    data.put("address" , address[i]);
+                    data.put("cardImage" , "");
+
+                    arrayListAdd.add(data);
+
+                }
+
+            }
+
+        }catch (Exception e){
+
+            String[] address = {"Sedi gaber , Alexandria , Egypt" , "Mandara , Alexandria , Egypt" , "ibrahimia , Alexandria , Egypt" , "Sedi beshr , Alexandria , Egypt" };
+            String[] price = {"3500" , "1200" , "2500" , "900"};
+            int[] images = {R.mipmap.house , R.mipmap.stage , R.mipmap.beachhouse , R.mipmap.land};
+
+
+            // I will make a HashMap inside for loop to add the Ads to the array list \\
+
+                for(int i=0 ; i <price.length ; i++){
+                    HashMap<String , String> data = new HashMap<>();
+                    data.put("price" , price[i]);
+                    data.put("address" , address[i]);
+                    data.put("cardImage" , String.valueOf(images[i]));
+
+                    arrayListAdd.add(data);
+
+                }
+        }
 
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        String mPosition = parent.getItemAtPosition(position).toString();
+
+        Toast.makeText(this, "position is : " + mPosition, Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void setListSize(ListView listView){
+        ListAdapter listAdapter = listView.getAdapter();
+        if(listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight =0 ;
+        View view = null;
+        for(int i=0 ; i < listAdapter.getCount();i++){
+            view = listAdapter.getView(i , view , listView);
+
+            if(i == 0)
+            view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth , ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth , View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
+
+}
 
 
