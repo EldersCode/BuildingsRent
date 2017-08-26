@@ -54,9 +54,23 @@ public class SubmitBuildingInfo extends Activity {
     DatabaseReference ref , ref2 ;
     private DatabaseReference  users ;
     GeoFire geoFire ,  geoFire2;
+    private String country,city,area=null;
     public SubmitBuildingInfo() {
 
 
+    }
+    public void address(LatLng latLng,Context context){
+        DataFromLatLng dataFromLatLng = new DataFromLatLng(latLng.latitude, latLng.longitude, context);
+
+         country = dataFromLatLng.getMyCountry();
+         city = dataFromLatLng.getMyCity();
+         area = dataFromLatLng.getMyArea();
+
+        adress = country + "/" + city + "/" + area + "/";
+        if(country.equals(null)||city.equals(null)||area.equals(null)) {
+            address(latLng, context);
+            Toast.makeText(context,"Please Wait ..",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public SubmitBuildingInfo(final EditText descriptionEditText,
@@ -71,13 +85,13 @@ public class SubmitBuildingInfo extends Activity {
         petsLayout.setVisibility(View.GONE);
 
                          /////geocoding get country ,city and region
-        DataFromLatLng dataFromLatLng = new DataFromLatLng(latLng.latitude, latLng.longitude, context);
-        String country = dataFromLatLng.getMyCountry();
-        String city = dataFromLatLng.getMyCity();
-         String area = dataFromLatLng.getMyArea();
-        adress = country + "/" + city + "/" + area + "/";
+//        DataFromLatLng dataFromLatLng = new DataFromLatLng(latLng.latitude, latLng.longitude, context);
+//        String country = dataFromLatLng.getMyCountry();
+//        String city = dataFromLatLng.getMyCity();
+//         String area = dataFromLatLng.getMyArea();
+//        adress = country + "/" + city + "/" + area + "/";
                                          //////////////////////
-
+address(latLng,context);
         petsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
