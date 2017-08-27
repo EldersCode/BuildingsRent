@@ -1,12 +1,14 @@
 package com.project.buildingsrent;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -123,22 +125,40 @@ public class AdvertiseActivity extends HandlingAdvertise {
         callBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNum));
-                    if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
-                    }
-                    startActivity(intent);
-                }catch (Exception e){
+                final AlertDialog.Builder alert = new AlertDialog.Builder(context)
+                        .setTitle(R.string.call)
+                        .setCancelable(true)
+                        .setMessage(phone.getText().toString() + " ?")
+                        .setNegativeButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNum));
+                                    if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                                        // TODO: Consider calling
+                                        //    ActivityCompat#requestPermissions
+                                        // here to request the missing permissions, and then overriding
+                                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                        //                                          int[] grantResults)
+                                        // to handle the case where the user grants the permission. See the documentation
+                                        // for ActivityCompat#requestPermissions for more details.
+                                        return;
+                                    }
+                                    startActivity(intent);
+                                }catch (Exception e){
 
-                }
+                                }
+                            }
+                        });
+                        alert.setPositiveButton(R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                alert.setCancelable(true);
+                            }
+                        });
+                alert.create().show();
+
+
             }
         });
 

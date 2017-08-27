@@ -95,8 +95,8 @@ public class ProfileHandling extends Activity implements AdapterView.OnItemClick
         noAdsText = (TextView)findViewById(R.id.noAdsText);
         AdvCardArrayList = new ArrayList<>();
 
-
-        HashMapAdvList(AdvCardArrayList);
+        retrieveUserAds(context);
+//        HashMapAdvList(AdvCardArrayList);
 
         myAdListView = (ListView) findViewById(R.id.userAdsListId);
 
@@ -265,50 +265,50 @@ public class ProfileHandling extends Activity implements AdapterView.OnItemClick
         finish();
     }
 
-    public void HashMapAdvList(ArrayList<HashMap<String,String>> arrayListAdd ){
-
-        try{
-
-            Bundle bundle = getIntent().getExtras();
-            String key = bundle.getString("change");
-            if(key.equals("change")){
-
-                String[] address = {"Sedi gaber , Alexandria , Egypt" , "Mandara , Alexandria , Egypt" , "ibrahimia , Alexandria , Egypt" , "Sedi beshr , Alexandria , Egypt" };
-                String[] price = {"3500" , "1200" , "2500" , "900"};
-
-                for(int i=0 ; i <price.length ; i++){
-                    HashMap<String , String> data = new HashMap<>();
-                    data.put("price" , price[i]);
-                    data.put("address" , address[i]);
-                    data.put("cardImage" , "");
-
-                    arrayListAdd.add(data);
-
-                }
-
-            }
-
-        }catch (Exception e){
-
-            String[] address = {"Sedi gaber , Alexandria , Egypt" , "Mandara , Alexandria , Egypt" , "ibrahimia , Alexandria , Egypt" , "Sedi beshr , Alexandria , Egypt" };
-            String[] price = {"3500" , "1200" , "2500" , "900"};
-            int[] images = {R.mipmap.house , R.mipmap.stage , R.mipmap.beachhouse , R.mipmap.land};
-
-
-            // I will make a HashMap inside for loop to add the Ads to the array list \\
-
-                for(int i=0 ; i <price.length ; i++){
-                    HashMap<String , String> data = new HashMap<>();
-                    data.put("price" , price[i]);
-                    data.put("address" , address[i]);
-                    data.put("cardImage" , String.valueOf(images[i]));
-
-                    arrayListAdd.add(data);
-
-                }
-        }
-
-    }
+//    public void HashMapAdvList(ArrayList<HashMap<String,String>> arrayListAdd ){
+//
+//        try{
+//
+//            Bundle bundle = getIntent().getExtras();
+//            String key = bundle.getString("change");
+//            if(key.equals("change")){
+//
+//                String[] address = {"Sedi gaber , Alexandria , Egypt" , "Mandara , Alexandria , Egypt" , "ibrahimia , Alexandria , Egypt" , "Sedi beshr , Alexandria , Egypt" };
+//                String[] price = {"3500" , "1200" , "2500" , "900"};
+//
+//                for(int i=0 ; i <price.length ; i++){
+//                    HashMap<String , String> data = new HashMap<>();
+//                    data.put("price" , price[i]);
+//                    data.put("address" , address[i]);
+//                    data.put("cardImage" , "");
+//
+//                    arrayListAdd.add(data);
+//
+//                }
+//
+//            }
+//
+//        }catch (Exception e){
+//
+//            String[] address = {"Sedi gaber , Alexandria , Egypt" , "Mandara , Alexandria , Egypt" , "ibrahimia , Alexandria , Egypt" , "Sedi beshr , Alexandria , Egypt" };
+//            String[] price = {"3500" , "1200" , "2500" , "900"};
+//            int[] images = {R.mipmap.house , R.mipmap.stage , R.mipmap.beachhouse , R.mipmap.land};
+//
+//
+//            // I will make a HashMap inside for loop to add the Ads to the array list \\
+//
+//                for(int i=0 ; i <price.length ; i++){
+//                    HashMap<String , String> data = new HashMap<>();
+//                    data.put("price" , price[i]);
+//                    data.put("address" , address[i]);
+//                    data.put("cardImage" , String.valueOf(images[i]));
+//
+//                    arrayListAdd.add(data);
+//
+//                }
+//        }
+//
+//    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -342,6 +342,310 @@ public class ProfileHandling extends Activity implements AdapterView.OnItemClick
         listView.setLayoutParams(params);
     }
 
+
+    public void retrieveUserAds(final Context context) {
+
+        try {
+            String building = "home";
+            final String myRefString = "users/" + currentUser.getUid() + "/";
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference ref = database.getReference(myRefString + building);
+            if (ref != null) {
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                        dataSnapshot.getChildrenCount();
+
+
+                        Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+
+
+                        for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                            //instances retrived
+                            Log.i("Snap", messageSnapshot.toString());
+                            String path = (String) messageSnapshot.getValue();
+                            Log.i("retrieving home", path);
+
+                            if (path != null) {
+
+                                DatabaseReference myRef = database.getReference(path);
+                                myRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String area = (String) dataSnapshot.child("area").getValue();
+                                        String price = (String) dataSnapshot.child("price").getValue();
+                                        Log.i("Area retrieve home", area);
+                                        Log.i("Price retrieve home", price);
+                                        HashMap<String, String> myHash = new HashMap<>();
+                                        myHash.put("price", price);
+                                        myHash.put("area", area);
+                                        myHash.put("cardImage", "");
+                                        AdvCardArrayList.add(myHash);
+                                        Log.i("retrieve array size", AdvCardArrayList.size() + "");
+                                        customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
+                                        myAdListView.setAdapter(customAdAdapter);
+                                        noAdsText.setText("");
+                                        setListSize(myAdListView);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+
+            building = "chalet";
+            final DatabaseReference ref2 = database.getReference(myRefString + building);
+            if (ref2 != null) {
+                ref2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                        dataSnapshot.getChildrenCount();
+
+
+                        Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+
+
+                        for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                            //instances retrived
+                            Log.i("Snap", messageSnapshot.toString());
+                            String path = (String) messageSnapshot.getValue();
+                            Log.i("retrieving chalet", path);
+
+                            if (path != null) {
+
+                                DatabaseReference myRef = database.getReference(path);
+                                myRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String area = (String) dataSnapshot.child("area").getValue();
+                                        String price = (String) dataSnapshot.child("price").getValue();
+                                        Log.i("Area retrieve chalet", area);
+                                        Log.i("Price retrieve chalet", price);
+                                        HashMap<String, String> myHash = new HashMap<>();
+                                        myHash.put("price", price);
+                                        myHash.put("area", area);
+                                        myHash.put("cardImage", "");
+                                        AdvCardArrayList.add(myHash);
+                                        Log.i("retrieve array size", AdvCardArrayList.size() + "");
+                                        customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
+                                        myAdListView.setAdapter(customAdAdapter);
+                                        noAdsText.setText("");
+                                        setListSize(myAdListView);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+            building = "hall";
+            final DatabaseReference ref3 = database.getReference(myRefString + building);
+            if (ref3 != null) {
+                ref3.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                        dataSnapshot.getChildrenCount();
+
+
+                        Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+
+
+                        for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                            //instances retrived
+                            Log.i("Snap", messageSnapshot.toString());
+                            String path = (String) messageSnapshot.getValue();
+                            Log.i("retrieving hall", path);
+
+                            if (path != null) {
+
+                                DatabaseReference myRef = database.getReference(path);
+                                myRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String area = (String) dataSnapshot.child("area").getValue();
+                                        String price = (String) dataSnapshot.child("price").getValue();
+                                        Log.i("Area retrieve hall", area);
+                                        Log.i("Price retrieve hall", price);
+                                        HashMap<String, String> myHash = new HashMap<>();
+                                        myHash.put("price", price);
+                                        myHash.put("area", area);
+                                        myHash.put("cardImage", "");
+                                        AdvCardArrayList.add(myHash);
+                                        Log.i("retrieve array size", AdvCardArrayList.size() + "");
+                                        customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
+                                        myAdListView.setAdapter(customAdAdapter);
+                                        noAdsText.setText("");
+                                        setListSize(myAdListView);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+            building = "store";
+            final DatabaseReference ref4 = database.getReference(myRefString + building);
+            if (ref4 != null) {
+                ref4.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                        dataSnapshot.getChildrenCount();
+
+
+                        Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+
+
+                        for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                            //instances retrived
+                            Log.i("Snap", messageSnapshot.toString());
+                            String path = (String) messageSnapshot.getValue();
+                            Log.i("retrieving store", path);
+
+                            if (path != null) {
+
+                                DatabaseReference myRef = database.getReference(path);
+                                myRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String area = (String) dataSnapshot.child("area").getValue();
+                                        String price = (String) dataSnapshot.child("price").getValue();
+                                        Log.i("Area retrieve store", area);
+                                        Log.i("Price retrieve store", price);
+                                        HashMap<String, String> myHash = new HashMap<>();
+                                        myHash.put("price", price);
+                                        myHash.put("area", area);
+                                        myHash.put("cardImage", "");
+                                        AdvCardArrayList.add(myHash);
+                                        Log.i("retrieve array size", AdvCardArrayList.size() + "");
+                                        customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
+                                        myAdListView.setAdapter(customAdAdapter);
+                                        noAdsText.setText("");
+                                        setListSize(myAdListView);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+            building = "land";
+            final DatabaseReference ref5 = database.getReference(myRefString + building);
+            if (ref5 != null) {
+                ref5.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                        dataSnapshot.getChildrenCount();
+
+
+                        Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+
+
+                        for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                            //instances retrived
+                            Log.i("Snap", messageSnapshot.toString());
+                            String path = (String) messageSnapshot.getValue();
+                            Log.i("retrieving land", path);
+
+                            if (path != null) {
+
+                                DatabaseReference myRef = database.getReference(path);
+                                myRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String area = (String) dataSnapshot.child("area").getValue();
+                                        String price = (String) dataSnapshot.child("price").getValue();
+                                        Log.i("Area retrieve land", area);
+                                        Log.i("Price retrieve land", price);
+                                        HashMap<String, String> myHash = new HashMap<>();
+                                        myHash.put("price", price);
+                                        myHash.put("area", area);
+                                        myHash.put("cardImage", "");
+                                        AdvCardArrayList.add(myHash);
+                                        Log.i("retrieve array size", AdvCardArrayList.size() + "");
+                                        customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
+                                        myAdListView.setAdapter(customAdAdapter);
+                                        noAdsText.setText("");
+                                        setListSize(myAdListView);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
 }
+
 
 

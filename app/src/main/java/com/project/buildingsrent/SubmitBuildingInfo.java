@@ -60,17 +60,26 @@ public class SubmitBuildingInfo extends Activity {
 
     }
     public void address(LatLng latLng,Context context){
-        DataFromLatLng dataFromLatLng = new DataFromLatLng(latLng.latitude, latLng.longitude, context);
 
-         country = dataFromLatLng.getMyCountry();
-         city = dataFromLatLng.getMyCity();
-         area = dataFromLatLng.getMyArea();
+        try {
 
-        adress = country + "/" + city + "/" + area + "/";
-        if(country.equals(null)||city.equals(null)||area.equals(null)) {
-            address(latLng, context);
-            Toast.makeText(context,"Please Wait ..",Toast.LENGTH_SHORT).show();
+            DataFromLatLng dataFromLatLng = new DataFromLatLng(latLng.latitude, latLng.longitude, context);
+
+            country = dataFromLatLng.getMyCountry();
+            city = dataFromLatLng.getMyCity();
+            area = dataFromLatLng.getMyArea();
+
+            adress = country + "/" + city + "/" + area + "/";
+
+
+            if (country.equals(null) || city.equals(null) || area.equals(null)) {
+                address(latLng, context);
+                Toast.makeText(context, "Please Wait ..", Toast.LENGTH_SHORT).show();
+            }
+        }catch(Exception e){
+            Toast.makeText(context, "please check internet connection or GPS..", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     public SubmitBuildingInfo(final EditText descriptionEditText,

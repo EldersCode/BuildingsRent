@@ -62,13 +62,13 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="200dp"
                 android:maxLines="1"
-                android:text="@string/AddressProfile"
+                android:text="@string/areaCard"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/addressHere"
+                android:text="@string/area"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
                 android:gravity="center_horizontal"

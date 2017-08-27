@@ -26,13 +26,15 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/Theme.Design.NoActionBar"
         android:windowActionBar="false"
-        tools:replace="android:icon">
+        android:roundIcon="@mipmap/ic_launcher_round"
+        tools:replace="android:icon,supportsRtl"
+        >
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
