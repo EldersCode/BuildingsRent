@@ -98,7 +98,7 @@
     <string name="required">required !</string>
     <string name="area">area ..</string>
     <string name="priceCard">* Price :</string>
-    <string name="priceHere">price here</string>
+    <string name="priceHere">price ..</string>
     <string name="addressHere">address here</string>
     <string name="noAds">you haven\'t set any advertise yet ..</string>
     <string name="noFav">No favourites yet</string>
@@ -106,6 +106,8 @@
     <string name="removeMsg">Do you want to remove this advertisement ?!</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
+    <string name="areaCard">* Area :</string>
+    <string name="call">Call</string>
 
 
 </resources>

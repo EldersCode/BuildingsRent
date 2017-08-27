@@ -49,10 +49,9 @@ private String myArea;
 
     Geocoder geocoder;
     List<Address> addresses;
-    geocoder =new
 
-    Geocoder(context,Locale.getDefault());
 
+             geocoder = new Geocoder(context, Locale.ENGLISH);
         try {
             addresses =geocoder.getFromLocation(latitude,longitude,1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 

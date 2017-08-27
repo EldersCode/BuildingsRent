@@ -118,7 +118,7 @@ public class HandlingLoginAuth extends Activity {
         //////////////
 
         //Handling Facebook side here
-        else if(profile != null){
+        if(profile != null){
             startActivity(new Intent(context , MapsActivity.class));
             finish();
         }

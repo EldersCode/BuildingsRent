@@ -1,10 +1,12 @@
 package com.profile.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.Profile;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.project.buildingsrent.R;
 
 import java.util.ArrayList;
@@ -72,7 +84,7 @@ public class CustomAdAdapter extends BaseAdapter {
                 HashMap<String, String> myAdv;
                 myAdv = advArrayList.get(position);
                 price.setText(myAdv.get("price"));
-                address.setText(myAdv.get("address"));
+                address.setText(myAdv.get("area"));
                 final String cardImage = myAdv.get("cardImage");
 //                try {
 //
@@ -109,14 +121,11 @@ public class CustomAdAdapter extends BaseAdapter {
                     alert.setNegativeButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(mContext , ProfileActivity.class);
-                            intent.putExtra("change" , "change");
-                            mContext.startActivity(intent);
-                            advArrayList.remove(position);
-                            if (advArrayList.size() != firstSize){
-                                setListSize(mListView) ;
+//                            Intent intent = new Intent(mContext , ProfileActivity.class);
+//                            intent.putExtra("change" , "change");
+//                            mContext.startActivity(intent);
 
-                            }
+                           new RemoveUserAds(mContext , String.valueOf(position) );
 
 
                         }
@@ -160,6 +169,329 @@ public class CustomAdAdapter extends BaseAdapter {
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
+    }
+
+
+
+    private class RemoveUserAds extends Activity{
+
+        private   RemoveUserAds(final Context context , final String position) {
+
+                                // Firebase and facebook user auth \\
+            FirebaseAuth mAuth= FirebaseAuth.getInstance();
+            final FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                                            /////\\\\
+
+
+            try {
+                String building = "home";
+                final String myRefString = "users/" + currentUser.getUid() + "/";
+                final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                final DatabaseReference ref = database.getReference(myRefString + building);
+                if (ref != null) {
+
+
+
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                            dataSnapshot.getChildrenCount();
+
+
+                            Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+
+
+                            for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                                //instances retrived
+                                Log.i("Snap", messageSnapshot.toString());
+                                String key = messageSnapshot.getKey();
+                                if(key.equals(position)) {
+//                                    dataSnapshot.getRef().setValue(null);
+                                    String path = (String) messageSnapshot.getValue();
+                                    Log.i("retrieving land", path);
+
+                                    if (path != null) {
+                                        final DatabaseReference ref22 = database.getReference("users/" + currentUser.getUid());
+                                        ref22.child("home").orderByChild(position).equalTo(path).addChildEventListener(new ChildEventListener() {
+                                            @Override
+                                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                                                ref22.child("home").child(dataSnapshot.getKey()).setValue(null);
+                                                dataSnapshot.getRef().setValue(null);
+                                                Log.i("Whats up ?" , "????");
+                                            }
+
+                                            @Override
+                                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+//
+//                                        DatabaseReference myRef = database.getReference(path);
+//                                        myRef.setValue(null);
+//                                        myRef.addValueEventListener(new ValueEventListener() {
+//                                            @Override
+//                                            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                                                advArrayList.remove(position);
+//                                                setListSize(mListView);
+//                                            }
+//
+//                                            @Override
+//                                            public void onCancelled(DatabaseError databaseError) {
+//
+//                                            }
+//                                        });
+
+                                    }
+                                }
+                            }
+                        }
+
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+
+
+
+
+
+                building = "chalet";
+                final DatabaseReference ref2 = database.getReference(myRefString + building);
+                if (ref2 != null) {
+                    ref2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                            dataSnapshot.getChildrenCount();
+
+
+                            Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+
+
+                            for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                                //instances retrived
+                                Log.i("Snap", messageSnapshot.toString());
+                                String key = messageSnapshot.getKey();
+                                if(key.equals(position)) {
+                                    dataSnapshot.getRef().removeValue();
+                                    String path = (String) messageSnapshot.getValue();
+                                    Log.i("retrieving land", path);
+
+                                    if (path != null) {
+
+                                        DatabaseReference myRef = database.getReference(path);
+                                        myRef.removeValue();
+                                        myRef.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                advArrayList.remove(position);
+                                                setListSize(mListView);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+                building = "hall";
+                final DatabaseReference ref3 = database.getReference(myRefString + building);
+                if (ref3 != null) {
+                    ref3.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                            dataSnapshot.getChildrenCount();
+
+
+                            Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+
+
+                            for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                                //instances retrived
+                                Log.i("Snap", messageSnapshot.toString());
+                                String key = messageSnapshot.getKey();
+                                if(key.equals(position)) {
+                                    dataSnapshot.getRef().removeValue();
+                                    String path = (String) messageSnapshot.getValue();
+                                    Log.i("retrieving land", path);
+
+                                    if (path != null) {
+
+                                        DatabaseReference myRef = database.getReference(path);
+                                        myRef.removeValue();
+                                        myRef.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                advArrayList.remove(position);
+                                                setListSize(mListView);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+                building = "store";
+                final DatabaseReference ref4 = database.getReference(myRefString + building);
+                if (ref4 != null) {
+                    ref4.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                            dataSnapshot.getChildrenCount();
+
+
+                            Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+
+
+                            for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                                //instances retrived
+                                Log.i("Snap", messageSnapshot.toString());
+                                String key = messageSnapshot.getKey();
+                                if(key.equals(position)) {
+                                    dataSnapshot.getRef().removeValue();
+                                    String path = (String) messageSnapshot.getValue();
+                                    Log.i("retrieving land", path);
+
+                                    if (path != null) {
+
+                                        DatabaseReference myRef = database.getReference(path);
+                                        myRef.removeValue();
+                                        myRef.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                advArrayList.remove(position);
+                                                setListSize(mListView);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+                building = "land";
+                final DatabaseReference ref5 = database.getReference(myRefString + building);
+                if (ref5 != null) {
+                    ref5.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+
+                            dataSnapshot.getChildrenCount();
+
+
+                            Log.e("aaaaaaaaaaacount", String.valueOf(dataSnapshot.getChildrenCount()));
+
+
+                            for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
+                                //instances retrived
+                                Log.i("Snap", messageSnapshot.toString());
+                                String key = messageSnapshot.getKey();
+                                if(key.equals(position)) {
+                                    dataSnapshot.getRef().removeValue();
+                                    String path = (String) messageSnapshot.getValue();
+                                    Log.i("retrieving land", path);
+
+                                    if (path != null) {
+
+                                        DatabaseReference myRef = database.getReference(path);
+                                        myRef.removeValue();
+                                        myRef.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                advArrayList.remove(position);
+                                                setListSize(mListView);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+            } catch (Exception e) {
+                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
     }
 
 
