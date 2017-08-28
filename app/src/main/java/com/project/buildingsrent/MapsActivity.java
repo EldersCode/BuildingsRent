@@ -46,6 +46,7 @@ import com.search.activity.SearchActivity;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import static com.profile.activities.EditProfileHandling.getSharedPrefs;
 import static com.project.buildingsrent.HandlingLoginAuth.getPrefsName;
 
 
@@ -620,8 +621,9 @@ categoriesBtnSheets();
 
 
 public void categoriesBtnSheets() {
-
-
+    if(myLatLng==null){    setGetMyLatLng(latLng);
+    }else if(latLng==null){    setGetMyLatLng(myLatLng);
+    }
 
     homeSheetBtn.setOnClickListener(new View.OnClickListener() {
         @Override

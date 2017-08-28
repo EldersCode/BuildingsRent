@@ -36,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import static com.profile.activities.EditProfileHandling.getSharedPrefs;
 import static com.project.buildingsrent.HandlingLoginAuth.getPrefsName;
+import static com.project.buildingsrent.HandlingMaps.flag;
 
 
 /**
@@ -46,7 +47,7 @@ public class SubmitBuildingInfo extends Activity {
 //    private DatabaseReference firebaseDatabase;
     private FirebaseDatabase database , database2;
     private ImageView cameraImg;
-    private int flatsNo =1 ;
+    static int flatsNo =1 ;
     private int flatsNo2 =1 ;
     private String adress , address2;
     private DatabaseReference houses ,  houses2;
@@ -242,7 +243,7 @@ address(latLng,context);
                     bottomSheetBehavior1.setState(BottomSheetBehavior.STATE_HIDDEN);
 //              refresh maps activity after submetting
                     Activity a = (Activity) context;
-
+flag=true;
                     final Intent intent = a.getIntent();
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     a.finish();
@@ -334,6 +335,10 @@ int counter =1;
     public void submitType(EditText descriptionEditText,final BottomSheetBehavior bottomSheetBehavior1, final Context context, final LatLng latLng, final GoogleMap mMap, final String building, Button locateFlat, final LinearLayout petsLayout, Switch petsSwitch, final EditText priceEditText, final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText, final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch, final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch
     , CheckBox farmLand,CheckBox buildLand , EditText phoneEditText) {
        Toast.makeText(context,building,Toast.LENGTH_SHORT).show();
+        if(flag){flag=false;}else {
+            flatsNo--;
+
+        }
         switch (building){
             case "home":
             {
