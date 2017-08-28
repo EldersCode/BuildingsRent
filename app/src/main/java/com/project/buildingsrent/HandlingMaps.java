@@ -16,6 +16,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -75,6 +76,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -91,6 +93,7 @@ import java.util.ArrayList;
 
 import static com.profile.activities.EditProfileHandling.getSharedPrefs;
 import static com.project.buildingsrent.HandlingLoginAuth.getPrefsName;
+import static com.project.buildingsrent.SubmitBuildingInfo.flatsNo;
 
 /**
  * Created by Hesham on 5/26/2017.
@@ -894,8 +897,19 @@ other=(CheckBox)findViewById(R.id.other);
                     ///////////////////////////////////////////////////////////
 
     //on sheets result (slider and sending images to firebase)
+    private LatLng getMyLatLng=null;
+
+    public LatLng getGetMyLatLng() {
+        return getMyLatLng;
+    }
+
+    public void setGetMyLatLng(LatLng getMyLatLng) {
+        this.getMyLatLng = getMyLatLng;
+    }
+
     @Override
                     //when an image selected
+
                     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //
 
@@ -904,13 +918,7 @@ other=(CheckBox)findViewById(R.id.other);
                             try {
                                 //sending image to firebase and store it
                                 final Uri uri = data.getData();
-                                StorageReference filepath = storageReference.child("flats").child("userId");
-                                filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        Toast.makeText(getApplicationContext(), "sent", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+
                                 ///////////////////////sending image end
                                 // recyle unused bitmaps
                                 if (bitmap != null) {
@@ -921,12 +929,11 @@ other=(CheckBox)findViewById(R.id.other);
 
                                 bitmap = BitmapFactory.decodeStream(stream);
                                 //setting the image in the slider
-                                Log.e("requestCode", String.valueOf(requestCode));
 
                                 switch (requestCode){
                                     case 1:
                                         Log.e("requestCode", String.valueOf(requestCode));
-
+                                        fireStoreage(uri,"home");
                                         this.slider(homeTextSliderView, data,houseSlider );
 
 
@@ -934,24 +941,28 @@ other=(CheckBox)findViewById(R.id.other);
 
                                     case 2:
                                         Log.e("requestCode", String.valueOf(requestCode));
+                                        fireStoreage(uri,"store");
 
                                         this.slider(storeTextSliderView, data,storeSlider);
                                         break;
 
                                     case 3:
                                         Log.e("requestCode", String.valueOf(requestCode));
+                                        fireStoreage(uri,"chalet");
 
                                         this.slider(chaletTextSliderView, data,chaletSlider);
                                         break;
 
                                     case 4:
                                         Log.e("requestCode", String.valueOf(requestCode));
+                                        fireStoreage(uri,"land");
 
                                         this.slider(landTextSliderView, data,landSlider);
                                         break;
 
                                     case 5:
                                         Log.e("requestCode", String.valueOf(requestCode));
+                                        fireStoreage(uri,"hall");
 
                                         this.slider(hallTextSliderView, data,hallSlider);
 break;
@@ -971,8 +982,93 @@ break;
                                 e.printStackTrace();
                             }
                         }
+
                     }
-/////////////////// on sheets result end
+                    public void submitImageDatabase(){
+
+                    }
+       private void databaseImageSubmit(String type, final String filepath ){
+           if(flag){flag=false;}else {
+               flatsNo--;
+
+           }
+           database2 = FirebaseDatabase.getInstance();
+           Log.e("ssssssss",adress+"/images/"+ flatsNo);
+
+           homeRef=database2.getReference(adress+type+"/"+flatsNo+"/images/");
+           homeRef.addValueEventListener(new ValueEventListener() {
+               @Override
+               public void onDataChange(DataSnapshot dataSnapshot) {
+              imgCounter= (int) (dataSnapshot.getChildrenCount()+1);
+
+               }
+
+               @Override
+               public void onCancelled(DatabaseError databaseError) {
+
+               }
+           });
+
+           homeRef.child(String.valueOf(imgCounter)).setValue(filepath);
+
+//    homeRef.push();
+       }
+       static boolean flag=true;
+       private int imgCounter=1;
+                    private   String  country;
+   private String city;
+    private String area;
+    private String adress;
+    public void address(LatLng latLng,Context context){
+
+        try {
+
+            DataFromLatLng dataFromLatLng = new DataFromLatLng(latLng.latitude, latLng.longitude, context);
+
+            country = dataFromLatLng.getMyCountry();
+             city = dataFromLatLng.getMyCity();
+            area = dataFromLatLng.getMyArea();
+
+             adress = country + "/" + city + "/" + area + "/";
+
+//Log.e("addressssss",adress);
+            if (country.equals(null) || city.equals(null) || area.equals(null)) {
+                address(latLng, context);
+                Toast.makeText(context, "Please Wait ..", Toast.LENGTH_SHORT).show();
+            }
+        }catch(Exception e){
+            Toast.makeText(context, "please check internet connection or GPS..", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+public void fireStoreage(Uri uri, final String type) {
+    address(getGetMyLatLng(),this);
+
+    final StorageReference filepath = storageReference.child(me()+flatsNo+imgCounter);
+
+    filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        @Override
+        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            Toast.makeText(getApplicationContext(), "sent", Toast.LENGTH_SHORT).show();
+            databaseImageSubmit(type, String.valueOf(filepath));
+        }
+    });
+
+
+
+}
+    private FirebaseDatabase    database2;
+    private DatabaseReference homeRef;
+    protected  String me(){
+        // getting ID of the user that logged in \\
+
+        FirebaseAuth mAuth= FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userId = currentUser.getUid();
+//    Toast.makeText(context, userId, Toast.LENGTH_SHORT).show();
+
+        return  userId;}
+                    /////////////////// on sheets result end
 
 
 
