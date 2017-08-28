@@ -108,6 +108,8 @@
     <string name="no">no</string>
     <string name="areaCard">* Area :</string>
     <string name="call">Call</string>
+    <string name="type">- Place is For :</string>
+    <string name="RentOrSale">Rent / Sale</string>
 
 
 </resources>

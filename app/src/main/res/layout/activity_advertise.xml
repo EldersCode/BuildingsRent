@@ -42,9 +42,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:text="@string/type"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="italic"
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/advRentOrSale"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/RentOrSale"
+                        android:textColor="@android:color/black" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:text="@string/priceText"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
+                    android:layout_marginTop="10dp"
                     android:textStyle="italic"
 
                     />
@@ -149,6 +177,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_marginTop="10dp"
+                        android:id="@+id/numberOfBedTitle"
                         android:text="@string/noOfBedrooms"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -188,6 +217,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_marginTop="10dp"
+                        android:id="@+id/numberOfBathTitle"
                         android:text="@string/noOfBathrooms"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -210,6 +240,40 @@
                         />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/seatTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/noOfSeats"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/seatsNum"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:ellipsize="end"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:text="@string/seat"
+                        android:textColor="@android:color/black"
+
+                        />
+
+                </LinearLayout>
+
 
 
                 <LinearLayout

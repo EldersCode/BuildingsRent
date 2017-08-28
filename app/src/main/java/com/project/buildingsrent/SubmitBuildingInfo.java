@@ -89,7 +89,7 @@ public class SubmitBuildingInfo extends Activity {
                               final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText,
                               final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch,
                               final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch,
-                              final CheckBox farmLand, final CheckBox buildLand , final EditText phoneEditText) {
+                              final CheckBox farmLand, final CheckBox buildLand , final EditText phoneEditText , final Button rentBtn , final Button saleBtn) {
 
         petsLayout.setVisibility(View.GONE);
 
@@ -223,7 +223,7 @@ address(latLng,context);
 
                     submitType(descriptionEditText, bottomSheetBehavior1, context,
                             latLng, mMap, building, locateFlat, petsLayout, petsSwitch, priceEditText, apartmentAreaEditText, noOfBedRoomsEditText, noOfBathRoomsEditText, parkingLotsSwitch, livingRoomSwitch, kitchenSwitch, coolingSystemSwitch, negotiablePriceSwitch,
-                            farmLand, buildLand, phoneEditText);
+                            farmLand, buildLand, phoneEditText , rentBtn , saleBtn);
                     ref = FirebaseDatabase.getInstance().getReference(adress + building + "/" + flatsNo + "/location");
 
                     geoFire = new GeoFire(ref);
@@ -233,7 +233,7 @@ address(latLng,context);
 
                     submitType2(descriptionEditText, bottomSheetBehavior1, context,
                             latLng, mMap, building, locateFlat, petsLayout, petsSwitch, priceEditText, apartmentAreaEditText, noOfBedRoomsEditText, noOfBathRoomsEditText, parkingLotsSwitch, livingRoomSwitch, kitchenSwitch, coolingSystemSwitch, negotiablePriceSwitch,
-                            farmLand, buildLand, phoneEditText);
+                            farmLand, buildLand, phoneEditText , rentBtn , saleBtn);
                     ref2 = FirebaseDatabase.getInstance().getReference(address2 + building + "/" + flatsNo2 + "/location");
 
                     geoFire2 = new GeoFire(ref2);
@@ -332,7 +332,7 @@ address(latLng,context);
 //    }//
 int counter =1;
     public void submitType(EditText descriptionEditText,final BottomSheetBehavior bottomSheetBehavior1, final Context context, final LatLng latLng, final GoogleMap mMap, final String building, Button locateFlat, final LinearLayout petsLayout, Switch petsSwitch, final EditText priceEditText, final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText, final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch, final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch
-    , CheckBox farmLand,CheckBox buildLand , EditText phoneEditText) {
+    , CheckBox farmLand,CheckBox buildLand , EditText phoneEditText , Button rentBtn , Button saleBtn) {
        Toast.makeText(context,building,Toast.LENGTH_SHORT).show();
         switch (building){
             case "home":
@@ -352,7 +352,11 @@ Log.e("address",adress);
                 houses.child(flatsNo + "/coolingSystem/").setValue(String.valueOf(coolingSystemSwitch.isChecked()));
                 houses.child(flatsNo + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
                 houses.child(flatsNo + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
-                houses.child(flatsNo + "/phone number/").setValue(String.valueOf(phoneEditText.getText().toString()));
+                if(rentBtn.isClickable()) {
+                    houses.child(flatsNo + "/rent or sale/").setValue(saleBtn.getText().toString());
+                }else if(saleBtn.isClickable()){
+                    houses.child(flatsNo + "/rent or sale/").setValue(rentBtn.getText().toString());
+            }
                 houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -376,6 +380,11 @@ break;
                 houses.child(flatsNo + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
                 houses.child(flatsNo + "/price/").setValue(priceEditText.getText().toString());
                 houses.child(flatsNo + "/phone number/").setValue(String.valueOf(phoneEditText.getText().toString()));
+                if(rentBtn.isClickable()) {
+                    houses.child(flatsNo + "/rent or sale/").setValue(saleBtn.getText().toString());
+                }else if(saleBtn.isClickable()){
+                    houses.child(flatsNo + "/rent or sale/").setValue(rentBtn.getText().toString());
+                }
                 houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -397,6 +406,11 @@ break;
                 houses.child(flatsNo + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
                 houses.child(flatsNo + "/price/").setValue(priceEditText.getText().toString());
                 houses.child(flatsNo + "/phone number/").setValue(String.valueOf(phoneEditText.getText().toString()));
+                if(rentBtn.isClickable()) {
+                    houses.child(flatsNo + "/rent or sale/").setValue(saleBtn.getText().toString());
+                }else if(saleBtn.isClickable()){
+                    houses.child(flatsNo + "/rent or sale/").setValue(rentBtn.getText().toString());
+                }
                 houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -424,7 +438,11 @@ break;
                 houses.child(flatsNo + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
                 houses.child(flatsNo + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
                 houses.child(flatsNo + "/phone number/").setValue(String.valueOf(phoneEditText.getText().toString()));
-
+                if(rentBtn.isClickable()) {
+                    houses.child(flatsNo + "/rent or sale/").setValue(saleBtn.getText().toString());
+                }else if(saleBtn.isClickable()){
+                    houses.child(flatsNo + "/rent or sale/").setValue(rentBtn.getText().toString());
+                }
                 houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -447,7 +465,11 @@ break;
                 houses.child(flatsNo + "/farm/").setValue(String.valueOf(farmLand.isChecked()));
                 houses.child(flatsNo + "/build/").setValue(String.valueOf(buildLand.isChecked()));
                 houses.child(flatsNo + "/phone number/").setValue(String.valueOf(phoneEditText.getText().toString()));
-
+                if(rentBtn.isClickable()) {
+                    houses.child(flatsNo + "/rent or sale/").setValue(saleBtn.getText().toString());
+                }else if(saleBtn.isClickable()){
+                    houses.child(flatsNo + "/rent or sale/").setValue(rentBtn.getText().toString());
+                }
                 houses.child(flatsNo + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -463,7 +485,7 @@ break;
 
 
     public void submitType2(EditText descriptionEditText,final BottomSheetBehavior bottomSheetBehavior1, final Context context, final LatLng latLng, final GoogleMap mMap, final String building, Button locateFlat, final LinearLayout petsLayout, Switch petsSwitch, final EditText priceEditText, final EditText apartmentAreaEditText, final EditText noOfBedRoomsEditText, final EditText noOfBathRoomsEditText, final Switch parkingLotsSwitch, final Switch livingRoomSwitch, final Switch kitchenSwitch, final Switch coolingSystemSwitch, final Switch negotiablePriceSwitch
-            , CheckBox farmLand,CheckBox buildLand , EditText phoneEditText) {
+            , CheckBox farmLand,CheckBox buildLand , EditText phoneEditText , Button rentBtn , Button saleBtn) {
         Toast.makeText(context,building,Toast.LENGTH_SHORT).show();
         switch (building){
             case "home":
@@ -480,6 +502,11 @@ break;
                 houses2.child(flatsNo2 + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
                 houses2.child(flatsNo2 + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
                 houses2.child(flatsNo2 + "/phone number/").setValue(String.valueOf(phoneEditText.getText().toString()));
+                if(rentBtn.isClickable()) {
+                    houses.child(flatsNo + "/rent or sale/").setValue(saleBtn.getText().toString());
+                }else if(saleBtn.isClickable()){
+                    houses.child(flatsNo + "/rent or sale/").setValue(rentBtn.getText().toString());
+                }
                 houses2.child(flatsNo2 + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -500,6 +527,11 @@ break;
                 houses2.child(flatsNo2 + "/descriptionEditText/").setValue(descriptionEditText.getText().toString());
                 houses2.child(flatsNo2 + "/price/").setValue(priceEditText.getText().toString());
                 houses2.child(flatsNo2 + "/phone number/").setValue(String.valueOf(phoneEditText.getText().toString()));
+                if(rentBtn.isClickable()) {
+                    houses.child(flatsNo + "/rent or sale/").setValue(saleBtn.getText().toString());
+                }else if(saleBtn.isClickable()){
+                    houses.child(flatsNo + "/rent or sale/").setValue(rentBtn.getText().toString());
+                }
                 houses2.child(flatsNo2 + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -518,6 +550,11 @@ break;
                 houses2.child(flatsNo2 + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
                 houses2.child(flatsNo2 + "/price/").setValue(priceEditText.getText().toString());
                 houses2.child(flatsNo2 + "/phone number/").setValue(String.valueOf(phoneEditText.getText().toString()));
+                if(rentBtn.isClickable()) {
+                    houses.child(flatsNo + "/rent or sale/").setValue(saleBtn.getText().toString());
+                }else if(saleBtn.isClickable()){
+                    houses.child(flatsNo + "/rent or sale/").setValue(rentBtn.getText().toString());
+                }
                 houses2.child(flatsNo2 + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -542,7 +579,11 @@ break;
                 houses2.child(flatsNo2 + "/negotiablePrice/").setValue(String.valueOf(negotiablePriceSwitch.isChecked()));
                 houses2.child(flatsNo2 + "/parking/").setValue(String.valueOf(parkingLotsSwitch.isChecked()));
                 houses2.child(flatsNo2 + "/phone number/").setValue(String.valueOf(phoneEditText.getText().toString()));
-
+                if(rentBtn.isClickable()) {
+                    houses.child(flatsNo + "/rent or sale/").setValue(saleBtn.getText().toString());
+                }else if(saleBtn.isClickable()){
+                    houses.child(flatsNo + "/rent or sale/").setValue(rentBtn.getText().toString());
+                }
                 houses2.child(flatsNo2 + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -561,7 +602,11 @@ break;
                 houses2.child(flatsNo2 + "/farm/").setValue(String.valueOf(farmLand.isChecked()));
                 houses2.child(flatsNo2 + "/build/").setValue(String.valueOf(buildLand.isChecked()));
                 houses2.child(flatsNo2 + "/phone number/").setValue(String.valueOf(phoneEditText.getText().toString()));
-
+                if(rentBtn.isClickable()) {
+                    houses.child(flatsNo + "/rent or sale/").setValue(saleBtn.getText().toString());
+                }else if(saleBtn.isClickable()){
+                    houses.child(flatsNo + "/rent or sale/").setValue(rentBtn.getText().toString());
+                }
                 houses2.child(flatsNo2 + "/area/").setValue(apartmentAreaEditText.getText().toString()).addOnSuccessListener((Activity) context, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

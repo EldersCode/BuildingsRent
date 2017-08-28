@@ -315,7 +315,7 @@ public class ProfileHandling extends Activity implements AdapterView.OnItemClick
 
         String mPosition = parent.getItemAtPosition(position).toString();
 
-        Toast.makeText(this, "position is : " + mPosition, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "I'm still working on removing advertise and editing soon", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -373,20 +373,24 @@ public class ProfileHandling extends Activity implements AdapterView.OnItemClick
                                 myRef.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        String area = (String) dataSnapshot.child("area").getValue();
-                                        String price = (String) dataSnapshot.child("price").getValue();
-                                        Log.i("Area retrieve home", area);
-                                        Log.i("Price retrieve home", price);
-                                        HashMap<String, String> myHash = new HashMap<>();
-                                        myHash.put("price", price);
-                                        myHash.put("area", area);
-                                        myHash.put("cardImage", "");
-                                        AdvCardArrayList.add(myHash);
-                                        Log.i("retrieve array size", AdvCardArrayList.size() + "");
-                                        customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
-                                        myAdListView.setAdapter(customAdAdapter);
-                                        noAdsText.setText("");
-                                        setListSize(myAdListView);
+                                        try {
+                                            String area = (String) dataSnapshot.child("area").getValue();
+                                            String price = (String) dataSnapshot.child("price").getValue();
+                                            Log.i("Area retrieve home", area);
+                                            Log.i("Price retrieve home", price);
+                                            HashMap<String, String> myHash = new HashMap<>();
+                                            myHash.put("price", price);
+                                            myHash.put("area", area);
+                                            myHash.put("cardImage", "");
+                                            AdvCardArrayList.add(myHash);
+                                            Log.i("retrieve array size", AdvCardArrayList.size() + "");
+                                            customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
+                                            myAdListView.setAdapter(customAdAdapter);
+                                            noAdsText.setText("");
+                                            setListSize(myAdListView);
+                                        }catch (Exception e){
+
+                                        }
                                     }
 
                                     @Override
@@ -433,20 +437,24 @@ public class ProfileHandling extends Activity implements AdapterView.OnItemClick
                                 myRef.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        String area = (String) dataSnapshot.child("area").getValue();
-                                        String price = (String) dataSnapshot.child("price").getValue();
-                                        Log.i("Area retrieve chalet", area);
-                                        Log.i("Price retrieve chalet", price);
-                                        HashMap<String, String> myHash = new HashMap<>();
-                                        myHash.put("price", price);
-                                        myHash.put("area", area);
-                                        myHash.put("cardImage", "");
-                                        AdvCardArrayList.add(myHash);
-                                        Log.i("retrieve array size", AdvCardArrayList.size() + "");
-                                        customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
-                                        myAdListView.setAdapter(customAdAdapter);
-                                        noAdsText.setText("");
-                                        setListSize(myAdListView);
+                                        try {
+                                            String area = (String) dataSnapshot.child("area").getValue();
+                                            String price = (String) dataSnapshot.child("price").getValue();
+                                            Log.i("Area retrieve chalet", area);
+                                            Log.i("Price retrieve chalet", price);
+                                            HashMap<String, String> myHash = new HashMap<>();
+                                            myHash.put("price", price);
+                                            myHash.put("area", area);
+                                            myHash.put("cardImage", "");
+                                            AdvCardArrayList.add(myHash);
+                                            Log.i("retrieve array size", AdvCardArrayList.size() + "");
+                                            customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
+                                            myAdListView.setAdapter(customAdAdapter);
+                                            noAdsText.setText("");
+                                            setListSize(myAdListView);
+                                        }catch (Exception e){
+
+                                        }
                                     }
 
                                     @Override
@@ -491,20 +499,24 @@ public class ProfileHandling extends Activity implements AdapterView.OnItemClick
                                 myRef.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        String area = (String) dataSnapshot.child("area").getValue();
-                                        String price = (String) dataSnapshot.child("price").getValue();
-                                        Log.i("Area retrieve hall", area);
-                                        Log.i("Price retrieve hall", price);
-                                        HashMap<String, String> myHash = new HashMap<>();
-                                        myHash.put("price", price);
-                                        myHash.put("area", area);
-                                        myHash.put("cardImage", "");
-                                        AdvCardArrayList.add(myHash);
-                                        Log.i("retrieve array size", AdvCardArrayList.size() + "");
-                                        customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
-                                        myAdListView.setAdapter(customAdAdapter);
-                                        noAdsText.setText("");
-                                        setListSize(myAdListView);
+                                        try {
+                                            String area = (String) dataSnapshot.child("area").getValue();
+                                            String price = (String) dataSnapshot.child("price").getValue();
+                                            Log.i("Area retrieve hall", area);
+                                            Log.i("Price retrieve hall", price);
+                                            HashMap<String, String> myHash = new HashMap<>();
+                                            myHash.put("price", price);
+                                            myHash.put("area", area);
+                                            myHash.put("cardImage", "");
+                                            AdvCardArrayList.add(myHash);
+                                            Log.i("retrieve array size", AdvCardArrayList.size() + "");
+                                            customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
+                                            myAdListView.setAdapter(customAdAdapter);
+                                            noAdsText.setText("");
+                                            setListSize(myAdListView);
+                                        }catch (Exception e){
+
+                                        }
                                     }
 
                                     @Override
@@ -549,20 +561,24 @@ public class ProfileHandling extends Activity implements AdapterView.OnItemClick
                                 myRef.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        String area = (String) dataSnapshot.child("area").getValue();
-                                        String price = (String) dataSnapshot.child("price").getValue();
-                                        Log.i("Area retrieve store", area);
-                                        Log.i("Price retrieve store", price);
-                                        HashMap<String, String> myHash = new HashMap<>();
-                                        myHash.put("price", price);
-                                        myHash.put("area", area);
-                                        myHash.put("cardImage", "");
-                                        AdvCardArrayList.add(myHash);
-                                        Log.i("retrieve array size", AdvCardArrayList.size() + "");
-                                        customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
-                                        myAdListView.setAdapter(customAdAdapter);
-                                        noAdsText.setText("");
-                                        setListSize(myAdListView);
+                                        try {
+                                            String area = (String) dataSnapshot.child("area").getValue();
+                                            String price = (String) dataSnapshot.child("price").getValue();
+                                            Log.i("Area retrieve store", area);
+                                            Log.i("Price retrieve store", price);
+                                            HashMap<String, String> myHash = new HashMap<>();
+                                            myHash.put("price", price);
+                                            myHash.put("area", area);
+                                            myHash.put("cardImage", "");
+                                            AdvCardArrayList.add(myHash);
+                                            Log.i("retrieve array size", AdvCardArrayList.size() + "");
+                                            customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
+                                            myAdListView.setAdapter(customAdAdapter);
+                                            noAdsText.setText("");
+                                            setListSize(myAdListView);
+                                        }catch (Exception e){
+
+                                        }
                                     }
 
                                     @Override
@@ -607,20 +623,24 @@ public class ProfileHandling extends Activity implements AdapterView.OnItemClick
                                 myRef.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        String area = (String) dataSnapshot.child("area").getValue();
-                                        String price = (String) dataSnapshot.child("price").getValue();
-                                        Log.i("Area retrieve land", area);
-                                        Log.i("Price retrieve land", price);
-                                        HashMap<String, String> myHash = new HashMap<>();
-                                        myHash.put("price", price);
-                                        myHash.put("area", area);
-                                        myHash.put("cardImage", "");
-                                        AdvCardArrayList.add(myHash);
-                                        Log.i("retrieve array size", AdvCardArrayList.size() + "");
-                                        customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
-                                        myAdListView.setAdapter(customAdAdapter);
-                                        noAdsText.setText("");
-                                        setListSize(myAdListView);
+                                        try {
+                                            String area = (String) dataSnapshot.child("area").getValue();
+                                            String price = (String) dataSnapshot.child("price").getValue();
+                                            Log.i("Area retrieve land", area);
+                                            Log.i("Price retrieve land", price);
+                                            HashMap<String, String> myHash = new HashMap<>();
+                                            myHash.put("price", price);
+                                            myHash.put("area", area);
+                                            myHash.put("cardImage", "");
+                                            AdvCardArrayList.add(myHash);
+                                            Log.i("retrieve array size", AdvCardArrayList.size() + "");
+                                            customAdAdapter = new CustomAdAdapter(context, AdvCardArrayList, myAdListView);
+                                            myAdListView.setAdapter(customAdAdapter);
+                                            noAdsText.setText("");
+                                            setListSize(myAdListView);
+                                        }catch (Exception e){
+
+                                        }
                                     }
 
                                     @Override
