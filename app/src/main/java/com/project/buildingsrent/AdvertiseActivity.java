@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,25 +17,48 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
-public class AdvertiseActivity extends HandlingAdvertise {
+import java.util.ArrayList;
+
+public class AdvertiseActivity extends HandlingAdvertise implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
 
     TextView advPrice,advArea,description,bedRooms,bathRooms,features , phone;
     String phoneNum = "";
+    public FirebaseStorage mStorage;
+    private SliderLayout mDemoSlider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advertise);
-
         HandlingAdvertise(AdvertiseActivity.this);
         functions(AdvertiseActivity.this);
+///////////////
+        mDemoSlider = (SliderLayout)findViewById(R.id.advSlider);
 
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(4000);
+        mDemoSlider.addOnPageChangeListener(this);
+
+        ////////////
         advPrice=(TextView)findViewById(R.id.advPrice);
         advArea=(TextView)findViewById(R.id.areaAdv);
         description=(TextView)findViewById(R.id.advDescription);
@@ -45,17 +69,74 @@ public class AdvertiseActivity extends HandlingAdvertise {
 
 
         try {
+            mStorage= FirebaseStorage.getInstance();
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             final String data = preferences.getString("data", "");
             Log.e("dddddddd", data);
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
             final DatabaseReference ref = database.getReference(data);
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String coolingSystem = (String) dataSnapshot.child("coolingSystem").getValue();
-                    Log.e("ddddd", coolingSystem);
+                    try {
+//                        ArrayList<String> imgs = new ArrayList<String>();
+//                        dataSnapshot.child("images").getChildren();
+ DatabaseReference imgRef=database.getReference(data+"/images/") ;
+                        Log.e("imrg", data+"/images/");
+
+                        imgRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot img : dataSnapshot.getChildren()) {
+                                    //instances retrived
+                                    String im = (String) img.getValue();
+
+                                    StorageReference storageRef = mStorage.getReferenceFromUrl(im);
+
+                                    String url = storageRef.getBucket();
+
+
+//                                 RequestCreator f=   Picasso.with(AdvertiseActivity.this).load(url)
+//                                            .error(R.mipmap.ic_launcher);
+
+
+                                    Log.e("url", url);
+                                    Log.e("img", im);
+                                    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                             TextSliderView textSliderView = new TextSliderView(AdvertiseActivity.this);
+
+                                            textSliderView
+                                                    .image(String.valueOf(uri))
+
+
+                                                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                                                    .setOnSliderClickListener(AdvertiseActivity.this);
+
+                                            mDemoSlider.addSlider(textSliderView);                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                            // Handle any errors
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }catch (Exception e){
+                        Log.e("ddddd", String.valueOf(e));
+
+                    }
                     String area = (String) dataSnapshot.child("area").getValue();
                     final String price = (String) dataSnapshot.child("price").getValue();
                     String descriptionS = (String) dataSnapshot.child("descriptionEditText").getValue();
@@ -165,4 +246,23 @@ public class AdvertiseActivity extends HandlingAdvertise {
     }
 
 
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }
