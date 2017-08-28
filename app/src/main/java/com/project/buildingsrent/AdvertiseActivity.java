@@ -121,6 +121,8 @@ public class AdvertiseActivity extends HandlingAdvertise implements BaseSliderVi
                                         @Override
                                         public void onFailure(@NonNull Exception exception) {
                                             // Handle any errors
+
+
                                         }
                                     });
                                 }
