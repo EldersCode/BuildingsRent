@@ -60,7 +60,7 @@
                         android:layout_marginStart="10dp"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
-                        android:text="@string/RentOrSale"
+                        android:hint="@string/RentOrSale"
                         android:textColor="@android:color/black" />
 
                 </LinearLayout>
@@ -231,7 +231,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:ellipsize="end"
-                        android:hint="@string/noOfBathrooms"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:text="@string/bathrooms_hint"
@@ -274,6 +273,38 @@
 
                 </LinearLayout>
 
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/landTypeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/landT"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/landType"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:ellipsize="end"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:textColor="@android:color/black"
+
+                        />
+
+                </LinearLayout>
 
 
                 <LinearLayout

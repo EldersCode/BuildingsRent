@@ -3,7 +3,7 @@
     <string name="ask_permission_messege">please enable your GPS to get your Location on Map</string>
     <string name="ask_permission_positive">Enable</string>
     <string name="ask_permission_negative">Cancel</string>
-    <string name="app_name">BuildingsRent</string>
+    <string name="app_name">Rent or Sale</string>
     <string name="title_activity_maps">Map</string>
     <string name="SearchForAnApartment_Menu">Search For new Advertisements</string>
     <string name="SearchForAnApartmentHint_Menu">Either you wana Buy Or Rent An Apartment , chalet , hall , land , store</string>
@@ -110,6 +110,7 @@
     <string name="call">Call</string>
     <string name="type">- Place is For :</string>
     <string name="RentOrSale">Rent / Sale</string>
+    <string name="landT">- Land Type :</string>
 
 
 </resources>

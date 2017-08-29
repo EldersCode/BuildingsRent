@@ -2,6 +2,7 @@ package com.search.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -150,9 +151,10 @@ setContext(SearchActivity.this);
 
             // On selecting a spinner item
             String item = parent.getItemAtPosition(position).toString();
-            Log.i("category Spinner : ", item);
+            Log.i("category Spinner ", item);
             // sending categorie to searchHandling class for felteration
             setCategorieItem(item);
+
 
 
 

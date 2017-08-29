@@ -89,7 +89,7 @@ public class MapsActivity extends HandlingMaps{
 
 
     // declearing widgets for sheets
-        sheetsWedgits();
+        sheetsWedgits(this);
         ////check for searching instances to be feltered
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         final String typeBuilding = preferences.getString("type","");
@@ -141,6 +141,7 @@ public class MapsActivity extends HandlingMaps{
                             }catch (Exception e){
 
                             }
+
                             //setting a firebase ref for retreiving markers
                             DatabaseReference refL = FirebaseDatabase.getInstance().getReference(searchpath + "/" + x + "/location");
                             GeoFire geoFire = new GeoFire(refL);
@@ -163,6 +164,10 @@ public class MapsActivity extends HandlingMaps{
                                                     )).title(price).icon(BitmapDescriptorFactory.fromResource(R.mipmap.house5)));
                                                     marker.showInfoWindow();
                                                     marker.setTag(finalX1);
+                                                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MapsActivity.this);
+                                                    SharedPreferences.Editor editor = preferences.edit();
+                                                    editor.putString("building","home");
+                                                    editor.apply();
                                                 }
                                                 else if(typeBuilding.equals("chalet")){
                                                     marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
@@ -170,6 +175,41 @@ public class MapsActivity extends HandlingMaps{
                                                     marker.showInfoWindow();
                                                     marker.setTag(finalX1);
                                                     Log.i("Chalet here : " , "It's okay");
+                                                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MapsActivity.this);
+                                                    SharedPreferences.Editor editor = preferences.edit();
+                                                    editor.putString("building","chalet");
+                                                    editor.apply();
+                                                }else if(typeBuilding.equals("land")){
+                                                    marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
+                                                    )).title(price).icon(BitmapDescriptorFactory.fromResource(R.mipmap.road5)));
+                                                    marker.showInfoWindow();
+                                                    marker.setTag(finalX1);
+                                                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MapsActivity.this);
+                                                    SharedPreferences.Editor editor = preferences.edit();
+                                                    editor.putString("building","land");
+                                                    editor.apply();
+                                                    Log.i("Land here : " , "It's okay");
+                                                }else if(typeBuilding.equals("store")){
+                                                    marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
+                                                    )).title(price).icon(BitmapDescriptorFactory.fromResource(R.mipmap.store5)));
+                                                    marker.showInfoWindow();
+                                                    marker.setTag(finalX1);
+                                                    Log.i("Store here : " , "It's okay");
+                                                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MapsActivity.this);
+                                                    SharedPreferences.Editor editor = preferences.edit();
+                                                    editor.putString("building","store");
+                                                    editor.apply();
+                                                }else if(typeBuilding.equals("hall")){
+//                                                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE
+                                                    marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude
+                                                    )).title(price).icon(BitmapDescriptorFactory.fromResource(R.mipmap.hall5)));
+                                                    marker.showInfoWindow();
+                                                    marker.setTag(finalX1);
+                                                    Log.i("Chalet here : " , "It's okay");
+                                                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MapsActivity.this);
+                                                    SharedPreferences.Editor editor = preferences.edit();
+                                                    editor.putString("building","hall");
+                                                    editor.apply();
                                                 }
                                                 else{
                                                      marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.latitude, location.longitude

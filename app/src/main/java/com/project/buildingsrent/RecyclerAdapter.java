@@ -115,42 +115,46 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Predic
         return filter;
     }
 
-    private ArrayList<AT_Place>getAutoComplete(CharSequence constraint){
+    private ArrayList<AT_Place>getAutoComplete(CharSequence constraint) {
 
-        if(myApiClient.isConnected()){
-            PendingResult<AutocompletePredictionBuffer> results =
-                    Places.GeoDataApi
-                            .getAutocompletePredictions(myApiClient,constraint.toString(),myBounds,myACFilter);
-            AutocompletePredictionBuffer autocompletePredictions =results
-                    .await(60 , TimeUnit.SECONDS);
+           if (myApiClient.isConnected()) {
+                PendingResult<AutocompletePredictionBuffer> results =
+                        Places.GeoDataApi
+                                .getAutocompletePredictions(myApiClient, constraint.toString(), myBounds, myACFilter);
+                AutocompletePredictionBuffer autocompletePredictions = results
+                        .await(60, TimeUnit.SECONDS);
 
-            final Status status = autocompletePredictions.getStatus();
-            if(!status.isSuccess()){
+                final Status status = autocompletePredictions.getStatus();
+                if (!status.isSuccess()) {
                 Toast.makeText(myContext, "error contacting API: please check internet connection ..", Toast.LENGTH_SHORT).show();
-                Log.e("", "Error getting autocomplete prediction API call "+status.toString());
-                return null;
+                    Log.e("", "Error getting autocomplete prediction API call " + status.toString());
+                    return null;
+
+                }
+
+                Log.i("", "Query complete. Received " + autocompletePredictions.getCount() + " predictions.");
+
+
+                Iterator<AutocompletePrediction> iterator = autocompletePredictions.iterator();
+                ArrayList resultList = new ArrayList<>(autocompletePredictions.getCount());
+                while (iterator.hasNext()) {
+                    AutocompletePrediction prediction = iterator.next();
+                    resultList.add(new AT_Place(prediction.getPlaceId(), prediction.getFullText(null)));
+                }
+
+                autocompletePredictions.release();
+                return resultList;
 
             }
 
-            Log.i("" , "Query complete. Received "+autocompletePredictions.getCount()+ " predictions.");
 
 
-            Iterator<AutocompletePrediction> iterator = autocompletePredictions.iterator();
-            ArrayList resultList = new ArrayList<>(autocompletePredictions.getCount());
-            while (iterator.hasNext()){
-                AutocompletePrediction prediction = iterator.next();
-                resultList.add(new AT_Place(prediction.getPlaceId() , prediction.getFullText(null)));
-            }
 
-            autocompletePredictions.release();
-            return resultList;
+            Log.e("", "Google API Client is not connected for autocomplete query");
+            return null;
 
-        }
 
-        Log.e("" , "Google API Client is not connected for autocomplete query");
-        return null;
     }
-
 
 
 

@@ -2,6 +2,7 @@ package com.project.buildingsrent;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -132,6 +133,7 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
 
     ////////////////submitBuildingInfo
 
+    ProgressDialog progressD;
 
     EditText noOfBedRoomsEditText;
     EditText noOfBathRoomsEditText;
@@ -229,8 +231,9 @@ public class HandlingMaps extends FragmentActivity implements OnMapReadyCallback
 
 
 
-    public void sheetsWedgits(){
+    public void sheetsWedgits(Context context){
 
+        progressD = new ProgressDialog(context);
         //slider creation and sending image instance
         storageReference= FirebaseStorage.getInstance().getReference();
 
@@ -716,69 +719,81 @@ other=(CheckBox)findViewById(R.id.other);
 
     private void  AutocompleteApi(){
 
-        search_editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if(!s.toString().equals("") && mGoogleApiClient.isConnected()){
-                    recyclerAdapter.getFilter().filter(s.toString());
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                }
-                else if(!mGoogleApiClient.isConnected()){
-                    Toast.makeText(getApplicationContext(), "Google API Client is not connected", Toast.LENGTH_SHORT).show();
+        try {
+            search_editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                 }
 
-            }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            @Override
-            public void afterTextChanged(Editable s) {
+                    if (!s.toString().equals("") && mGoogleApiClient.isConnected()) {
 
-            }
-        });
+                            recyclerAdapter.getFilter().filter(s.toString());
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                    }  if (!mGoogleApiClient.isConnected()) {
+
+                        Toast.makeText(getApplicationContext(), "Google API Client is not connected please check internet connection ..", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }
+
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+        }catch (Exception e){
+
+        }
 
 
         mRecyclerView.addOnItemTouchListener(
 
+
                 new Recycler_Listener(this, new Recycler_Listener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view , int position) {
-                        final RecyclerAdapter.AT_Place item = recyclerAdapter.getItem(position);
-                        final String placeId = String.valueOf(item.placeId);
+                        try {
+                            final RecyclerAdapter.AT_Place item = recyclerAdapter.getItem(position);
+                            final String placeId = String.valueOf(item.placeId);
 
                         /*
                              Issue a request to the Places Geo Data API to retrieve a Place object with additional details about the place.
                          */
 
-                        PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-                                .getPlaceById(mGoogleApiClient, placeId);
-                        placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
-                            @Override
-                            public void onResult(PlaceBuffer places) {
-                                if(places.getCount()==1){
-                                    //Do the things here on Click.....
-                                    findAddress(search_img);
+                            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                                    .getPlaceById(mGoogleApiClient, placeId);
+                            placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
+                                @Override
+                                public void onResult(PlaceBuffer places) {
+                                    if (places.getCount() == 1) {
+                                        //Do the things here on Click.....
+                                        findAddress(search_img);
 //                                    Toast.makeText(getApplicationContext(), "please click on Search button on the left ..",Toast.LENGTH_SHORT).show();
 
-                                    //LatLng latLng = String.valueOf(places.get(0).getLatLng()) ;
+                                        //LatLng latLng = String.valueOf(places.get(0).getLatLng()) ;
 
-                                    //////////// hena bageb el latitude w el longitude w ab3thom lel map !! aw a7sn a5ally el edit text yeb2a feh el address
-                                    search_editText.setText(String.valueOf(places.get(0).getAddress()));
-                                    mRecyclerView.setVisibility(View.GONE);
+                                        //////////// hena bageb el latitude w el longitude w ab3thom lel map !! aw a7sn a5ally el edit text yeb2a feh el address
+                                        search_editText.setText(String.valueOf(places.get(0).getAddress()));
+                                        mRecyclerView.setVisibility(View.GONE);
 
-                                }else {
-                                    Toast.makeText(getApplicationContext(),"Something went wrong !",Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Something went wrong !", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
-                        Log.i("TAG", "Clicked: " + item.description);
-                        Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
-                    }
+                            });
+                            Log.i("TAG", "Clicked: " + item.description);
+                            Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
+                        }catch (Exception e){
+
+                        }
+                        }
+
                 })
         );
 
@@ -794,58 +809,64 @@ other=(CheckBox)findViewById(R.id.other);
     public void findAddress(View view) {
         //hn5ally el keyboard te5tfy b3d ma el user y5allas ketaba
 
-        ConnectivityManager connectMan = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState()   == NetworkInfo.State.CONNECTED  ) {
+        try {
 
-            if (search_editText.length() == 0) {
-                Log.i("Empty", "EditText is Empty");
-                Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
-            }else {
+            ConnectivityManager connectMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                    connectMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
 
-                mRecyclerView.setVisibility(View.GONE);
-
-                final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                alert.setTitle("Your Guide");
-                alert.setCancelable(false);
-                alert.setIcon(R.mipmap.alarm);
-                alert.setMessage("You can long click on marker and drag the nearest marker to the location of your apartment");
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        alert.setCancelable(true);
-                    }
-                });
-                alert.create().show();
-
-                InputMethodManager inputMethod = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethod.hideSoftInputFromWindow(search_editText.getWindowToken(), 0);
-
-                try {
-
-
-                    //hn5ally el activity_search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
-
-                    String encodedAddress = URLEncoder.encode(search_editText.getText().toString(), "UTF-8");
-                    String httpWeb = fixedHttp + "address=" + encodedAddress + "&key=" + apiKey;
-
-                    Log.i("httpWeb", httpWeb);
-
-                    // I will send the httpWeb which contains the full http site for what the user searchs for ..
-
-                    // we open connection by the DownloadTask Class
-                    DownloadTask task = new DownloadTask();
-                    // we used the interface to get the data we have after the onPostExecute method finished to use it ..
-                    task.delegate = this;
-                    task.execute(httpWeb);
-
-
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                if (search_editText.length() == 0) {
+                    Log.i("Empty", "EditText is Empty");
                     Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    mRecyclerView.setVisibility(View.GONE);
+
+                    final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                    alert.setTitle("Your Guide");
+                    alert.setCancelable(false);
+                    alert.setIcon(R.mipmap.alarm);
+                    alert.setMessage("You can long click on marker and drag the nearest marker to the location of your apartment \n (if the marker initialized in wrong country or city , please click on search tool beside address above)");
+                    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            alert.setCancelable(true);
+                        }
+                    });
+                    alert.create().show();
+
+                    InputMethodManager inputMethod = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethod.hideSoftInputFromWindow(search_editText.getWindowToken(), 0);
+
+                    try {
+
+
+                        //hn5ally el activity_search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
+
+                        String encodedAddress = URLEncoder.encode(search_editText.getText().toString(), "UTF-8");
+                        String httpWeb = fixedHttp + "address=" + encodedAddress + "&key=" + apiKey;
+
+                        Log.i("httpWeb", httpWeb);
+
+                        // I will send the httpWeb which contains the full http site for what the user searchs for ..
+
+                        // we open connection by the DownloadTask Class
+                        DownloadTask task = new DownloadTask();
+                        // we used the interface to get the data we have after the onPostExecute method finished to use it ..
+                        task.delegate = this;
+                        task.execute(httpWeb);
+
+
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
+                    }
                 }
+            } else {
+                Toast.makeText(this, "Please check internet connection and try again!", Toast.LENGTH_SHORT).show();
             }
-        }else{
+
+        }catch (Exception e){
             Toast.makeText(this, "Please check internet connection and try again!", Toast.LENGTH_SHORT).show();
         }
 
@@ -912,6 +933,9 @@ other=(CheckBox)findViewById(R.id.other);
 
                     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //
+
+        progressD.setMessage("Please wait ..");
+        progressD.show();
 
                         InputStream stream = null;
                         if ( resultCode == Activity.RESULT_OK) {
@@ -1049,6 +1073,9 @@ public void fireStoreage(Uri uri, final String type) {
     filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
         @Override
         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+
+            progressD.dismiss();
             Toast.makeText(getApplicationContext(), "sent", Toast.LENGTH_SHORT).show();
             databaseImageSubmit(type, String.valueOf(filepath));
         }

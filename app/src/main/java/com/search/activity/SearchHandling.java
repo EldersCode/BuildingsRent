@@ -280,63 +280,66 @@ Log.e("ffffffff",searchActivity.getAreaFrom());
 //fireRetrive();
         //hn5ally el keyboard te5tfy b3d ma el user y5allas ketaba
 
-        InputMethodManager inputMethod = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethod.hideSoftInputFromWindow(search_editText.getWindowToken(),0);
-
         try {
+            InputMethodManager inputMethod = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethod.hideSoftInputFromWindow(search_editText.getWindowToken(), 0);
 
-            if (search_editText.length() == 0 || getAreaFrom().equals("") || getAreaTo().equals("")
-                    || getPriceFrom().equals("")
-                    || getPriceTo().equals("")) {
-                Log.i("Empty" , "EditText is Empty");
-                Toast.makeText(this, "Please enter the full information to search ..", Toast.LENGTH_SHORT).show();
-            } else {
+            try {
 
-                ConnectivityManager connectMan = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-                if(connectMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                   connectMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState()   == NetworkInfo.State.CONNECTED  ) {
+                if (search_editText.length() == 0 || getAreaFrom().equals("") || getAreaTo().equals("")
+                        || getPriceFrom().equals("")
+                        || getPriceTo().equals("")) {
+                    Log.i("Empty", "EditText is Empty");
+                    Toast.makeText(this, "Please enter the full information to search ..", Toast.LENGTH_SHORT).show();
+                } else {
 
-
-                    ProgressDialog progressDialog = new ProgressDialog(this);
-                    progressDialog.setMessage(getString(R.string.pleaseWait));
-                    progressDialog.show();
-
-                    //hn5ally el activity_search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
-
-                    String encodedAddress = URLEncoder.encode(search_editText.getText().toString(), "UTF-8");
-                    String httpWeb = fixedHttp + "address=" + encodedAddress + "&key=" + apiKey;
-
-                    Log.i("httpWeb", httpWeb);
+                    ConnectivityManager connectMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                    if (connectMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                            connectMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
 
 
-                    DownloadTask task = new DownloadTask();
+                        ProgressDialog progressDialog = new ProgressDialog(this);
+                        progressDialog.setMessage(getString(R.string.pleaseWait));
+                        progressDialog.show();
 
-                    // we used the interface to get the data we have after the onPostExecute method finished to use it ..
+                        //hn5ally el activity_search editText yeb2a feh + ben kol kelma fl address (n7welha le URL form)
 
-                    task.delegate = this;
-                    task.execute(httpWeb);
-                    try {
+                        String encodedAddress = URLEncoder.encode(search_editText.getText().toString(), "UTF-8");
+                        String httpWeb = fixedHttp + "address=" + encodedAddress + "&key=" + apiKey;
 
-                        //country , city , area from searching battern
-                        DataFromLatLng dataFromLatLng = new DataFromLatLng(filterLatLng.latitude, filterLatLng.longitude,
-                                this);
-                        String country = dataFromLatLng.getMyCountry();
-                        String city = dataFromLatLng.getMyCity();
-                        String area = dataFromLatLng.getMyArea();
+                        Log.i("httpWeb", httpWeb);
+
+
+                        DownloadTask task = new DownloadTask();
+
+                        // we used the interface to get the data we have after the onPostExecute method finished to use it ..
+
+                        task.delegate = this;
+                        task.execute(httpWeb);
+                        try {
+
+                            //country , city , area from searching battern
+                            DataFromLatLng dataFromLatLng = new DataFromLatLng(filterLatLng.latitude, filterLatLng.longitude,
+                                    this);
+                            String country = dataFromLatLng.getMyCountry();
+                            String city = dataFromLatLng.getMyCity();
+                            String area = dataFromLatLng.getMyArea();
 //                    fireRetrive(country,city,area);
-                        //////////////////
-                    } catch (Exception e) {
+                            //////////////////
+                        } catch (Exception e) {
 //                    Toast.makeText(this, filterLatLng.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "Please check internet connection !", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(this, "Please check internet connection !", Toast.LENGTH_SHORT).show();
                 }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
             }
-        } catch(UnsupportedEncodingException e){
-            e.printStackTrace();
-            Toast.makeText(this, "Please enter the address you want to search for ..", Toast.LENGTH_SHORT).show();
-        }
+        }catch(Exception e){
 
+        }
 
     }
 
