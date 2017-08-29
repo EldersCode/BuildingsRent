@@ -55,6 +55,7 @@ public class HandlingLoginAuth extends Activity {
 
     //Declaration of what we need in login layout
 
+    ProgressDialog progD;
     private View loginLayout , registerLayout;
     private ProgressDialog progressD ;
     private String email = null;
@@ -326,6 +327,9 @@ public class HandlingLoginAuth extends Activity {
             @Override
             public void onClick(View v) {
 
+                progD = new ProgressDialog(context);
+                progD.setMessage("Please wait");
+                progD.show();
 
                 email = null;
                 pass = null;
@@ -478,10 +482,12 @@ public class HandlingLoginAuth extends Activity {
                                         Toast.LENGTH_SHORT).show();
                                 currentUser = mAuth.getCurrentUser();
                                 VerifyEmail(currentUser , context);
+                                progD.dismiss();
                                 mAuth.signOut();
 
                             } else {
                                 // If sign in fails, display a message to the user.
+                                progD.dismiss();
                                 Toast.makeText(context, "Authentication failed .. please check internet connection ..",
                                         Toast.LENGTH_SHORT).show();
                             }
